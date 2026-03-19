@@ -151,14 +151,13 @@ Al finalizar esta guía, podrás:
 
 ### Ejercicios de gestión
 
-**Ejercicio 3: Ciclo de vida de un archivo** 1. En tu directorio
-`practica_bash`, crea un archivo de texto vacío llamado `ejemplo.txt`.
+**Ejercicio 3: Ciclo de vida de un archivo**
 
-````         
-```bash
+1.  En tu directorio `practica_bash`, crea un archivo de texto vacío llamado `ejemplo.txt`.
+
+``` bash
 touch ejemplo.txt
 ```
-````
 
 2.  Haz una copia de ese archivo llamada `backup.txt`.
 
@@ -180,25 +179,29 @@ touch ejemplo.txt
     rm respaldo_final.txt
     ```
 
-**Ejercicio 4: Estructura de directorios** 1. Crea la siguiente
-estructura de directorios dentro de `practica_bash`:
+**Ejercicio 4: Estructura de directorios**
 
-````         
-```
+1.  Crea la siguiente estructura de directorios dentro de `practica_bash`:
+
+```         
 proyecto/
 ├── datos/
 ├── scripts/
 └── resultados/
 ```
-*Pista: Usa `mkdir -p proyecto/{datos,scripts,resultados}`.*
-````
+
+**Pista:** Usa
+
+``` bash
+mkdir -p proyecto/{datos,scripts,resultados}
+```
 
 ## Visualización y exploración de archivos
 
 ### Comandos de inspección
 
 | Comando | Descripción | Opciones comunes |
-|------------------|-----------------------|--------------------------------|
+|------------------|-----------------------|-------------------------------|
 | `cat` | Concatena y muestra el contenido completo de uno o varios archivos. | `-n` (numera líneas) |
 | `less` | Muestra el contenido de un archivo página a página (usa flechas, `Espacio` para avanzar, `q` para salir). |  |
 | `head` | Muestra las primeras líneas de un archivo (por defecto, 10). | `-n N` (muestra N líneas) |
@@ -207,14 +210,13 @@ proyecto/
 
 ### Ejercicios de visualización
 
-**Ejercicio 5: Crear y examinar un archivo** 1. Crea un archivo llamado
-`numeros.txt` con 20 líneas. Puedes usar un bucle o un comando rápido:
+**Ejercicio 5: Crear y examinar un archivo**
 
-````         
-```bash
+1.  Crea un archivo llamado `numeros.txt` con 20 líneas. Puedes usar un bucle o un comando rápido:
+
+``` bash
 for i in {1..20}; do echo "Línea número $i" >> numeros.txt; done
 ```
-````
 
 2.  Muestra las primeras 5 líneas del archivo.
 
@@ -323,7 +325,7 @@ grep -w "sistema" sistemas.txt
 complejas.
 
 | Patrón | Significado | Ejemplo (coincide con) |
-|----------------|----------------------|----------------------------------|
+|------------------|----------------------|---------------------------------|
 | `^` | Inicio de línea. | `^Unix` (líneas que comienzan con "Unix") |
 | `$` | Fin de línea. | `.$` (líneas que terminan con un punto) |
 | `.` | Cualquier carácter (excepto salto de línea). | `s.ste.a` ("sistema", "sisteia", etc.) |
@@ -563,9 +565,9 @@ por defecto (normalmente la pantalla).
 archivo.
 
 ```         
->> redirige la salida a un archivo (sobrescribe) 
+>  redirige la salida a un archivo (sobrescribe) 
 >> redirige la salida añadiendo al archivo 
-| envía la salida de un comando como entrada a otro 
+|  envía la salida de un comando como entrada a otro 
 ```
 
 **Ejemplos**
@@ -625,7 +627,7 @@ Los comodines permiten seleccionar múltiples archivos/directorios
 basándose en patrones en sus nombres.
 
 | Comodín | Uso | Ejemplo |
-|----------------|----------------------|----------------------------------|
+|------------------|----------------------|---------------------------------|
 | \* | Coincide con cualquier número de caracteres (incluyendo ninguno). | \*.txt (todos los archivos .txt) |
 | ? | Coincide con exactamente un carácter. | documento?.pdf (documento1.pdf, documentoA.pdf) |
 | \[ \] | Coincide con cualquier carácter dentro del conjunto. | \[aeiou\]\* (archivos que comienzan con vocal) |
@@ -665,14 +667,13 @@ ls ?????.*
 
 ## Herramientas principales
 
-gzip / gunzip: Comprime/descomprime archivos individuales (extensión
-.gz). tar: Agrupa múltiples archivos/directorios en un solo archivo
-(tarball). Combinado con gzip (.tar.gz o .tgz) permite comprimir.
+- **`gzip` / `gunzip`**: Comprime/descomprime archivos individuales (extensión `.gz`).
+- **`tar`**: Agrupa múltiples archivos/directorios en un solo archivo (*tarball*). Combinado con `gzip` (`.tar.gz` o `.tgz`) permite comprimir.
 
 **Uso común**
 
 | Tarea | Comando |
-|------------------------|-----------------------------------------------|
+|-------------------------|-----------------------------------------------|
 | Comprimir un archivo (manteniendo original) | `gzip -k archivo.txt` → archivo.txt.gz |
 | Descomprimir un archivo .gz | `gunzip archivo.txt.gz` o `gzip -d archivo.txt.gz` |
 | Crear un tarball comprimido de un directorio | `tar -czvf archivo.tar.gz directorio/` |
@@ -720,7 +721,7 @@ tar -czvf logs_compressed.tar.gz logs/*.log
 línea).
 
 | Uso común | Comando |
-|------------------------|-----------------------------------------------|
+|-------------------------|-----------------------------------------------|
 | Sustituir texto (reemplazar) | `sed 's/patrón/reemplazo/g' archivo` |
 | Eliminar líneas | `sed '/patrón/d' archivo` |
 | Mostrar un rango de líneas | `sed -n '5,10p' archivo` |
@@ -750,7 +751,7 @@ sed -i 's/Windows/Linux/g' config.txt
 TSV).
 
 | Uso común | Comando |
-|------------------------|-----------------------------------------------|
+|-------------------------|-----------------------------------------------|
 | Imprimir columnas específicas | awk '{print \$1, \$3}' archivo.csv |
 | Usar un separador diferente | awk -F',' '{print \$2}' archivo.csv (separador: coma) |
 | Filtrar líneas basadas en una condición a | wk '\$1 \> 100 {print \$0}' datos.txt (si la col1 \> 100) |
@@ -909,15 +910,17 @@ En entornos Unix/Linux, `wget` y `curl` son dos herramientas
 fundamentales para transferir datos desde la línea de comandos. Aunque
 comparten funcionalidades, tienen enfoques y características diferentes:
 
-Característica `wget` `curl` Enfoque principal Descarga recursiva de
-sitios web y archivos Transferencia de datos usando múltiples protocolos
-Protocolos HTTP, HTTPS, FTP HTTP, HTTPS, FTP, FTPS, SCP, SFTP, TFTP,
-LDAP, DICT, FILE, y más Recursividad Sí (descarga enlaces internos) No
-(por defecto) Seguimiento de redirecciones Sí (automático) Sí (con
-opción -L) Reanudar descargas Sí (-c) Sí (-C -) Interacción con APIs
-Limitada Excelente (envía datos, headers personalizados) Scripting Bueno
-para descargas automáticas Mejor para APIs y transferencias complejas
-\### `wget`: El descargador web
+| Característica | `wget` | `curl` |
+|---|---|---|
+| Enfoque principal | Descarga recursiva de sitios web y archivos | Transferencia de datos con múltiples protocolos |
+| Protocolos | HTTP, HTTPS, FTP | HTTP, HTTPS, FTP, FTPS, SCP, SFTP, TFTP, LDAP, y más |
+| Recursividad | Sí (descarga enlaces internos) | No (por defecto) |
+| Seguimiento de redirecciones | Sí (automático) | Sí (con opción `-L`) |
+| Reanudar descargas | Sí (`-c`) | Sí (`-C -`) |
+| Interacción con APIs | Limitada | Excelente (envía datos, headers personalizados) |
+| Scripting | Bueno para descargas automáticas | Mejor para APIs y transferencias complejas |
+
+## `wget`: El descargador web
 
 **Sintaxis básica**
 
@@ -957,10 +960,12 @@ wget -c https://ejemplo.com/archivo_interrumpido.zip
 wget -r -l 2 --no-parent https://ejemplo.com/seccion/
 ```
 
--r: recursivo -l 2: profundidad de 2 niveles --no-parent: no subir al
+- `-r`: recursivo 
+- `-l 2`: profundidad de 2 niveles 
+- `--no-parent`: no subir al
 directorio padre
 
-6.  Descargar todos los archivos de un tipo específico:
+6.  Descargar todos los archivos de un tipo específico, en este caso todos los pdfs:
 
 ``` bash
 wget -r -A "*.pdf" https://ejemplo.com/documentos/
@@ -971,6 +976,7 @@ wget -r -A "*.pdf" https://ejemplo.com/documentos/
 ``` bash
 wget -i lista_urls.txt
 ```
+Por ejemplo este es útil para descargar múltiples archivos alojados cada uno en una distinta URL 
 
 8.  Limitar velocidad de descarga:
 
@@ -1058,7 +1064,7 @@ curl -i https://ejemplo.com/
 curl -I https://ejemplo.com/
 ```
 
-Ejercicios prácticos
+**Ejercicios prácticos**
 
 Ejercicio 1: Descarga básica con wget
 
@@ -1085,15 +1091,19 @@ mkdir practica_descargas
 cd practica_descargas
 ```
 
-# Descargar solo archivos CSV de un directorio público de ejemplo
+### Descargar solo archivos CSV de un directorio público de ejemplo
 
-wget -r -l 1 -A "\*.csv" https://people.sc.fsu.edu/\~jburkardt/data/csv/
+``` bash
+wget -r -l 1 -A "*.csv" https://people.sc.fsu.edu/~jburkardt/data/csv/
+```
+
 Limpiar y reorganizar:
 
 ``` bash
 # Mover todos los archivos CSV al directorio actual
 find . -name "*.csv" -exec mv {} . \;
-``
+```
+
 ```bash
 # Eliminar estructura de directorios vacíos
 find . -type d -empty -delete
@@ -1106,281 +1116,296 @@ Verificar archivos descargados:
 ls *.csv | wc -l
 ```
 
-Ejercicio 3: Interactuar con una API REST usando curl
+**Ejercicio 3: Interactuar con una API REST usando `curl`**
 
 Obtener datos de una API pública (JSONPlaceholder):
 
-bash \# Obtener lista de posts curl -s
-https://jsonplaceholder.typicode.com/posts \| head -20 Filtrar y
-formatear la respuesta:
-
-bash \# Obtener solo el primer post y formatear con jq (si está
-instalado) curl -s https://jsonplaceholder.typicode.com/posts/1 \| jq
-'.'
-
-# O sin jq, usando herramientas nativas
-
-curl -s https://jsonplaceholder.typicode.com/posts/1 \|\
-grep -E "(title\|body)" \| head -2 Crear un nuevo recurso:
-
-bash curl -X POST\
--H "Content-Type: application/json"\
--d '{"title": "Mi nuevo post", "body": "Contenido del post", "userId":
-1}'\
-https://jsonplaceholder.typicode.com/posts Ejercicio 4: Script de
-descarga automatizada
-
-Crea un script descarga_diaria.sh que:
-
-Descarga datos meteorológicos de una API Guarda con fecha en el nombre
-Registra la operación en un log bash #!/bin/bash
-
-# Configuración
-
-API_URL="https://api.open-meteo.com/v1/forecast"
-PARAMS="latitude=40.4168&longitude=-3.7038&hourly=temperature_2m"
-DIR_DATOS="datos_meteo" LOG="descargas_meteo.log"
-
-# Crear directorio si no existe
-
-mkdir -p "\$DIR_DATOS"
-
-# Obtener fecha actual
-
-FECHA=$(date +%Y-%m-%d)
-ARCHIVO="${DIR_DATOS}/meteo\_\${FECHA}.json"
-
-# Descargar datos
-
-echo "\[$(date '+%Y-%m-%d %H:%M:%S')] Iniciando descarga..." >> "$LOG"
-
-curl -s -o "$ARCHIVO" "${API_URL}?\${PARAMS}"
-
-# Verificar éxito
-
-if \[ $? -eq 0 ]; then
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')\] Descarga exitosa:
-$ARCHIVO" >> "$LOG" echo "Tamaño: $(stat -c%s "$ARCHIVO") bytes" \>\>
-"\$LOG"
-
-```         
-# Extraer información útil
-TEMP_MAX=$(jq '.hourly.temperature_2m | max' "$ARCHIVO" 2>/dev/null || echo "N/A")
-echo "Temperatura máxima prevista: $TEMP_MAX°C" >> "$LOG"
+``` bash
+# Obtener lista de posts
+curl -s https://jsonplaceholder.typicode.com/posts | head -20
 ```
 
-else echo
-"\[$(date '+%Y-%m-%d %H:%M:%S')] Error en la descarga" >> "$LOG" fi
+Filtrar y formatear la respuesta:
 
-echo "---" \>\> "\$LOG" Ejercicio 5: Comparativa y casos de uso
+``` bash
+# Obtener solo el primer post y formatear con jq (si está instalado)
+curl -s https://jsonplaceholder.typicode.com/posts/1 | jq '.'
 
-Caso 1: Descarga de un archivo grande con posibilidad de interrupción
+# O sin jq, usando herramientas nativas
+curl -s https://jsonplaceholder.typicode.com/posts/1 | \
+  grep -E "(title|body)" | head -2
+```
 
-bash \# Con wget (mejor para descargas largas) wget -c
-https://ejemplo.com/archivo_grande.iso
+Crear un nuevo recurso:
 
-# Con curl
+``` bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Mi nuevo post", "body": "Contenido del post", "userId": 1}' \
+  https://jsonplaceholder.typicode.com/posts
+```
 
-curl -C - -O https://ejemplo.com/archivo_grande.iso Caso 2: Interacción
-con API que requiere autenticación
+**Ejercicio 4: Script de descarga automatizada**
 
-bash \# Con curl (mucho más flexible) curl -H "Authorization: Bearer
-\$(cat token.txt)"\
-https://api.ejemplo.com/datos_sensibles
+Crea un script `descarga_diaria.sh` que:
 
-# Con wget (más limitado)
+- Descargue datos meteorológicos de una API.
+- Guarde el resultado con la fecha en el nombre del archivo.
+- Registre la operación en un archivo de log.
 
-wget --header="Authorization: Bearer \$(cat token.txt)"\
--O resultado.json\
-https://api.ejemplo.com/datos_sensibles Caso 3: Descarga de un sitio web
-completo para ver offline
-
-bash \# Solo wget es adecuado para esto wget --mirror\
---convert-links\
---adjust-extension\
---page-requisites\
---no-parent\
-https://ejemplo.com/documentacion/ Consejos y mejores prácticas
-
-Para wget:
-
-Usar -q para modo silencioso en scripts. -nv (no verbose) muestra solo
-información esencial. --timeout=30 para evitar esperas infinitas.
---tries=3 para reintentos automáticos. Verificar integridad con
---checksum cuando esté disponible. Para curl:
-
-Usar -s (silent) y -S (show error) en scripts: curl -sS. -f para fallar
-en respuestas HTTP de error. -w para formato personalizado de salida.
-Guardar cookies con -c y reusarlas con -b. Usar --retry para reintentos
-automáticos. Seguridad:
-
-Verificar certificados SSL (por defecto en ambos). No enviar
-credenciales en la línea de comandos (usar variables). Validar URLs
-antes de descargar. Limitar permisos de archivos descargados. Ejercicio
-integrador final
-
-Crea un script que:
-
-Descarga datos de múltiples fuentes usando ambas herramientas. Combina y
-procesa los resultados. Genera un reporte consolidado. bash #!/bin/bash
-
-# Script: descarga_integrador.sh
-
-# Descarga datos de múltiples fuentes y genera un reporte
-
-set -e \# Detener en caso de error
+``` bash
+#!/bin/bash
 
 # Configuración
+API_URL="https://api.open-meteo.com/v1/forecast"
+PARAMS="latitude=40.4168&longitude=-3.7038&hourly=temperature_2m"
+DIR_DATOS="datos_meteo"
+LOG="descargas_meteo.log"
 
-DIR_TRABAJO="datos_integrado" LOG="integracion.log" FECHA=\$(date
-+%Y%m%d)
+# Crear directorio si no existe
+mkdir -p "$DIR_DATOS"
+
+# Obtener fecha actual
+FECHA=$(date +%Y-%m-%d)
+ARCHIVO="${DIR_DATOS}/meteo_${FECHA}.json"
+
+# Descargar datos
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Iniciando descarga..." >> "$LOG"
+
+curl -s -o "$ARCHIVO" "${API_URL}?${PARAMS}"
+
+# Verificar éxito
+if [ $? -eq 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Descarga exitosa: $ARCHIVO" >> "$LOG"
+    echo "Tamaño: $(stat -c%s "$ARCHIVO") bytes" >> "$LOG"
+
+    # Extraer información útil
+    TEMP_MAX=$(jq '.hourly.temperature_2m | max' "$ARCHIVO" 2>/dev/null || echo "N/A")
+    echo "Temperatura máxima prevista: $TEMP_MAX°C" >> "$LOG"
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Error en la descarga" >> "$LOG"
+fi
+
+echo "---" >> "$LOG"
+```**Ejercicio 5: Comparativa y casos de uso**
+
+**Caso 1: Descarga de un archivo grande con posibilidad de interrupción**
+
+``` bash
+# Con wget (mejor para descargas largas)
+wget -c https://ejemplo.com/archivo_grande.iso
+
+# Con curl
+curl -C - -O https://ejemplo.com/archivo_grande.iso
+```
+
+**Caso 2: Interacción con API que requiere autenticación**
+
+``` bash
+# Con curl (mucho más flexible)
+curl -H "Authorization: Bearer $(cat token.txt)" \
+  https://api.ejemplo.com/datos_sensibles
+
+# Con wget (más limitado)
+wget --header="Authorization: Bearer $(cat token.txt)" \
+  -O resultado.json \
+  https://api.ejemplo.com/datos_sensibles
+```
+
+**Caso 3: Descarga de un sitio web completo para ver offline**
+
+``` bash
+# Solo wget es adecuado para esto
+wget --mirror \
+  --convert-links \
+  --adjust-extension \
+  --page-requisites \
+  --no-parent \
+  https://ejemplo.com/documentacion/
+```
+
+## Consejos y mejores prácticas
+
+**Para `wget`:**
+
+- Usar `-q` para modo silencioso en scripts.
+- `-nv` (no verbose) muestra solo información esencial.
+- `--timeout=30` para evitar esperas infinitas.
+- `--tries=3` para reintentos automáticos.
+- Verificar integridad con `--checksum` cuando esté disponible.
+
+**Para `curl`:**
+
+- Usar `-s` (silent) y `-S` (show error) en scripts: `curl -sS`.
+- `-f` para fallar en respuestas HTTP de error.
+- `-w` para formato personalizado de salida.
+- Guardar cookies con `-c` y reutilizarlas con `-b`.
+- Usar `--retry` para reintentos automáticos.
+
+**Seguridad:**
+
+- Verificar certificados SSL (activo por defecto en ambas herramientas).
+- No enviar credenciales en la línea de comandos; usar variables de entorno.
+- Validar las URLs antes de descargar.
+- Limitar los permisos de los archivos descargados.
+
+## Ejercicio integrador final
+
+Crea un script que descargue datos de múltiples fuentes usando ambas herramientas, combine y procese los resultados, y genere un reporte consolidado.
+
+``` bash
+#!/bin/bash
+
+# Script: descarga_integrador.sh
+# Descarga datos de múltiples fuentes y genera un reporte
+
+set -e  # Detener en caso de error
+
+# Configuración
+DIR_TRABAJO="datos_integrado"
+LOG="integracion.log"
+FECHA=$(date +%Y%m%d)
 
 # Limpiar y crear directorio
-
 rm -rf "$DIR_TRABAJO"
-mkdir -p "$DIR_TRABAJO" cd "\$DIR_TRABAJO"
+mkdir -p "$DIR_TRABAJO"
+cd "$DIR_TRABAJO"
 
-echo "=== Iniciando descarga integrada ===" \| tee "\$LOG"
+echo "=== Iniciando descarga integrada ===" | tee "$LOG"
 
 # 1. Descargar datos CSV con wget
-
-echo "1. Descargando datos CSV..." \| tee -a "$LOG"
+echo "1. Descargando datos CSV..." | tee -a "$LOG"
 wget -q -O datos_poblacion.csv \
   "https://raw.githubusercontent.com/datasets/population/master/data/population.csv"
 echo "  ✓ Datos de población descargados" | tee -a "$LOG"
 
 # 2. Obtener datos JSON de API con curl
-
-echo "2. Consultando API de clima..." \| tee -a "$LOG"
+echo "2. Consultando API de clima..." | tee -a "$LOG"
 curl -sS -H "Accept: application/json" \
   "https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true" \
   > clima_ny.json
 echo "  ✓ Datos climáticos obtenidos" | tee -a "$LOG"
 
 # 3. Extraer información relevante
-
-echo "3. Procesando datos..." \| tee -a "\$LOG"
+echo "3. Procesando datos..." | tee -a "$LOG"
 
 # De clima.json
-
-TEMPERATURA=\$(jq -r '.current_weather.temperature' clima_ny.json
-2\>/dev/null \|\| echo "N/A")
+TEMPERATURA=$(jq -r '.current_weather.temperature' clima_ny.json 2>/dev/null || echo "N/A")
 
 # De población.csv (último dato para España)
-
-POBLACION_ES=\$(grep -i ",Spain," datos_poblacion.csv \| tail -1 \| cut
--d',' -f4)
+POBLACION_ES=$(grep -i ",Spain," datos_poblacion.csv | tail -1 | cut -d',' -f4)
 
 # 4. Generar reporte
-
-echo "4. Generando reporte..." \| tee -a "$LOG"
-cat > reporte_${FECHA}.md \<\< EOF \# Reporte de Datos Integrados
-**Fecha:** \$(date '+%Y-%m-%d %H:%M')
+echo "4. Generando reporte..." | tee -a "$LOG"
+cat > reporte_${FECHA}.md << EOF
+# Reporte de Datos Integrados
+**Fecha:** $(date '+%Y-%m-%d %H:%M')
 
 ## Datos Climatológicos (NYC)
-
--   Temperatura actual: \${TEMPERATURA}°C
+- Temperatura actual: ${TEMPERATURA}°C
 
 ## Datos Demográficos
-
--   Población de España (último dato): \${POBLACION_ES}
+- Población de España (último dato): ${POBLACION_ES}
 
 ## Archivos Descargados
-
-\$(find . -name "*.csv" -o -name "*.json" \| sed 's/\^/- /')
+$(find . -name "*.csv" -o -name "*.json" | sed 's/^/- /')
 
 ## Estadísticas
+- Total archivos: $(find . -type f \( -name "*.csv" -o -name "*.json" \) | wc -l)
+- Tamaño total: $(du -sh . | cut -f1)
+EOF
 
--   Total archivos: \$(find . -type f -name "*.csv" -o -name "*.json" \|
-    wc -l)
--   Tamaño total: \$(du -sh . \| cut -f1) EOF
+echo "=== Proceso completado ===" | tee -a "$LOG"
+echo "Reporte generado: $DIR_TRABAJO/reporte_${FECHA}.md" | tee -a "$LOG"
+```
 
-echo "=== Proceso completado ===" \| tee -a "\$LOG" echo "Reporte
-generado: $DIR_TRABAJO/reporte_${FECHA}.md" \| tee -a "\$LOG" Resumen
+## Resumen
 
-Usa wget cuando necesites descargar archivos individuales, sitios web
-completos, o realizar descargas recursivas. Usa curl cuando trabajes con
-APIs REST, necesites enviar datos complejos, o requieras mayor control
-sobre las peticiones HTTP. Ambas herramientas son complementarias y
-dominarlas te permitirá automatizar tareas de descarga y procesamiento
-de datos eficientemente. Recursos adicionales
+Usa `wget` cuando necesites descargar archivos individuales, sitios web completos, o realizar descargas recursivas. Usa `curl` cuando trabajes con APIs REST, necesites enviar datos complejos, o requieras mayor control sobre las peticiones HTTP. Ambas herramientas son complementarias y dominarlas te permitirá automatizar tareas de descarga y procesamiento de datos eficientemente.
 
-Documentación oficial:
+## Recursos adicionales
 
-wget: man wget o GNU Wget Manual curl: man curl o curl Documentation
-Práctica interactiva: Usa APIs públicas como:
+**Documentación oficial:**
 
-JSONPlaceholder (API falsa para pruebas) Open-Meteo (API meteorológica
-gratuita) GitHub API (API de GitHub) Esta sección te proporciona las
-bases para trabajar con transferencias de datos desde la terminal, una
-habilidad esencial para administradores de sistemas, científicos de
-datos y desarrolladores que trabajan en entornos Unix/Linux.
+- `wget`: `man wget` o [GNU Wget Manual](https://www.gnu.org/software/wget/manual/)
+- `curl`: `man curl` o [curl Documentation](https://curl.se/docs/)
+
+**Práctica interactiva:** Usa APIs públicas como:
+
+- [JSONPlaceholder](https://jsonplaceholder.typicode.com/) — API falsa para pruebas.
+- [Open-Meteo](https://open-meteo.com/) — API meteorológica gratuita.
+- [GitHub API](https://docs.github.com/en/rest) — API de GitHub.
+
+Esta sección te proporciona las bases para trabajar con transferencias de datos desde la terminal, una habilidad esencial para administradores de sistemas, científicos de datos y desarrolladores que trabajan en entornos Unix/Linux.
 
 ::: callout-important
-Para recordar
+## Para recordar
 
-wget es mejor para descargas simples y recursivas curl es mejor para
-APIs y transferencias complejas Nunca expongas credenciales en la línea
-de comandos Siempre verifica certificados SSL en producción Automatiza
-tareas repetitivas con scripts
+- `wget` es mejor para descargas simples y recursivas.
+- `curl` es mejor para APIs y transferencias complejas.
+- Nunca expongas credenciales en la línea de comandos.
+- Siempre verifica certificados SSL en producción.
+- Automatiza tareas repetitivas con scripts.
 :::
 
 # Proyecto final: Script de backup automatizado
 
-Objetivo: Crear un script de Bash que realice un backup de todos los
-archivos modificados en los últimos 7 días dentro de un directorio
-específico.
+**Objetivo:** Crear un script de Bash que realice un backup de todos los archivos modificados en los últimos 7 días dentro de un directorio específico.
 
-Requisitos del script (backup_reciente.sh):
+**Requisitos del script (`backup_reciente.sh`):**
 
-Debe recibir el directorio a respaldar como primer argumento. Crear un
-archivo comprimido (tar.gz) con los archivos modificados en los últimos
-7 días. El nombre del archivo de backup debe incluir la fecha (formato:
-backup_YYYY-MM-DD.tar.gz). Mover el archivo de backup a un directorio
-central de backups (por ejemplo, \~/backups/). Registrar la operación
-(fecha, directorio respaldado, nombre del archivo) en un archivo de log
-(\~/backups/backup.log). Esqueleto del script:
+1. Debe recibir el directorio a respaldar como primer argumento.
+2. Crear un archivo comprimido (`.tar.gz`) con los archivos modificados en los últimos 7 días.
+3. El nombre del archivo de backup debe incluir la fecha (formato: `backup_YYYY-MM-DD.tar.gz`).
+4. Mover el archivo de backup a un directorio central de backups (por ejemplo, `~/backups/`).
+5. Registrar la operación (fecha, directorio respaldado, nombre del archivo) en un archivo de log (`~/backups/backup.log`).
 
-bash #!/bin/bash
+**Esqueleto del script:**
+
+``` bash
+#!/bin/bash
 
 # Verificar que se proporcionó un directorio
-
-if \[ \$# -ne 1 \]; then echo "Uso: \$0 <directorio_a_respaldar>" exit 1
+if [ $# -ne 1 ]; then
+    echo "Uso: $0 <directorio_a_respaldar>"
+    exit 1
 fi
 
 DIR_ORIGEN="$1"
-DIR_BACKUP="$HOME/backups" LOG="$DIR_BACKUP/backup.log"
+DIR_BACKUP="$HOME/backups"
+LOG="$DIR_BACKUP/backup.log"
 FECHA=$(date +%Y-%m-%d)
 ARCHIVO_BACKUP="$DIR_BACKUP/backup_$FECHA.tar.gz"
 
 # Crear directorio de backups si no existe
-
-mkdir -p "\$DIR_BACKUP"
+mkdir -p "$DIR_BACKUP"
 
 # Crear backup (solo archivos modificados en los últimos 7 días)
-
-find
-"$DIR_ORIGEN" -type f -mtime -7 -print0 | tar -czvf "$ARCHIVO_BACKUP"
---null -T -
+find "$DIR_ORIGEN" -type f -mtime -7 -print0 | tar -czvf "$ARCHIVO_BACKUP" --null -T -
 
 # Verificar éxito de la creación
-
-if \[ \$? -eq 0 \]; then echo "Backup creado exitosamente:
-$ARCHIVO_BACKUP"
+if [ $? -eq 0 ]; then
+    echo "Backup creado exitosamente: $ARCHIVO_BACKUP"
     # Registrar en el log
-    echo "$(date): Backup de \$DIR_ORIGEN completado -\>
-$ARCHIVO_BACKUP" >> "$LOG" else echo "Error al crear el backup." \>&2
-exit 1 fi Para ejecutar el script:
+    echo "$(date): Backup de $DIR_ORIGEN completado -> $ARCHIVO_BACKUP" >> "$LOG"
+else
+    echo "Error al crear el backup." >&2
+    exit 1
+fi
+```
 
-Guarda el código en un archivo backup_reciente.sh. Dale permisos de
-ejecución: chmod +x backup_reciente.sh. Ejecútalo: ./backup_reciente.sh
-/ruta/del/directorio. Conclusión
+**Para ejecutar el script:**
 
-Esta guía cubre los fundamentos esenciales para trabajar eficientemente
-en un entorno Unix/Linux desde la terminal. La práctica constante es
-clave para interiorizar estos comandos. Continúa explorando las páginas
-de manual (man), automatizando tareas con scripts y desafiándote con
-problemas reales.
+1. Guarda el código en un archivo `backup_reciente.sh`.
+2. Dale permisos de ejecución: `chmod +x backup_reciente.sh`.
+3. Ejecútalo: `./backup_reciente.sh /ruta/del/directorio`.
 
-Recuerda: La línea de comandos es una herramienta poderosa. Con gran
-poder viene una gran responsabilidad. ¡Feliz aprendizaje!
+# Conclusión
+
+Esta guía cubre los fundamentos esenciales para trabajar eficientemente en un entorno Unix/Linux desde la terminal. La práctica constante es clave para interiorizar estos comandos. Continúa explorando las páginas de manual (`man`), automatizando tareas con scripts y desafiándote con problemas reales.
+
+::: callout-note
+## Recuerda
+
+La línea de comandos es una herramienta poderosa. Con gran poder viene una gran responsabilidad. ¡Feliz aprendizaje!
+:::
