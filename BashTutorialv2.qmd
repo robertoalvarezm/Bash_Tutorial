@@ -1,0 +1,1272 @@
+---
+title: "Introducción a Unix/Bash: Guía práctica con ejercicios"
+author: "Roberto Álvarez"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: show
+    code-tools: true
+    theme: cosmo
+    css: styles.css  # Opcional, para mayor personalización
+execute:
+  echo: true
+  warning: false
+  message: false
+lang: es
+---
+
+# Introducción a Unix/Bash
+
+## Cómo usar este material {.callout-note}
+
+-   **Espacio de trabajo seguro**: Crea y trabaja siempre dentro de un directorio de práctica dedicado.
+-   **Ejecución consciente**: Copia/pega comandos con atención. **Lee antes de ejecutar**.
+-   **Metodología activa**: En cada ejercicio, escribe el comando y **una breve explicación de lo que esperas ver** (predicción → ejecución → verificación).
+-   **Autocompletado**: Usa la tecla `TAB` para completar rutas y nombres de archivos.
+-   **Ayuda**: Usa `man comando` para consultar el manual (presiona `q` para salir).
+
+## Objetivos de aprendizaje
+
+Al finalizar esta guía, podrás:
+
+-   Navegar eficientemente por el sistema de archivos (`pwd`, `ls`, `cd`).
+-   Gestionar archivos y directorios (`mkdir`, `cp`, `mv`, `rm`).
+-   Inspeccionar y explorar archivos de texto (`cat`, `less`, `head`, `tail`, `wc`).
+-   Buscar patrones con `grep` y expresiones regulares básicas.
+-   Encadenar comandos mediante tuberías (`|`) y redirecciones (`>`, `>>`).
+-   Utilizar comodines (*wildcards*) de forma efectiva.
+-   Comprimir y descomprimir archivos y directorios (`tar`, `gzip`).
+-   Realizar transformaciones básicas de texto con `sed` y `awk`.
+
+## Convenciones tipográficas
+
+-   `$` indica un comando que se debe escribir en la terminal (no se incluye el prompt real).
+-   `archivo.txt`, `directorio/` son ejemplos; reemplázalos por tus rutas reales.
+-   Los bloques de código muestran comandos y su salida esperada.
+-   `TAB` representa la tecla de autocompletado.
+
+::: {.callout-warning}
+## Seguridad básica (¡Muy importante!)
+
+-   **Cuidado con `rm -r`**: Evita usarlo hasta entender perfectamente qué elimina.
+-   **Verifica antes de borrar**: Usa `pwd` para confirmar tu ubicación y `ls` para listar el contenido.
+-   **Espacio de práctica**: Realiza los ejercicios de eliminación **solo** en tu directorio de práctica.
+-   **Copia de seguridad**: Considera hacer copias de archivos importantes antes de modificarlos o eliminarlos.
+:::
+
+# Navegación y estructura básica
+
+## Comandos esenciales
+
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `pwd`   | Muestra el directorio de trabajo actual (**p**rint **w**orking **d**irectory). | `$ pwd` |
+| `ls`    | Lista archivos y directorios. | `$ ls` |
+| `ls -a` | Lista **todos** los archivos, incluidos los ocultos (que empiezan por `.`). | `$ ls -a` |
+| `ls -l` | Lista con formato largo (detalles de permisos, tamaño, etc.). | `$ ls -l` |
+| `ls -la`| Combina `-l` y `-a`. | `$ ls -la` |
+| `cd`    | Cambia de directorio (**c**hange **d**irectory). | `$ cd /ruta/destino` |
+| `cd ~`  | Te lleva a tu directorio personal (`$HOME`). | `$ cd ~` |
+| `cd ..` | Sube un nivel (al directorio padre). | `$ cd ..` |
+| `mkdir` | Crea un nuevo directorio (**m**a**k**e **dir**ectory). | `$ mkdir nuevo_dir` |
+
+### Ejercicios de navegación
+
+**Ejercicio 1: Exploración inicial**
+
+1.  Abre una terminal.
+2.  Ejecuta `pwd`. ¿Qué muestra? ¿Es el directorio que esperabas?
+3.  Ejecuta `ls -la`. ¿Qué tipos de archivos y directorios ves? ¿Reconoces algunos?
+
+**Ejercicio 2: Crear un entorno de práctica**
+
+1.  En tu directorio personal (`~`), crea un directorio llamado `practica_bash`.
+
+    ```bash
+    mkdir ~/practica_bash
+    ```
+2.  Cambiate a ese directorio.
+
+    ```bash
+    cd ~/practica_bash
+    ```
+3.  Verifica que estás en la ubicación correcta con `pwd`.
+
+# Gestión de archivos y directorios
+
+## Comandos de gestión
+
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `touch` | Crea un archivo vacío o actualiza su marca de tiempo. | `$ touch archivo.txt` |
+| `cp`    | Copia archivos o directorios. | `$ cp origen destino` |
+| `mv`    | Mueve o renombra archivos/directorios. | `$ mv viejo nuevo` |
+| `rm`    | Elimina archivos (¡Cuidado! No va a la papelera). | `$ rm archivo.txt` |
+| `rmdir` | Elimina un directorio **vacío**. | `$ rmdir dir_vacio` |
+| `rm -r` | Elimina un directorio y todo su contenido (¡Extrema precaución!). | `$ rm -r directorio/` |
+
+::: {.callout-tip}
+## Truco: Confirmación y verbose
+
+-   Usa la opción `-i` (*interactive*) con `cp`, `mv` o `rm` para que el sistema pregunte antes de sobrescribir o eliminar.
+    
+    ```bash
+    cp -i archivo1 archivo2
+    rm -i archivo.txt
+    ```
+    
+-   Usa `-v` (*verbose*) para que los comandos muestren qué están haciendo.
+
+    ```bash
+    cp -v origen destino
+    ```
+:::
+
+### Ejercicios de gestión
+
+**Ejercicio 3: Ciclo de vida de un archivo**
+1.  En tu directorio `practica_bash`, crea un archivo de texto vacío llamado `ejemplo.txt`.
+
+    ```bash
+    touch ejemplo.txt
+    ```
+    
+2.  Haz una copia de ese archivo llamada `backup.txt`.
+
+    ```bash
+    cp ejemplo.txt backup.txt
+    ```
+3.  Renombra `backup.txt` a `respaldo_final.txt`.
+
+    ```bash
+    mv backup.txt respaldo_final.txt
+    ```
+4.  Lista los archivos para verificar los cambios.
+5.  (Opcional) Elimina el archivo `respaldo_final.txt`.
+
+    ```bash
+    rm respaldo_final.txt
+    ```
+
+**Ejercicio 4: Estructura de directorios**
+1.  Crea la siguiente estructura de directorios dentro de `practica_bash`:
+
+    ```
+    proyecto/
+    ├── datos/
+    ├── scripts/
+    └── resultados/
+    ```
+    *Pista: Usa `mkdir -p proyecto/{datos,scripts,resultados}`.*
+
+
+## Visualización y exploración de archivos
+
+### Comandos de inspección
+
+| Comando | Descripción | Opciones comunes |
+|---------|-------------|------------------|
+| `cat`   | Concatena y muestra el contenido completo de uno o varios archivos. | `-n` (numera líneas) |
+| `less`  | Muestra el contenido de un archivo página a página (usa flechas, `Espacio` para avanzar, `q` para salir). | |
+| `head`  | Muestra las primeras líneas de un archivo (por defecto, 10). | `-n N` (muestra N líneas) |
+| `tail`  | Muestra las últimas líneas de un archivo (por defecto, 10). | `-n N`, `-f` (sigue el archivo en tiempo real) |
+| `wc`    | Cuenta líneas, palabras y caracteres (Word Count). | `-l` (solo líneas), `-w` (solo palabras), `-c` (solo caracteres) |
+
+### Ejercicios de visualización
+
+**Ejercicio 5: Crear y examinar un archivo**
+1.  Crea un archivo llamado `numeros.txt` con 20 líneas. Puedes usar un bucle o un comando rápido:
+
+    ```bash
+    for i in {1..20}; do echo "Línea número $i" >> numeros.txt; done
+    ```
+2.  Muestra las primeras 5 líneas del archivo.
+
+    ```bash
+    head -5 numeros.txt
+    ```
+3.  Muestra las últimas 3 líneas.
+
+    ```bash
+    tail -3 numeros.txt
+    ```
+4.  Cuenta el número total de líneas en el archivo.
+
+    ```bash
+    wc -l numeros.txt
+    ```
+5.  (Opcional) Usa `less` para navegar por todo el archivo.
+
+## Búsqueda de patrones con `grep`
+
+`grep` es una herramienta poderosa para buscar líneas que coincidan con un patrón (texto simple o expresión regular) en uno o varios archivos.
+
+### Opciones comunes de `grep`
+
+| Opción | Descripción |
+|--------|-------------|
+| `-i`   | Búsqueda insensible a mayúsculas/minúsculas. |
+| `-w`   | Coincide solo con palabras completas. |
+| `-c`   | Cuenta el número de líneas que coinciden. |
+| `-n`   | Muestra el número de línea de cada coincidencia. |
+| `-v`   | Invierte la búsqueda (muestra líneas que **NO** coinciden). |
+| `-l`   | Solo lista los nombres de los archivos que contienen coincidencias. |
+| `-A N` | Muestra N líneas **después** de la coincidencia (After). |
+| `-B N` | Muestra N líneas **antes** de la coincidencia (Before). |
+| `-C N` | Muestra N líneas antes y después de la coincidencia (Context). |
+
+### Archivo de ejemplo
+
+Crea un archivo `sistemas.txt` con el siguiente contenido para los ejercicios:
+
+```bash
+$ cat > sistemas.txt << 'EOF'
+Unix es un sistema operativo.
+Los sistemas UNIX tienen interfaz gráfica.
+Unix fue desarrollado en los años 60.
+UNIX es poderoso.
+Este texto no tiene la palabra.
+Linux es otro sistema operativo.
+El sistema operativo macOS está basado en UNIX.
+Hay sistemas operativos de todo tipo.
+EOF
+```
+
+
+### Ejercicios con grep
+
+**Ejercicio 6.1: Búsqueda básica**
+
+Busca todas las líneas que contengan la palabra "Unix", ignorando mayúsculas/minúsculas.
+
+```bash
+grep -i "unix" sistemas.txt
+```
+
+**Ejercicio 6.2: Conteo**
+
+Cuenta cuántas líneas contienen "sistema".
+
+```bash
+grep -c "sistema" sistemas.txt
+```
+
+**Ejercicio 6.3: Números de línea**
+
+Muestra las líneas que contienen "operativo" junto con su número de línea.
+
+```bash
+grep -n "operativo" sistemas.txt
+```
+
+**Ejercicio 6.4: Invertir búsqueda**
+
+Muestra las líneas que NO contienen la palabra "Unix".
+
+```bash
+grep -v -i "unix" sistemas.txt
+```
+
+**Ejercicio 6.5: Palabra completa**
+
+Busca la palabra "sistema" como palabra completa (no "sistemas").
+
+```bash
+grep -w "sistema" sistemas.txt
+```
+
+### Expresiones regulares básicas con grep
+
+`grep` acepta expresiones regulares (regex) para búsquedas más complejas.
+
+
+|Patrón|	Significado	|Ejemplo (coincide con)|
+|-------|--------------|----------------------|
+|`^`	|Inicio de línea.	|`^Unix` (líneas que comienzan con "Unix")|
+|`$`	|Fin de línea.	|`.$` (líneas que terminan con un punto)|
+|`.`	|Cualquier carácter (excepto salto de línea).|	`s.ste.a` ("sistema", "sisteia", etc.)|
+|`*`	|Cero o más repeticiones del carácter anterior.|	`sist*ema` ("sistema", "sisttema", etc.)|
+|`[ ]`	|Conjunto de caracteres.|	`[Uu]`nix ("Unix" o "unix")|
+|`[^ ]`	|Negación del conjunto.|	`[^0-9]` (cualquier carácter que no sea un dígito)|
+
+**Ejercicio 6.6: Regex - Inicio de línea**
+
+Busca líneas que comiencen con "Unix" (sensible a mayúsculas).
+
+```bash
+grep "^Unix" sistemas.txt
+```
+
+**Ejercicio 6.7: Regex - Fin de línea**
+
+Busca líneas que terminen con un punto.
+
+```bash
+grep ".$" sistemas.txt
+```
+**Ejercicio 6.8: Regex - Dígitos**
+
+Busca líneas que contengan al menos un dígito.
+
+```bash
+grep "[0-9]" sistemas.txt
+```
+
+**Ejercicio A: Texto simple (inicio de un libro)**
+
+**Objetivo**: Generar un fragmento del inicio de un libro y usar expresiones regulares con `grep` para buscar patrones.
+
+Paso 1: Crear el archivo de texto
+
+Crea un archivo llamado `libro.txt` con el siguiente contenido:
+
+```bash
+cat > libro.txt << 'EOF'
+Capítulo 1
+
+Era el mejor de los tiempos, era el peor de los tiempos, la edad de la sabiduría, y también de la locura; la época de las creencias y de la incredulidad; la era de la luz y de las tinieblas.
+
+En aquel tiempo, como en el actual, la gente hablaba de "progreso", pero no todos estaban de acuerdo en su significado.
+
+Los personajes principales eran: Ana, Juan, María y Pedro. Sus edades: 25, 30, 22 y 35 años respectivamente.
+
+El teléfono de Ana es 555-1234, el de Juan es 555-5678. El correo de María es maria@example.com y el de Pedro es pedro123@example.net.
+
+El libro fue publicado en 1859 por la editorial "Editorial Ejemplo". El ISBN es 978-3-16-148410-0.
+
+Fin del capítulo 1.
+EOF
+```
+Buscar todas las líneas que contengan la palabra "tiempos" (sin importar mayúsculas/minúsculas).
+
+```bash
+grep -i "tiempos" libro.txt
+```
+
+Buscar líneas que comiencen con "El" (mayúscula inicial).
+
+```bash
+grep "^El" libro.txt
+```
+
+Buscar líneas que terminen con un punto.
+
+```bash
+grep "\.$" libro.txt
+```
+
+Buscar direcciones de correo electrónico (patrón: texto@texto.texto).
+
+```bash
+grep -E "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" libro.txt
+```
+
+Nota: Esta expresión regular es una versión simplificada para el ejemplo.
+
+Buscar números de teléfono (formato: 555-####).
+
+```bash
+grep -E "555-[0-9]{4}" libro.txt
+```
+
+Buscar cualquier número de 2 o más dígitos (como las edades).
+
+```bash
+grep -E "[0-9]{2,}" libro.txt
+```
+
+Buscar líneas que contengan palabras que comiencen con mayúscula y tengan al menos 4 letras.
+
+```bash
+grep -E "\b[A-Z][a-z]{3,}\b" libro.txt
+```
+
+Buscar la palabra "progreso" entre comillas dobles.
+
+```bash
+grep -E '"progreso"' libro.txt
+```
+
+
+**Ejercicio B: Archivo FASTA**
+
+**Objetivo:** Generar un archivo FASTA de ejemplo (secuencias de ADN) y usar expresiones regulares con `grep` para extraer información.
+
+1.  Paso 1: Crear el archivo FASTA
+
+Crea un archivo llamado `secuencias.fasta` con el siguiente contenido:
+
+```bash
+cat > secuencias.fasta << 'EOF'
+>seq1_gene_X
+ATGGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC
+>seq2_gene_Y
+ATGAAACCCGGGTTTAAATAGGGTGAATGGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA
+>seq3_gene_Z
+CCCGGGTTTCCCGGGTTAACCCGGGATGAAACCCGGGTTTAAATAGGGTGAATGGCTAGCTAGCTAGCT
+>seq4_promoter_region
+TTGACATATAAAGGCCAATGCGTATGAAATGAAACCCGGGTTTAAATAGGGTGAATGGCTAGCTAGCTA
+>seq5_mutant_gene_X
+ATGGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGT
+EOF
+```
+
+**Paso 2: Ejercicios con `grep` y expresiones regulares** 
+
+
+2.  Paso 2: Ejercicios con grep y expresiones regulares
+
+**Ejercicio 6.9: Buscar secuencias de genes**
+
+Busca todas las secuencias que pertenecen a genes (líneas que comienzan con `>seq`).
+
+```bash 
+grep "^>seq" secuencias.fasta
+```
+
+**Ejercicio 6.10: Buscar secuencias con mutaciones**
+
+Busca secuencias que contienen la palabra "mutant" en su encabezado.
+
+```bash
+grep "mutant" secuencias.fasta
+```
+**Ejercicio 6.11: Buscar secuencias que terminan con una base específica**
+
+Busca secuencias que terminan con la base "T".
+
+```bash
+grep "T$" secuencias.fasta
+```
+    
+Buscar todas las líneas que sean cabeceras (comienzan con ">").
+```bash
+grep "^>" secuencias.fasta
+```
+Buscar cabeceras que contengan "gene" (sin importar mayúsculas/minúsculas).
+```bash
+grep -i "gene" secuencias.fasta
+```
+Buscar cabeceras que contengan "gene_X" o "gene_Y".
+```bash
+grep -E "gene_[XY]" secuencias.fasta
+```
+Buscar secuencias (no cabeceras) que contengan el codón de inicio "ATG".
+```bash
+grep -v "^>" secuencias.fasta | grep -E "ATG"
+```
+Buscar secuencias que contengan al menos 3 repeticiones de "AGCT".
+```bash
+grep -E "(AGCT){3,}" secuencias.fasta
+```
+Buscar secuencias que terminen con "A" o "T" (adenina o timina).
+```bash
+grep -v "^>" secuencias.fasta | grep -E "[AT]$"
+```
+Buscar cabeceras que contengan "mutant" o "promoter".
+```bash
+grep -E "mutant|promoter" secuencias.fasta
+```
+Contar el número total de secuencias (cabeceras) en el archivo.
+```bash
+grep -c "^>" secuencias.fasta
+```
+Extraer solo los identificadores de las secuencias (lo que sigue a ">" hasta el primer espacio o fin de línea).
+```bash
+grep "^>" secuencias.fasta | grep -oE "^>[^ ]+"
+```
+Buscar secuencias (sin cabeceras) que contengan la subsecuencia "GGGTTT" y luego, en algún momento, "TAA".
+```bash
+grep -v "^>" secuencias.fasta | grep -E "GGGTTT.*TAA"
+```
+
+# Redirecciones y tuberías (Pipes)
+
+**Conceptos clave**
+
+**Salida estándar (stdout)**: Donde los comandos envían sus resultados por defecto (normalmente la pantalla).
+
+**Redirección:** Capturar la salida de un comando y enviarla a un archivo.
+
+```
+>> redirige la salida a un archivo (sobrescribe) 
+>> redirige la salida añadiendo al archivo 
+| envía la salida de un comando como entrada a otro 
+```
+
+
+**Ejemplos**
+
+```bash
+# Guardar la lista de archivos en un archivo
+ls -la > listado_completo.txt
+```
+```bash
+# Añadir la fecha al final de un archivo
+$ date >> listado_completo.txt
+```
+```bash
+# Filtrar la lista para mostrar solo archivos .txt
+$ ls -la | grep ".txt"
+```
+
+```bash
+# Contar cuántos archivos .txt hay
+$ ls *.txt | wc -l
+```
+
+### Ejercicios de redirección y tuberías
+**Ejercicio 7.1: Filtrar y guardar**
+
+Lista todos los archivos en tu directorio actual y guarda solo los que son archivos de texto (.txt) en un archivo llamado `solo_txt.txt.`
+
+```bash
+ls | grep ".txt" > solo_txt.txt
+```
+
+**Ejercicio 7.2: Procesamiento en cadena**
+
+Del archivo `sistemas.txt`, filtra las líneas que contienen "UNIX" (en mayúsculas), numéralas y guarda el resultado en `unix_lines.txt.`
+
+```bash
+grep -n "UNIX" sistemas.txt > unix_lines.txt
+```
+
+**Ejercicio 7.3: Conteo con tubería**
+
+¿Cuántos archivos y directorios hay en tu directorio personal? Usa una tubería entre `ls` y `wc`.
+
+```bash
+ls ~ | wc -l
+```
+
+## Comodines (Wildcards)
+
+Los comodines permiten seleccionar múltiples archivos/directorios basándose en patrones en sus nombres.
+
+|Comodín|	Uso|	Ejemplo|
+|-------|--------------|----------------------|
+|*	|Coincide con cualquier número de caracteres (incluyendo ninguno).	|*.txt (todos los archivos .txt)|
+|?	|Coincide con exactamente un carácter.	|documento?.pdf (documento1.pdf, documentoA.pdf)|
+|[ ]	|Coincide con cualquier carácter dentro del conjunto.|	[aeiou]* (archivos que comienzan con vocal)|
+|[! ] o [^ ]|	Coincide con cualquier carácter que no esté en el conjunto.|	[!0-9]* (archivos que no comienzan con dígito)|
+
+
+**Ejercicios con comodines**
+
+**Ejercicio 8.1: Búsqueda con patrones**
+
+Crea varios archivos: `info1.txt`, `info2.txt`, `datos1.csv`, `datos2.csv`, `resumen.pdf`.
+
+Lista solo los archivos que empiecen por "info".
+
+```bash
+ls info*
+```
+
+Lista todos los archivos que sean .txt o .csv.
+
+```bash
+ls *.txt *.csv
+# O usando {}
+ls *.{txt,csv}
+```
+
+**Ejercicio 8.2: Caracteres específicos**
+
+Lista los archivos cuyo nombre tenga exactamente 5 caracteres (sin contar la extensión).
+
+```bash
+ls ?????.*
+```
+
+
+# Compresión y descompresión
+
+## Herramientas principales
+
+gzip / gunzip: Comprime/descomprime archivos individuales (extensión .gz).
+tar: Agrupa múltiples archivos/directorios en un solo archivo (tarball). Combinado con gzip (.tar.gz o .tgz) permite comprimir.
+
+**Uso común**
+
+|Tarea|	Comando|
+|-------|--------------|
+|Comprimir un archivo (manteniendo original)|	 ```gzip -k archivo.txt``` → archivo.txt.gz|
+|Descomprimir un archivo .gz|	 ```gunzip archivo.txt.gz``` o ```gzip -d archivo.txt.gz```|
+|Crear un tarball comprimido de un directorio|	 ```tar -czvf archivo.tar.gz directorio/```|
+|Listar contenido de un tarball	| ```tar -tzvf archivo.tar.gz```|
+|Extraer un tarball comprimido	| ```tar -xzvf archivo.tar.gz```|
+
+
+## Ejercicios de compresión
+
+**Ejercicio 9.1: Backup de un proyecto**
+
+Dentro de tu directorio practica_bash, asegúrate de tener la estructura del proyecto/ creada anteriormente.
+Crea un archivo comprimido (tar.gz) de todo el directorio proyecto/.
+
+```bash
+tar -czvf proyecto_backup.tar.gz proyecto/
+```
+Lista el contenido del archivo comprimido sin extraerlo.
+
+```bash
+tar -tzvf proyecto_backup.tar.gz
+```
+
+Extrae el contenido en una nueva ubicación, por ejemplo, en /tmp/.
+
+```bash
+tar -xzvf proyecto_backup.tar.gz -C /tmp/
+```
+
+**Ejercicio 9.2: Compresión selectiva**
+
+Comprime solo los archivos .log dentro de un directorio logs/. Pista: Usa tar con un patrón.
+
+```bash
+tar -czvf logs_compressed.tar.gz logs/*.log
+```
+
+# Herramientas avanzadas de procesamiento de texto
+
+**`sed` **(**s**tream **ed**itor)
+
+`sed` realiza transformaciones básicas en un flujo de texto (línea por línea).
+
+|Uso común	|Comando|
+|-------|--------------|
+|Sustituir texto (reemplazar)|	```sed 's/patrón/reemplazo/g' archivo```|
+|Eliminar líneas|	```sed '/patrón/d' archivo```|
+|Mostrar un rango de líneas|	```sed -n '5,10p' archivo```|
+|Insertar texto antes/después de una línea	|```sed '/patrón/i\Texto antes' archivo (antes)<br>sed '/patrón/a\Texto después' archivo (después)```|  
+
+**Ejemplo práctico:** Cambiar todas las ocurrencias de "Windows" por "Linux" en un archivo config.txt.
+
+```bash
+sed 's/Windows/Linux/g' config.txt
+```
+::: {.callout-tip}
+## Nota: Por *default*, ```sed``` muestra el resultado en pantalla. 
+
+Para guardar los cambios en el mismo archivo, usa la opción -i
+(in-place): 
+
+```bash
+sed -i 's/Windows/Linux/g' config.txt
+```
+:::
+
+
+## `awk` **(Lenguaje de procesamiento de patrones)**
+
+`awk` es ideal para procesar datos estructurados en columnas (como CSV o TSV).
+
+|Uso común|	Comando|
+|-------|--------------|  
+|Imprimir columnas específicas|	awk '{print $1, $3}' archivo.csv|
+|Usar un separador diferente|	awk -F',' '{print $2}' archivo.csv (separador: coma)|
+|Filtrar líneas basadas en una condición	a|wk '$1 > 100 {print $0}' datos.txt (si la col1 > 100)|
+|Calcular sumas o promedios	|awk '{sum += $2} END {print sum}' archivo.txt|
+
+**Ejemplo práctico:** 
+
+Dado un archivo ventas.csv con columnas Producto,Cantidad,Precio, calcular el total de ventas.
+
+```bash
+awk -F',' '{total += $2 * $3} END {print "Total: $" total}' ventas.csv
+```
+**Ejercicios con `sed` y `awk`**
+
+**Ejercicio 10.1: Limpieza con `sed`**
+
+Crea un archivo prueba.txt con varias líneas de texto que incluyan la palabra "error" en diferentes casos (Error, ERROR, error). Usa sed para cambiar todas las variantes a "ERROR" (en mayúsculas) y guarda el resultado en corregido.txt.
+
+```bash
+sed 's/[Ee][Rr][Rr][Oo][Rr]/ERROR/g' prueba.txt > corregido.txt
+```
+
+**Ejercicio 10.2: Análisis con `awk`**
+
+Crea un archivo notas.csv con el siguiente contenido:
+
+```text
+Nombre,Matemáticas,Física,Química
+Ana,85,90,88
+Luis,78,85,80
+Carla,92,88,95
+```
+
+Usa `awk` para:
+
+Mostrar solo los nombres y la nota de Matemáticas.
+Calcular el promedio de Física para todos los estudiantes.
+
+```bash
+# 1. Nombres y Matemáticas
+awk -F',' 'NR>1 {print $1, $2}' notas.csv
+# 2. Promedio de Física
+awk -F',' 'NR>1 {sum+=$3; count++} END {print "Promedio Física: " sum/count}' notas.csv
+```
+# Automatización con alias y comandos combinados
+
+## Crear alias para comandos frecuentes
+
+Los alias te permiten crear atajos (abreviaturas) para comandos largos o complejos.
+
+Crear un alias (temporal): 
+
+```bash
+alias nombre="comando largo"
+```
+
+```bash
+alias ll="ls -la"
+alias hoy="date +%Y-%m-%d"
+```
+
+Ver alias definidos: 
+```bash 
+alias
+```
+
+Eliminar un alias: 
+
+```bash
+unalias nombre
+```
+
+Para hacerlos permanentes, añade las líneas alias a tu archivo de configuración del shell (`~/.bashrc` o `~/.bash_profile`).
+
+### Ejercicio con alias
+
+**Ejercicio 11: Simplificar tareas**
+
+Crea un alias llamado limpiar que elimine todos los archivos temporales con extensión .tmp en el directorio actual, pero que pida confirmación antes de cada eliminación.
+
+```bash
+alias limpiar="rm -i *.tmp"
+```
+
+Crea un alias espacio que muestre el uso de disco de los directorios en el actual, ordenados por tamaño.
+
+```bash
+alias espacio="du -sh * | sort -hr"
+```
+
+**Combinación de comandos: Ejercicios integradores**
+
+**Ejercicio 12.1: Archivos más grandes**
+
+Encuentra los 5 archivos más grandes en el directorio actual y sus subdirectorios, mostrando su tamaño y ruta.
+
+```bash
+find . -type f -exec du -h {} + | sort -rh | head -5
+```
+
+**Ejercicio 12.2: Monitoreo de logs en tiempo real**
+
+Simula un archivo de log (app.log) y monitorea en tiempo real solo las líneas que contengan "ERROR" o "WARN".
+
+```bash
+# Terminal 1: Crear/agregar logs continuamente
+while true; do echo "$(date): INFO - Operación normal" >> app.log; sleep 2; done
+# Terminal 2: Monitorear (en otra ventana de terminal)
+$ tail -f app.log | grep -E "ERROR|WARN"
+```
+
+**Ejercicio 12.3: Análisis de logs web**
+
+Dado un archivo de log de acceso web (access.log), cuenta cuántas peticiones hubo por cada método HTTP (GET, POST, etc.).
+
+```bash
+# Suponiendo que el método HTTP es la primera palabra entre comillas
+awk '{print $6}' access.log | sort | uniq -c | sort -rn
+```
+**Resumen de comandos adicionales útiles**
+
+|Comando|	Descripción breve|
+|-------|--------------|
+|sort	|Ordena líneas de texto.|
+|uniq|	Reporta o omite líneas repetidas consecutivas.|
+|diff	|Compara dos archivos línea por línea.|
+|find	|Busca archivos/directorios en una jerarquía.|
+|chmod	|Cambia los permisos de archivos/directorios.|
+|ps	|Muestra una instantánea de los procesos activos.|
+|kill	|Envía una señal a un proceso (por defecto, TERMINAR).|
+|top	|Muestra procesos en tiempo real.|
+|df	|Muestra el espacio libre en los sistemas de archivos.|
+|du|Estima el uso de espacio de archivos/directorios.|
+
+
+# Descarga de archivos desde la terminal con `wget` y `curl`
+
+## Introducción a wget y curl
+
+En entornos Unix/Linux, `wget` y `curl` son dos herramientas fundamentales para transferir datos desde la línea de comandos. Aunque comparten funcionalidades, tienen enfoques y características diferentes:
+
+Característica	`wget`	`curl`
+Enfoque principal	Descarga recursiva de sitios web y archivos	Transferencia de datos usando múltiples protocolos
+Protocolos	HTTP, HTTPS, FTP	HTTP, HTTPS, FTP, FTPS, SCP, SFTP, TFTP, LDAP, DICT, FILE, y más
+Recursividad	Sí (descarga enlaces internos)	No (por defecto)
+Seguimiento de redirecciones	Sí (automático)	Sí (con opción -L)
+Reanudar descargas	Sí (-c)	Sí (-C -)
+Interacción con APIs	Limitada	Excelente (envía datos, headers personalizados)
+Scripting	Bueno para descargas automáticas	Mejor para APIs y transferencias complejas
+### `wget`: El descargador web
+
+**Sintaxis básica**
+
+```bash
+wget [opciones] [URL]
+```
+
+Ejemplos comunes
+
+1. Descargar un archivo simple:
+
+```bash
+wget https://ejemplo.com/archivo.zip
+```
+
+2. Descargar con nombre personalizado:
+
+```bash
+wget -O mi_archivo.zip https://ejemplo.com/archivo.zip
+```
+
+3. Descargar en segundo plano:
+
+```bash
+wget -b https://ejemplo.com/archivo_grande.iso
+```
+
+4. Reanudar una descarga interrumpida:
+
+```bash
+wget -c https://ejemplo.com/archivo_interrumpido.zip
+```
+
+5. Descargar recursivamente un sitio web:
+
+```bash
+wget -r -l 2 --no-parent https://ejemplo.com/seccion/
+```
+
+-r: recursivo
+-l 2: profundidad de 2 niveles
+--no-parent: no subir al directorio padre
+
+6. Descargar todos los archivos de un tipo específico:
+
+```bash
+wget -r -A "*.pdf" https://ejemplo.com/documentos/
+```
+
+7. Descargar desde una lista de URLs:
+
+```bash
+wget -i lista_urls.txt
+```
+
+8. Limitar velocidad de descarga:
+
+```bash
+wget --limit-rate=100k https://ejemplo.com/archivo_grande.iso
+```
+
+### `curl`: El cliente de transferencia de datos
+
+**Sintaxis básica**
+
+```bash
+curl [opciones] [URL]
+```
+
+**Ejemplos comunes**
+
+1. Descargar un archivo:
+
+```bash
+curl -O https://ejemplo.com/archivo.txt
+```
+
+2. Descargar con nombre personalizado:
+
+```bash
+curl -o resultado.json https://api.ejemplo.com/datos
+```
+
+3. Seguir redirecciones:
+
+```bash
+curl -L https://ejemplo.com/acortado
+```
+
+4. Enviar una petición GET con parámetros:
+
+```bash
+curl "https://api.ejemplo.com/buscar?q=termino&pagina=1"
+```
+
+5. Enviar una petición POST con datos:
+
+```bash
+curl -X POST -d "usuario=juan&clave=secreta" https://api.ejemplo.com/login
+```
+
+6. Enviar datos JSON:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"usuario": "juan", "email": "juan@ejemplo.com"}' \
+  https://api.ejemplo.com/registro
+```
+
+7. Enviar archivo como datos:
+
+```bash
+curl -X POST -F "archivo=@datos.csv" https://api.ejemplo.com/subir
+```
+8. Usar autenticación básica:
+
+```bash
+curl -u usuario:clave https://api.ejemplo.com/protegido
+```
+
+9. Enviar headers personalizados:
+
+```bash
+curl -H "Authorization: Bearer token123" \
+  -H "X-API-Key: abcdef" \
+  https://api.ejemplo.com/datos
+```
+10. Guardar la respuesta HTTP completa (headers + cuerpo):
+
+```bash
+curl -i https://ejemplo.com/
+```
+11. Solo mostrar los headers de la respuesta:
+
+```bash
+curl -I https://ejemplo.com/
+```
+
+Ejercicios prácticos
+
+Ejercicio 1: Descarga básica con wget
+
+Descargar una imagen de ejemplo desde Unsplash:
+
+```bash
+wget https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80 -O libro_ejemplo.jpg
+```
+Verificar la descarga:
+
+```bash
+file libro_ejemplo.jpg
+ls -lh libro_ejemplo.jpg
+```
+
+Ejercicio 2: Descarga recursiva para archivos de datos
+
+Crear una estructura de ejemplo para descargar:
+
+```bash
+# Crear directorio para el ejercicio
+mkdir practica_descargas
+cd practica_descargas
+```
+
+# Descargar solo archivos CSV de un directorio público de ejemplo
+wget -r -l 1 -A "*.csv" https://people.sc.fsu.edu/~jburkardt/data/csv/
+Limpiar y reorganizar:
+
+```bash
+# Mover todos los archivos CSV al directorio actual
+find . -name "*.csv" -exec mv {} . \;
+``
+```bash
+# Eliminar estructura de directorios vacíos
+find . -type d -empty -delete
+```
+Verificar archivos descargados:
+```bash
+# Contar archivos descargados
+ls *.csv | wc -l
+```
+
+Ejercicio 3: Interactuar con una API REST usando curl
+
+Obtener datos de una API pública (JSONPlaceholder):
+
+bash
+# Obtener lista de posts
+curl -s https://jsonplaceholder.typicode.com/posts | head -20
+Filtrar y formatear la respuesta:
+
+bash
+# Obtener solo el primer post y formatear con jq (si está instalado)
+curl -s https://jsonplaceholder.typicode.com/posts/1 | jq '.'
+
+# O sin jq, usando herramientas nativas
+curl -s https://jsonplaceholder.typicode.com/posts/1 | \
+  grep -E "(title|body)" | head -2
+Crear un nuevo recurso:
+
+bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Mi nuevo post", "body": "Contenido del post", "userId": 1}' \
+  https://jsonplaceholder.typicode.com/posts
+Ejercicio 4: Script de descarga automatizada
+
+Crea un script descarga_diaria.sh que:
+
+Descarga datos meteorológicos de una API
+Guarda con fecha en el nombre
+Registra la operación en un log
+bash
+#!/bin/bash
+
+# Configuración
+API_URL="https://api.open-meteo.com/v1/forecast"
+PARAMS="latitude=40.4168&longitude=-3.7038&hourly=temperature_2m"
+DIR_DATOS="datos_meteo"
+LOG="descargas_meteo.log"
+
+# Crear directorio si no existe
+mkdir -p "$DIR_DATOS"
+
+# Obtener fecha actual
+FECHA=$(date +%Y-%m-%d)
+ARCHIVO="${DIR_DATOS}/meteo_${FECHA}.json"
+
+# Descargar datos
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Iniciando descarga..." >> "$LOG"
+
+curl -s -o "$ARCHIVO" "${API_URL}?${PARAMS}"
+
+# Verificar éxito
+if [ $? -eq 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Descarga exitosa: $ARCHIVO" >> "$LOG"
+    echo "Tamaño: $(stat -c%s "$ARCHIVO") bytes" >> "$LOG"
+    
+    # Extraer información útil
+    TEMP_MAX=$(jq '.hourly.temperature_2m | max' "$ARCHIVO" 2>/dev/null || echo "N/A")
+    echo "Temperatura máxima prevista: $TEMP_MAX°C" >> "$LOG"
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Error en la descarga" >> "$LOG"
+fi
+
+echo "---" >> "$LOG"
+Ejercicio 5: Comparativa y casos de uso
+
+Caso 1: Descarga de un archivo grande con posibilidad de interrupción
+
+bash
+# Con wget (mejor para descargas largas)
+wget -c https://ejemplo.com/archivo_grande.iso
+
+# Con curl
+curl -C - -O https://ejemplo.com/archivo_grande.iso
+Caso 2: Interacción con API que requiere autenticación
+
+bash
+# Con curl (mucho más flexible)
+curl -H "Authorization: Bearer $(cat token.txt)" \
+  https://api.ejemplo.com/datos_sensibles
+
+# Con wget (más limitado)
+wget --header="Authorization: Bearer $(cat token.txt)" \
+  -O resultado.json \
+  https://api.ejemplo.com/datos_sensibles
+Caso 3: Descarga de un sitio web completo para ver offline
+
+bash
+# Solo wget es adecuado para esto
+wget --mirror \
+  --convert-links \
+  --adjust-extension \
+  --page-requisites \
+  --no-parent \
+  https://ejemplo.com/documentacion/
+Consejos y mejores prácticas
+
+Para wget:
+
+Usar -q para modo silencioso en scripts.
+-nv (no verbose) muestra solo información esencial.
+--timeout=30 para evitar esperas infinitas.
+--tries=3 para reintentos automáticos.
+Verificar integridad con --checksum cuando esté disponible.
+Para curl:
+
+Usar -s (silent) y -S (show error) en scripts: curl -sS.
+-f para fallar en respuestas HTTP de error.
+-w para formato personalizado de salida.
+Guardar cookies con -c y reusarlas con -b.
+Usar --retry para reintentos automáticos.
+Seguridad:
+
+Verificar certificados SSL (por defecto en ambos).
+No enviar credenciales en la línea de comandos (usar variables).
+Validar URLs antes de descargar.
+Limitar permisos de archivos descargados.
+Ejercicio integrador final
+
+Crea un script que:
+
+Descarga datos de múltiples fuentes usando ambas herramientas.
+Combina y procesa los resultados.
+Genera un reporte consolidado.
+bash
+#!/bin/bash
+
+# Script: descarga_integrador.sh
+# Descarga datos de múltiples fuentes y genera un reporte
+
+set -e  # Detener en caso de error
+
+# Configuración
+DIR_TRABAJO="datos_integrado"
+LOG="integracion.log"
+FECHA=$(date +%Y%m%d)
+
+# Limpiar y crear directorio
+rm -rf "$DIR_TRABAJO"
+mkdir -p "$DIR_TRABAJO"
+cd "$DIR_TRABAJO"
+
+echo "=== Iniciando descarga integrada ===" | tee "$LOG"
+
+# 1. Descargar datos CSV con wget
+echo "1. Descargando datos CSV..." | tee -a "$LOG"
+wget -q -O datos_poblacion.csv \
+  "https://raw.githubusercontent.com/datasets/population/master/data/population.csv"
+echo "  ✓ Datos de población descargados" | tee -a "$LOG"
+
+# 2. Obtener datos JSON de API con curl
+echo "2. Consultando API de clima..." | tee -a "$LOG"
+curl -sS -H "Accept: application/json" \
+  "https://api.open-meteo.com/v1/forecast?latitude=40.71&longitude=-74.01&current_weather=true" \
+  > clima_ny.json
+echo "  ✓ Datos climáticos obtenidos" | tee -a "$LOG"
+
+# 3. Extraer información relevante
+echo "3. Procesando datos..." | tee -a "$LOG"
+
+# De clima.json
+TEMPERATURA=$(jq -r '.current_weather.temperature' clima_ny.json 2>/dev/null || echo "N/A")
+
+# De población.csv (último dato para España)
+POBLACION_ES=$(grep -i ",Spain," datos_poblacion.csv | tail -1 | cut -d',' -f4)
+
+# 4. Generar reporte
+echo "4. Generando reporte..." | tee -a "$LOG"
+cat > reporte_${FECHA}.md << EOF
+# Reporte de Datos Integrados
+**Fecha:** $(date '+%Y-%m-%d %H:%M')
+
+## Datos Climatológicos (NYC)
+- Temperatura actual: ${TEMPERATURA}°C
+
+## Datos Demográficos
+- Población de España (último dato): ${POBLACION_ES}
+
+## Archivos Descargados
+$(find . -name "*.csv" -o -name "*.json" | sed 's/^/- /')
+
+## Estadísticas
+- Total archivos: $(find . -type f -name "*.csv" -o -name "*.json" | wc -l)
+- Tamaño total: $(du -sh . | cut -f1)
+EOF
+
+echo "=== Proceso completado ===" | tee -a "$LOG"
+echo "Reporte generado: $DIR_TRABAJO/reporte_${FECHA}.md" | tee -a "$LOG"
+Resumen
+
+Usa wget cuando necesites descargar archivos individuales, sitios web completos, o realizar descargas recursivas.
+Usa curl cuando trabajes con APIs REST, necesites enviar datos complejos, o requieras mayor control sobre las peticiones HTTP.
+Ambas herramientas son complementarias y dominarlas te permitirá automatizar tareas de descarga y procesamiento de datos eficientemente.
+Recursos adicionales
+
+Documentación oficial:
+
+wget: man wget o GNU Wget Manual
+curl: man curl o curl Documentation
+Práctica interactiva: Usa APIs públicas como:
+
+JSONPlaceholder (API falsa para pruebas)
+Open-Meteo (API meteorológica gratuita)
+GitHub API (API de GitHub)
+Esta sección te proporciona las bases para trabajar con transferencias de datos desde la terminal, una habilidad esencial para administradores de sistemas, científicos de datos y desarrolladores que trabajan en entornos Unix/Linux.
+
+::: {.callout-important}
+
+Para recordar
+
+wget es mejor para descargas simples y recursivas
+curl es mejor para APIs y transferencias complejas
+Nunca expongas credenciales en la línea de comandos
+Siempre verifica certificados SSL en producción
+Automatiza tareas repetitivas con scripts
+:::
+
+# Proyecto final: Script de backup automatizado
+
+Objetivo: Crear un script de Bash que realice un backup de todos los archivos modificados en los últimos 7 días dentro de un directorio específico.
+
+Requisitos del script (backup_reciente.sh):
+
+Debe recibir el directorio a respaldar como primer argumento.
+Crear un archivo comprimido (tar.gz) con los archivos modificados en los últimos 7 días.
+El nombre del archivo de backup debe incluir la fecha (formato: backup_YYYY-MM-DD.tar.gz).
+Mover el archivo de backup a un directorio central de backups (por ejemplo, ~/backups/).
+Registrar la operación (fecha, directorio respaldado, nombre del archivo) en un archivo de log (~/backups/backup.log).
+Esqueleto del script:
+
+bash
+#!/bin/bash
+
+# Verificar que se proporcionó un directorio
+if [ $# -ne 1 ]; then
+    echo "Uso: $0 <directorio_a_respaldar>"
+    exit 1
+fi
+
+DIR_ORIGEN="$1"
+DIR_BACKUP="$HOME/backups"
+LOG="$DIR_BACKUP/backup.log"
+FECHA=$(date +%Y-%m-%d)
+ARCHIVO_BACKUP="$DIR_BACKUP/backup_$FECHA.tar.gz"
+
+# Crear directorio de backups si no existe
+mkdir -p "$DIR_BACKUP"
+
+# Crear backup (solo archivos modificados en los últimos 7 días)
+find "$DIR_ORIGEN" -type f -mtime -7 -print0 | tar -czvf "$ARCHIVO_BACKUP" --null -T -
+
+# Verificar éxito de la creación
+if [ $? -eq 0 ]; then
+    echo "Backup creado exitosamente: $ARCHIVO_BACKUP"
+    # Registrar en el log
+    echo "$(date): Backup de $DIR_ORIGEN completado -> $ARCHIVO_BACKUP" >> "$LOG"
+else
+    echo "Error al crear el backup." >&2
+    exit 1
+fi
+Para ejecutar el script:
+
+Guarda el código en un archivo backup_reciente.sh.
+Dale permisos de ejecución: chmod +x backup_reciente.sh.
+Ejecútalo: ./backup_reciente.sh /ruta/del/directorio.
+Conclusión
+
+Esta guía cubre los fundamentos esenciales para trabajar eficientemente en un entorno Unix/Linux desde la terminal. La práctica constante es clave para interiorizar estos comandos. Continúa explorando las páginas de manual (man), automatizando tareas con scripts y desafiándote con problemas reales.
+
+Recuerda: La línea de comandos es una herramienta poderosa. Con gran poder viene una gran responsabilidad. ¡Feliz aprendizaje!
+
