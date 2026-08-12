@@ -105,7 +105,7 @@ Esta forma de pensar ayuda a construir *pipelines* más claros, detectar errores
 
 ---
 
-## 🚀 ¿Cómo utilizar el tutorial?
+## 🌸 ¿Cómo utilizar el tutorial?
 
 Los capítulos están organizados de manera progresiva, por lo que se recomienda recorrerlos en orden.
 
@@ -113,12 +113,11 @@ Si ya tienes experiencia con alguna de las herramientas, también puedes utiliza
 
 Cada capítulo combina:
 
-* 📖 Explicación conceptual
+* 📖 Explicación de conceptos
 * 💻 Ejemplos de código
 * 🧬 Aplicaciones a datos biológicos
 * 📝 Ejercicios (preguntas de comprensión y retos prácticos
-* 🔎 Preguntas de comprensión
-* 🏆 Retos prácticos
+  
 
 La recomendación es **intentar resolver los ejercicios antes de consultar las soluciones**.
 
