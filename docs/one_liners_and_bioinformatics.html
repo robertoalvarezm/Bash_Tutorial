@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Herramientas para Bioinformática - 3&nbsp; Aplicación de las herramientas a datos biológicos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./automatization.html" rel="next">
+<link href="./bash_one_liners.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./one_liners_and_bioinformatics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicación de las herramientas a datos biológicos</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Herramientas para Bioinformática</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bash_one_liners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./one_liners_and_bioinformatics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicación de las herramientas a datos biológicos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./automatization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatización y construcción de pipelines</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seqtk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><code>seqtk</code> Procesamiento especializado de FASTA/FASTQ</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./SRA_toolkit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SRA Toolkit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e_utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">E-utilities (NCBI)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./NCBI_dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">NCBI Datasets CLI</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gget: Acceso a bases de datos genómicas con Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Resumen y recursos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#cómo-pasar-de-un-comando-a-un-problema-biológico" id="toc-cómo-pasar-de-un-comando-a-un-problema-biológico" class="nav-link active" data-scroll-target="#cómo-pasar-de-un-comando-a-un-problema-biológico">Cómo pasar de un comando a un problema biológico</a></li>
+  <li><a href="#de-texto-a-datos-biológicos" id="toc-de-texto-a-datos-biológicos" class="nav-link" data-scroll-target="#de-texto-a-datos-biológicos"><span class="header-section-number">3.1</span> De texto a datos biológicos</a></li>
+  <li><a href="#manipulación-de-archivos-fasta-fastq" id="toc-manipulación-de-archivos-fasta-fastq" class="nav-link" data-scroll-target="#manipulación-de-archivos-fasta-fastq"><span class="header-section-number">3.2</span> Manipulación de archivos FASTA / FASTQ</a></li>
+  <li><a href="#manipulación-de-vcf-y-bam" id="toc-manipulación-de-vcf-y-bam" class="nav-link" data-scroll-target="#manipulación-de-vcf-y-bam"><span class="header-section-number">3.3</span> Manipulación de VCF y BAM</a></li>
+  <li><a href="#estadísticas-básicas-de-reads" id="toc-estadísticas-básicas-de-reads" class="nav-link" data-scroll-target="#estadísticas-básicas-de-reads"><span class="header-section-number">3.4</span> Estadísticas básicas de reads</a></li>
+  <li><a href="#manejo-de-blast" id="toc-manejo-de-blast" class="nav-link" data-scroll-target="#manejo-de-blast"><span class="header-section-number">3.5</span> Manejo de BLAST</a></li>
+  <li><a href="#interleaving-de-fastq-paired-end" id="toc-interleaving-de-fastq-paired-end" class="nav-link" data-scroll-target="#interleaving-de-fastq-paired-end"><span class="header-section-number">3.6</span> Interleaving de FASTQ paired-end</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicación de las herramientas a datos biológicos</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="cómo-pasar-de-un-comando-a-un-problema-biológico" class="level3 unnumbered idea">
+<h3 class="unnumbered anchored" data-anchor-id="cómo-pasar-de-un-comando-a-un-problema-biológico">Cómo pasar de un comando a un problema biológico</h3>
+<p>En bioinformática, se aplica la misma lógica que en los ejemplos anteriores porque muchos formatos tienen una estructura repetitiva. La estrategia que usaremos es siempre la misma:</p>
+<ol type="1">
+<li><strong>Identificar la estructura del archivo.</strong> ¿Cada registro ocupa una línea o varias? ¿Dónde están las columnas importantes?</li>
+<li><strong>Elegir la herramienta.</strong> ¿Necesitamos seleccionar columnas, buscar patrones, reemplazar texto o hacer cálculos?</li>
+<li><strong>Probar con una muestra pequeña.</strong> Antes de procesar millones de registros, comprueba que el comando produce exactamente lo que esperas.</li>
+<li><strong>Convertirlo en un pipeline.</strong> Cuando cada paso funciona, conecta las herramientas con <code>|</code> o guarda la salida en un archivo.</li>
+</ol>
+<p>Esto evita uno de los errores más comunes al aprender Bash: intentar construir un comando enorme sin comprobar qué hace cada parte.</p>
+</section>
+<p>Ahora que conocemos la lógica de ambas herramientas, podemos trasladarla a formatos que aparecen constantemente en bioinformática. La idea importante es que no estamos aprendiendo comandos nuevos para cada formato: estamos reutilizando las mismas operaciones sobre estructuras diferentes.</p>
+<p>Un FASTQ, por ejemplo, no es una tabla convencional, pero tiene un patrón fijo de cuatro líneas por read. Un GFF3 sí es tabular y tiene nueve columnas. Un VCF mezcla líneas de metadatos con una tabla de variantes. Reconocer esa estructura antes de escribir un comando es parte esencial del análisis desde la terminal.</p>
+<blockquote class="blockquote">
+<p><strong>Regla práctica:</strong> antes de ejecutar un <em>one-liner</em> sobre un archivo que no conoces, inspecciona primero algunas líneas con <code>head</code>, identifica el separador y determina qué representa cada columna o línea.</p>
+</blockquote>
+<section id="de-texto-a-datos-biológicos" class="level2 idea" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="de-texto-a-datos-biológicos"><span class="header-section-number">3.1</span> De texto a datos biológicos</h2>
+<p>Los mismos operadores que utilizamos con <code>file.txt</code> aparecen constantemente en bioinformática. La diferencia es que ahora conocemos la estructura del archivo: sabemos qué representa cada línea, cada columna o cada bloque de secuencias.</p>
+<p>Antes de ejecutar un comando complejo, identifica siempre <strong>qué representa una línea</strong>, <strong>qué representa cada columna</strong> y, en formatos como FASTQ, <strong>cuántas líneas forman un registro</strong>.</p>
+</section>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/types_of_files.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<section id="manipulación-de-archivos-fasta-fastq" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="manipulación-de-archivos-fasta-fastq"><span class="header-section-number">3.2</span> Manipulación de archivos FASTA / FASTQ</h2>
+<p>Los archivos FASTA y FASTQ son formatos comunes para almacenar secuencias biológicas. FASTA contiene un identificador y una o más líneas de secuencia, mientras que FASTQ añade información de calidad y organiza cada <em>read</em> en un bloque de cuatro líneas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/fastq_file.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>Esta estructura permite utilizar <code>awk</code> y <code>sed</code> para realizar operaciones sencillas, como convertir entre formatos, extraer secuencias o calcular longitudes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir FASTQ → FASTA</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-n</span> <span class="st">'1~4s/^@/&gt;/p; 2~4p'</span> archivo.fq <span class="op">&gt;</span> archivo.fa</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer solo las secuencias de un FASTQ (cada 4 líneas, empezando en la 2da)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-n</span> <span class="st">'2~4p'</span> archivo.fq</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Dividir un multi-FASTA en archivos individuales</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'/^&gt;/{s=++d".fa"} {print &gt; s}'</span> multi.fa</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Longitud de cada secuencia en un FASTA</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file.fa <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$0 ~ "&gt;" {print c; c=0; printf substr($0,2,100) "\t"; } \</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">              $0 !~ "&gt;" {c += length($0);} END {print c;}'</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular la longitud media de reads en FASTQ</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'NR%4==2 {sum += length($0)} END {print sum/(NR/4)}'</span> input.fastq</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer un read específico por nombre</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> archivo.fastq.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'BEGIN{RS="@"; FS="\n"}; $1~/nombreRead/{print $2; exit}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En estos ejemplos, la estructura de FASTQ es especialmente importante. Como cada <em>read</em> ocupa cuatro líneas, podemos utilizar el número de línea (<code>NR</code>) para identificar qué líneas corresponden a los identificadores, las secuencias y las calidades.</p>
+<p>Por ejemplo, <code>NR%4==2</code> selecciona las líneas que contienen las secuencias. Esto permite calcular directamente la longitud de cada <em>read</em> sin tener que procesar las líneas de calidad.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/hedgehog.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="manipulación-de-vcf-y-bam" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="manipulación-de-vcf-y-bam"><span class="header-section-number">3.3</span> Manipulación de VCF y BAM</h2>
+<p>Los archivos VCF y BAM contienen información diferente y requieren conocer su estructura antes de procesarlos.</p>
+<p>Un archivo VCF almacena variantes en registros tabulares, mientras que un archivo BAM contiene alineamientos de secuencias en formato binario. Por esta razón, algunas operaciones requieren convertir primero el BAM a un formato de texto o utilizar herramientas especializadas, como <code>samtools</code> y <code>bcftools</code>, junto con <code>awk</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir VCF → BED</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-e</span> <span class="st">'s/chr//'</span> file.vcf <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{OFS="\t"; if (!/^#/) {print $1, $2-1, $2, $4"/"$5, "+"}}'</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir BAM → FASTQ (usando samtools + awk)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view archivo.bam <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="st">'BEGIN {FS="\t"} {print "@" $1 "\n" $10 "\n+\n" $11}'</span> <span class="op">&gt;</span> archivo.fq</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrar variantes en Chr1 entre 1Mb y 2Mb</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> file.txt <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$1=="1"'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3&gt;=1000000'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3&lt;=2000000'</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar muestras con datos faltantes en VCF (bcftools + awk)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'[%GT\t]\n'</span> archivo.bcf <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="st">'{miss=0}; {for (x=1; x&lt;=NF; x++) if ($x=="./.") {miss+=1}}; {print miss}'</span> <span class="op">&gt;</span> nmiss.count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En el primer ejemplo se combinan <code>sed</code> y <code>awk</code>: <code>sed</code> elimina el prefijo <code>chr</code> y <code>awk</code> selecciona los registros de variantes y reorganiza la información para generar una salida compatible con BED.</p>
+<p>El segundo ejemplo muestra cómo pueden combinarse herramientas especializadas con comandos de Bash. <code>samtools view</code> convierte el contenido del BAM en registros de texto que <code>awk</code> puede procesar para construir un archivo FASTQ.</p>
+<p>Estos ejemplos muestran una idea importante: <code>awk</code> y <code>sed</code> no tienen que trabajar de manera aislada. Pueden integrarse con herramientas específicas de cada formato mediante <em>pipes</em>.</p>
+</section>
+<section id="estadísticas-básicas-de-reads" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="estadísticas-básicas-de-reads"><span class="header-section-number">3.4</span> Estadísticas básicas de reads</h2>
+<p>Una de las tareas más frecuentes al trabajar con datos de secuenciación es obtener estadísticas rápidas sobre los <em>reads</em>. Aunque existen herramientas especializadas para realizar análisis más completos, un <em>one-liner</em> puede ser útil para responder preguntas sencillas directamente desde la terminal.</p>
+<p>El siguiente ejemplo recorre los registros de un FASTQ, cuenta los <em>reads</em> y determina cuáles aparecen una sola vez y cuál es el identificador más abundante.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estadísticas de un FASTQ: total reads, únicos, más abundante</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> myfile.fq <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'((NR-2)%4==0){</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">  read=$1; total++; count[read]++</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">} END {</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">  for(read in count){</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">    if(!max || count[read]&gt;max) { max=count[read]; maxRead=read }</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">    if(count[read]==1) { unique++ }</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">  print total, unique, unique*100/total, maxRead, count[maxRead], count[maxRead]*100/total</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El comando aprovecha nuevamente la estructura de cuatro líneas del FASTQ. La condición <code>((NR-2)%4==0)</code> permite seleccionar las líneas correspondientes a las secuencias. A partir de ellas se construye un conteo para cada <em>read</em> y, al finalizar el archivo, se calculan los valores resumidos.</p>
+</section>
+<section id="manejo-de-blast" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="manejo-de-blast"><span class="header-section-number">3.5</span> Manejo de BLAST</h2>
+<p>Los resultados de BLAST suelen almacenarse como tablas en las que cada fila representa un alineamiento entre una consulta y una secuencia de referencia. Cuando una consulta tiene varios <em>hits</em>, podemos utilizar <code>awk</code> para seleccionar o comparar resultados a partir de alguna de sus columnas.</p>
+<p>Los siguientes ejemplos muestran cómo conservar los mejores <em>hits</em> utilizando el <em>bit score</em> como criterio.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conservar solo los mejores hits (mayor bit score por query)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{ if(!x[$1]++) {print $0; bitscore=($14-1)} \</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">       else { if($14&gt;bitscore) print $0} }'</span> blastout.txt</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Hits dentro de 5 puntos del mejor bit score</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'{ if(!x[$1]++) {print $0; bitscore=($14-6)} \</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">       else { if($14&gt;bitscore) print $0} }'</span> blastout.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En ambos casos, <code>awk</code> utiliza la primera columna como identificador de la consulta y guarda información sobre el mejor <em>bit score</em> encontrado. Esto permite comparar los <em>hits</em> de una misma consulta sin tener que abrir el resultado en un programa externo.</p>
+</section>
+<section id="interleaving-de-fastq-paired-end" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="interleaving-de-fastq-paired-end"><span class="header-section-number">3.6</span> Interleaving de FASTQ paired-end</h2>
+<p>En la secuenciación <em>paired-end</em>, cada fragmento se representa mediante dos <em>reads</em>: uno almacenado en el archivo <code>R1</code> y otro en <code>R2</code>. Algunas herramientas requieren que ambos archivos se encuentren intercalados en un único FASTQ, alternando los <em>reads</em> de cada pareja.</p>
+<p>En Bash podemos construir este archivo combinando herramientas como <code>paste</code>, <code>cut</code> y <code>tr</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Intercalar dos archivos FASTQ paired-end</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span> <span class="op">&lt;(</span><span class="fu">paste</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="op">&lt;</span> reads-1.fastq<span class="op">)</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;(</span><span class="fu">paste</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="op">&lt;</span> reads-2.fastq<span class="op">)</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">tr</span> <span class="st">'\t'</span> <span class="st">'\n'</span> <span class="op">&gt;</span> reads-interleaved.fastq</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar un FASTQ interleaved en /1 y /2</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="at">-</span> <span class="op">&lt;</span> reads-int.fastq <span class="dt">\</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">tee</span> <span class="op">&gt;(</span><span class="fu">cut</span> <span class="at">-f</span> 1-4 <span class="kw">|</span> <span class="fu">tr</span> <span class="st">'\t'</span> <span class="st">'\n'</span> <span class="op">&gt;</span> reads-1.fastq<span class="op">)</span> <span class="dt">\</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 5-8 <span class="kw">|</span> <span class="fu">tr</span> <span class="st">'\t'</span> <span class="st">'\n'</span> <span class="op">&gt;</span> reads-2.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El comando agrupa primero cada cuatro líneas de cada FASTQ para mantener unido cada <em>read</em>. Después, <code>paste</code> combina los registros correspondientes de <code>R1</code> y <code>R2</code>, mientras que <code>tr</code> transforma los separadores utilizados por <code>paste</code> nuevamente en saltos de línea.</p>
+<p>El resultado es un FASTQ intercalado en el que los registros de las parejas aparecen de forma alternada.</p>
+<p>Y en el segundo ejemplo, este proceso también puede realizarse en sentido contrario. En este caso, <code>paste</code> agrupa ocho líneas para representar los dos <em>reads</em> de una pareja, y <code>cut</code> separa nuevamente los registros correspondientes a <code>R1</code> y <code>R2</code>.</p>
+<p>Ahora, hay que practicar lo aprendido, los ejercicios combinan interpretación de formatos, selección de información y construcción de comandos. Si un ejercicio parece complejo, intenta dividir el problema en pasos pequeños antes de escribir el <em>one-liner</em> completo.</p>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Ejercicio 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>¿Cuál comando convierte correctamente un archivo FASTQ a FASTA?</strong></p>
+<ol type="a">
+<li><code>awk 'NR%4==1 || NR%4==2' archivo.fq</code><br>
+</li>
+<li><strong><code>sed -n '1~4s/^@/&gt;/p; 2~4p' archivo.fq &gt; archivo.fa</code></strong><br>
+</li>
+<li><code>grep -v "^+" archivo.fq &gt; archivo.fa</code><br>
+</li>
+<li><code>cut -f1,2 archivo.fq &gt; archivo.fa</code></li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>La respuesta es <strong>b)</strong>.</p>
+<p>Un archivo FASTQ tiene <strong>4 líneas por read</strong>:</p>
+<pre><code>@header     ← línea 1 (cada 4 líneas desde la 1)
+SECUENCIA   ← línea 2 (cada 4 líneas desde la 2)
++           ← línea 3 (separador)
+CALIDADES   ← línea 4</code></pre>
+<p>El comando <code>sed -n '1~4s/^@/&gt;/p; 2~4p'</code> hace: - <code>1~4</code>: líneas 1, 5, 9, … → reemplaza <code>@</code> por <code>&gt;</code> e imprime - <code>2~4</code>: líneas 2, 6, 10, … → imprime la secuencia tal cual</p>
+</div>
+</div>
+</div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Ejercicio 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Completa el comando para convertir un archivo <strong>VCF a BED</strong>, eliminando el prefijo “chr”:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-e</span> <span class="st">'s/___//'</span> file.vcf <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{OFS="___"; if (!/^#/) {print $1, ___-1, $2, $4"/"$5, "+"}}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-e</span> <span class="st">'s/chr//'</span> file.vcf <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{OFS="\t"; if (!/^#/) {print $1, $2-1, $2, $4"/"$5, "+"}}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Explicación clave:</strong> En formato BED las coordenadas son <strong>0-based</strong>, mientras que VCF usa coordenadas <strong>1-based</strong>. Por eso se resta 1 a la posición de inicio (<code>$2-1</code>).</p>
+</div>
+</div>
+</div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Ejercicio 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>Tienes un archivo <code>genes.tsv</code> con estas columnas: <code>gen_id | cromosoma | inicio | fin | hebra | función</code></p>
+<p>Escribe los comandos para:</p>
+<ol type="1">
+<li>Imprimir solo los genes del cromosoma 3</li>
+<li>Calcular la longitud promedio de todos los genes<br>
+</li>
+<li>Encontrar el gen más largo</li>
+</ol>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Genes del cromosoma 3</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$2 == "chr3"'</span> genes.tsv</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Longitud promedio (fin - inicio)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'NR&gt;1 {len = $4 - $3; total += len} END {print "Longitud promedio:", total/(NR-1), "bp"}'</span> genes.tsv</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Gen más largo</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'NR&gt;1 {len = $4 - $3; if(len &gt; max) {max=len; gen=$1}} END {print "Gen más largo:", gen, "(" max " bp)"}'</span> genes.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./bash_one_liners.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./automatization.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatización y construcción de pipelines</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,115 @@
+---
+title: "Automatización y construcción de pipelines"
+format: html
+editor: visual
+---
+
+::: idea
+### De trabajar con un archivo a trabajar con un proyecto completo {.unnumbered}
+
+Hasta este punto la mayoría de los ejemplos recibe uno o pocos archivos.
+En un análisis real podemos tener cientos de FASTQ, BAM o resultados de QC distribuidos en diferentes carpetas.
+
+Aquí aparecen tres necesidades diferentes:
+
+-   **`find`**: localizar archivos que cumplen ciertos criterios.
+-   **`xargs`**: tomar una lista de resultados y convertirlos en
+    argumentos para otro comando.
+-   **GNU `parallel`**: ejecutar una misma tarea sobre muchos elementos
+    de forma concurrente.
+
+Es importante distinguir **automatización** de **paralelización**. Un `for` puede automatizar cien muestras ejecutándolas una detrás de otra; `parallel` puede ejecutar varias simultáneamente. La segunda opción puede ahorrar mucho tiempo, pero también consume recursos y debe utilizarse de acuerdo con la memoria, CPU y almacenamiento disponibles.
+:::
+
+![Ilustración de Allison Horst](figures/plan_on_it.jpg){fig-align="center" width="70%"}
+
+En ese escenario, escribir el mismo comando manualmente no es práctico y aumenta la posibilidad de errores.
+
+`find` permite localizar archivos según criterios como nombre, extensión, tamaño o fecha. `xargs` convierte una lista de resultados en argumentos para otro comando. GNU `parallel` lleva esta idea un paso más allá: permite ejecutar la misma tarea sobre múltiples entradas de forma concurrente.
+
+La paralelización **no significa simplemente usar todos los núcleos disponibles**. Debemos considerar memoria, almacenamiento, ancho de banda y los recursos que utiliza cada programa. Por eso aprenderemos a controlar el número de trabajos con `-j` y a probar primero con `--dry-run` cuando una operación pueda modificar o eliminar archivos.
+
+Cuando pasamos de una muestra a decenas o cientos de archivos, ejecutar un comando manualmente deja de ser práctico. Esta sección introduce tres herramientas para resolver ese problema:
+
+-   `find`: localizar archivos y directorios según criterios;
+-   `xargs`: convertir una lista de elementos en argumentos para otro comando;
+-   `parallel`: ejecutar muchas tareas de manera controlada y, cuando conviene, simultánea.
+
+::: warning
+**Antes de paralelizar:** asegúrate de que el comando funciona correctamente sobre **un solo archivo**. Después automatízalo y finalmente aumenta el número de procesos.
+:::
+
+## Búsqueda y operaciones en lote
+
+``` bash
+# Buscar archivos .bam recursivamente
+find . -name "*.bam"
+
+# Buscar archivos grandes (>500 MB)
+find . -type f -size +500M
+
+# Contar líneas en todos los .txt del directorio
+find . -type f -name '*.txt' -exec wc -l {} \; | awk '{total += $1} END {print total}'
+
+# Renombrar .txt a .bak
+find . -name "*.txt" | sed "s/\.txt$//" | xargs -i echo mv {}.txt {}.bak | sh
+
+# Encontrar el archivo más grande
+find . -type f -printf '%s %p\n' | sort -nr | head -1 | cut -d' ' -f2-
+
+# Comprimir todos los directorios con archivos .log
+find . -type f -name "*.log" -printf "%h\0" | sort -uz | xargs -0 tar -czvf logs.tar.gz
+```
+
+## Paralelización con GNU `parallel`
+
+``` bash
+# Filtro de calidad Illumina en paralelo
+find *fq | parallel "cat {} | grep -A 3 '^@.*[^:]*:N:[^:]*:' | \
+           grep -v '^\-\-$' > {}.filt.fq"
+
+# FASTQC en paralelo (12 jobs simultáneos)
+find *.fq | parallel -j 12 "fastqc {} --outdir ."
+
+# Indexar BAMs en paralelo (modo dry-run primero)
+find *.bam | parallel --dry-run 'samtools index {}'
+
+# Alinear múltiples muestras con BWA-MEM en paralelo
+ls *_R1.fastq.gz | sed 's/_R1.fastq.gz//' | \
+  parallel "bwa mem genome.fa {}_R1.fastq.gz {}_R2.fastq.gz | \
+            samtools sort -o {}.bam && samtools index {}.bam"
+```
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### Ejercicio 1:
+
+Tienes 20 archivos `sample_01.fq.gz ... sample_20.fq.gz`. Escribe el comando para:
+
+a)  Contar el número de reads en cada archivo\
+b)  Ejecutar el conteo en paralelo con 4 cores\
+c)  Guardar un resumen en `read_counts.txt`
+
+### ✅ Solución
+
+``` bash
+# Opción A: con parallel
+ls sample_*.fq.gz | parallel -j4 \
+  "echo -n '{} '; zcat {} | wc -l | awk '{print \$1/4}'" \
+  > read_counts.txt
+
+# Opción B: más robusta con función bash
+count_reads() {
+  file=$1
+  count=$(zcat "$file" | wc -l)
+  echo -e "$file\t$((count / 4))"
+}
+export -f count_reads
+
+find . -name "sample_*.fq.gz" | parallel -j4 count_reads {} > read_counts.txt
+
+# Ver resumen ordenado por número de reads
+sort -k2nr read_counts.txt
+```
+:::

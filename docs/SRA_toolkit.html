@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Herramientas para Bioinformática - 7&nbsp; SRA Toolkit</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./e_utilities.html" rel="next">
+<link href="./gff3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./SRA_toolkit.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SRA Toolkit</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Herramientas para Bioinformática</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bash_one_liners.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./one_liners_and_bioinformatics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aplicación de las herramientas a datos biológicos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./automatization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatización y construcción de pipelines</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seqtk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><code>seqtk</code> Procesamiento especializado de FASTA/FASTQ</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./SRA_toolkit.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SRA Toolkit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./e_utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">E-utilities (NCBI)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./NCBI_dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">NCBI Datasets CLI</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gget.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gget: Acceso a bases de datos genómicas con Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Resumen y recursos</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#el-modelo-mental-del-sra-toolkit" id="toc-el-modelo-mental-del-sra-toolkit" class="nav-link active" data-scroll-target="#el-modelo-mental-del-sra-toolkit">El modelo mental del SRA Toolkit</a></li>
+  <li><a href="#instalación-y-configuración" id="toc-instalación-y-configuración" class="nav-link" data-scroll-target="#instalación-y-configuración"><span class="header-section-number">7.1</span> Instalación y configuración</a>
+  <ul>
+  <li><a href="#instalación-en-linuxmacos" id="toc-instalación-en-linuxmacos" class="nav-link" data-scroll-target="#instalación-en-linuxmacos"><span class="header-section-number">7.1.1</span> Instalación en Linux/macOS</a></li>
+  <li><a href="#instalación-en-windows---wsl-recomendado" id="toc-instalación-en-windows---wsl-recomendado" class="nav-link" data-scroll-target="#instalación-en-windows---wsl-recomendado"><span class="header-section-number">7.1.2</span> Instalación en Windows - WSL (recomendado)</a>
+  <ul class="collapse">
+  <li><a href="#paso-1---habilitar-wsl" id="toc-paso-1---habilitar-wsl" class="nav-link" data-scroll-target="#paso-1---habilitar-wsl">Paso 1 - Habilitar WSL</a></li>
+  <li><a href="#paso-2---abrir-la-terminal-ubuntu-e-instalar-dependencias" id="toc-paso-2---abrir-la-terminal-ubuntu-e-instalar-dependencias" class="nav-link" data-scroll-target="#paso-2---abrir-la-terminal-ubuntu-e-instalar-dependencias">Paso 2 - Abrir la terminal Ubuntu e instalar dependencias</a></li>
+  <li><a href="#paso-3---instalar-sra-toolkit-dentro-de-wsl" id="toc-paso-3---instalar-sra-toolkit-dentro-de-wsl" class="nav-link" data-scroll-target="#paso-3---instalar-sra-toolkit-dentro-de-wsl">Paso 3 - Instalar SRA Toolkit dentro de WSL</a></li>
+  <li><a href="#paso-4---verificar-e-integrar-con-el-sistema-de-archivos-de-windows" id="toc-paso-4---verificar-e-integrar-con-el-sistema-de-archivos-de-windows" class="nav-link" data-scroll-target="#paso-4---verificar-e-integrar-con-el-sistema-de-archivos-de-windows">Paso 4 - Verificar e integrar con el sistema de archivos de Windows</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#prefetch-y-fasterq-dump" id="toc-prefetch-y-fasterq-dump" class="nav-link" data-scroll-target="#prefetch-y-fasterq-dump"><span class="header-section-number">7.2</span> <code>prefetch</code> y <code>fasterq-dump</code></a>
+  <ul>
+  <li><a href="#qué-es-un-accession" id="toc-qué-es-un-accession" class="nav-link" data-scroll-target="#qué-es-un-accession"><span class="header-section-number">7.2.1</span> ¿Qué es un accession?</a></li>
+  <li><a href="#por-qué-hay-dos-pasos" id="toc-por-qué-hay-dos-pasos" class="nav-link" data-scroll-target="#por-qué-hay-dos-pasos"><span class="header-section-number">7.2.2</span> ¿Por qué hay dos pasos?</a></li>
+  <li><a href="#descarga-con-prefetch" id="toc-descarga-con-prefetch" class="nav-link" data-scroll-target="#descarga-con-prefetch"><span class="header-section-number">7.2.3</span> Descarga con <code>prefetch</code></a></li>
+  <li><a href="#convertir-a-fastq-con-fasterq-dump" id="toc-convertir-a-fastq-con-fasterq-dump" class="nav-link" data-scroll-target="#convertir-a-fastq-con-fasterq-dump"><span class="header-section-number">7.2.4</span> Convertir a FASTQ con <code>fasterq-dump</code></a></li>
+  <li><a href="#descarga-directa-en-la-nube-sin-prefetch" id="toc-descarga-directa-en-la-nube-sin-prefetch" class="nav-link" data-scroll-target="#descarga-directa-en-la-nube-sin-prefetch"><span class="header-section-number">7.2.5</span> Descarga directa en la nube (sin prefetch)</a></li>
+  </ul></li>
+  <li><a href="#vdb-validate-y-metadatos" id="toc-vdb-validate-y-metadatos" class="nav-link" data-scroll-target="#vdb-validate-y-metadatos"><span class="header-section-number">7.3</span> <code>vdb-validate</code> y Metadatos</a>
+  <ul>
+  <li><a href="#validación-de-archivos" id="toc-validación-de-archivos" class="nav-link" data-scroll-target="#validación-de-archivos"><span class="header-section-number">7.3.1</span> Validación de archivos</a></li>
+  <li><a href="#información-y-metadatos-con-sam-dump" id="toc-información-y-metadatos-con-sam-dump" class="nav-link" data-scroll-target="#información-y-metadatos-con-sam-dump"><span class="header-section-number">7.3.2</span> Información y metadatos con <code>sam-dump</code></a></li>
+  </ul></li>
+  <li><a href="#descargas-en-lote-batch" id="toc-descargas-en-lote-batch" class="nav-link" data-scroll-target="#descargas-en-lote-batch"><span class="header-section-number">7.4</span> Descargas en Lote (Batch)</a>
+  <ul>
+  <li><a href="#de-una-muestra-a-muchas-muestras" id="toc-de-una-muestra-a-muchas-muestras" class="nav-link" data-scroll-target="#de-una-muestra-a-muchas-muestras"><span class="header-section-number">7.4.1</span> De una muestra a muchas muestras</a></li>
+  <li><a href="#scripts-para-múltiples-accessions" id="toc-scripts-para-múltiples-accessions" class="nav-link" data-scroll-target="#scripts-para-múltiples-accessions"><span class="header-section-number">7.4.2</span> Scripts para múltiples accessions</a>
+  <ul class="collapse">
+  <li><a href="#método-1-loop-con-una-lista-de-accessions" id="toc-método-1-loop-con-una-lista-de-accessions" class="nav-link" data-scroll-target="#método-1-loop-con-una-lista-de-accessions">Método 1: Loop con una lista de accessions</a></li>
+  <li><a href="#método-2-con-gnu-parallel-más-eficiente" id="toc-método-2-con-gnu-parallel-más-eficiente" class="nav-link" data-scroll-target="#método-2-con-gnu-parallel-más-eficiente">Método 2: Con GNU <code>parallel</code> (más eficiente)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#método-3-con-manejo-de-errores-y-reintentos" id="toc-método-3-con-manejo-de-errores-y-reintentos" class="nav-link" data-scroll-target="#método-3-con-manejo-de-errores-y-reintentos"><span class="header-section-number">8</span> Método 3: Con manejo de errores y reintentos</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SRA Toolkit</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="el-modelo-mental-del-sra-toolkit" class="level3 unnumbered idea">
+<h3 class="unnumbered anchored" data-anchor-id="el-modelo-mental-del-sra-toolkit">El modelo mental del SRA Toolkit</h3>
+<p>Los datos públicos de secuenciación en formato <strong>Sequence Read Archive (SRA)</strong> que están en NCBI se organizan mediante <strong>accessions</strong> que permiten identificar estudios, experimentos y corridas de secuenciación.</p>
+<p>Una forma útil de visualizar el flujo es:</p>
+<pre class="text"><code>accession
+   ↓
+prefetch
+   ↓
+archivo SRA local
+   ↓
+vdb-validate
+   ↓
+fasterq-dump
+   ↓
+FASTQ
+   ↓
+análisis</code></pre>
+<p>Cada paso tiene una función diferente: descargamos los datos, comprobamos que la descarga sea válida y finalmente los convertimos al formato que utilizaremos para el análisis.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/sra_workflow.png" class="img-fluid figure-img" style="width:120.0%"></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Descarga no significa análisis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un archivo descargado correctamente no garantiza que esté listo para procesarse. La validación, la comprobación del espacio disponible y la organización de los archivos forman parte del pipeline.</p>
+</div>
+</div>
+</section>
+<p>El <strong>SRA Toolkit</strong> (Sequence Read Archive Toolkit) del NCBI permite descargar datos de secuenciación directamente desde el archivo SRA. Es la herramienta estándar para acceder a datos públicos de NGS, proporciona las herramientas necesarias para realizar este proceso desde la línea de comandos.</p>
+<section id="instalación-y-configuración" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="instalación-y-configuración"><span class="header-section-number">7.1</span> Instalación y configuración</h2>
+<p>Antes de utilizar las herramientas del SRA Toolkit necesitamos instalarlas y configurar el entorno.</p>
+<p>En herramientas que trabajan con archivos de secuenciación grandes, también es importante considerar dónde se almacenarán las descargas y cuánto espacio estará disponible para los archivos temporales y los FASTQ resultantes.</p>
+<p>En esta sección veremos las opciones principales para Linux/macOS y Windows.</p>
+<section id="instalación-en-linuxmacos" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="instalación-en-linuxmacos"><span class="header-section-number">7.1.1</span> Instalación en Linux/macOS</h3>
+<p>Una de las formas más sencillas de instalar SRA Toolkit es mediante Conda. También es posible descargar directamente los binarios desde el NCBI.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Opción 1: Conda (recomendada) ---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> bioconda sra-tools</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Opción 2: Descarga directa (Linux) ---</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar la versión más reciente en: https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> sratoolkit.current-ubuntu64.tar.gz</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:<span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/sratoolkit.<span class="pp">*</span>/bin</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Verificar instalación ---</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fastq-dump</span> <span class="at">--version</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="instalación-en-windows---wsl-recomendado" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="instalación-en-windows---wsl-recomendado"><span class="header-section-number">7.1.2</span> Instalación en Windows - WSL (recomendado)</h3>
+<p>Si utilizas Windows y el tutorial está basado principalmente en comandos Bash, <strong>WSL (Windows Subsystem for Linux)</strong> proporciona un entorno Ubuntu dentro de Windows y permite trabajar con el SRA Toolkit utilizando comandos similares a los de Linux.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Por qué utilizar WSL?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>WSL permite trabajar con Bash y herramientas como Conda dentro de un entorno Linux, lo que resulta especialmente útil cuando posteriormente trabajes con servidores o clústeres bioinformáticos.</p>
+</div>
+</div>
+<section id="paso-1---habilitar-wsl" class="level4">
+<h4 class="anchored" data-anchor-id="paso-1---habilitar-wsl">Paso 1 - Habilitar WSL</h4>
+<p>Abre PowerShell como administrador:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instala Ubuntu por defecto; requiere reiniciar el equipo</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar la versión instalada</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>list <span class="op">--</span>verbose</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="paso-2---abrir-la-terminal-ubuntu-e-instalar-dependencias" class="level4">
+<h4 class="anchored" data-anchor-id="paso-2---abrir-la-terminal-ubuntu-e-instalar-dependencias">Paso 2 - Abrir la terminal Ubuntu e instalar dependencias</h4>
+<p>Después de instalar WSL, abre la terminal de Ubuntu y continúa con la instalación.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt-get upgrade <span class="at">-y</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> libxml2 curl wget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="paso-3---instalar-sra-toolkit-dentro-de-wsl" class="level4">
+<h4 class="anchored" data-anchor-id="paso-3---instalar-sra-toolkit-dentro-de-wsl">Paso 3 - Instalar SRA Toolkit dentro de WSL</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Opción A: conda/mamba (más sencillo)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> bioconda sra-tools</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Opción B: descarga directa del binario Linux</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> sratoolkit.tar.gz <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> sratoolkit.tar.gz</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$PATH</span>:<span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/sratoolkit.<span class="pp">*</span>/bin</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar al PATH permanentemente</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH=$PATH:~/sratoolkit/bin'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="paso-4---verificar-e-integrar-con-el-sistema-de-archivos-de-windows" class="level4">
+<h4 class="anchored" data-anchor-id="paso-4---verificar-e-integrar-con-el-sistema-de-archivos-de-windows">Paso 4 - Verificar e integrar con el sistema de archivos de Windows</h4>
+<p>También podemos acceder desde WSL a los archivos almacenados en Windows mediante <code>/mnt/c/</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar que funciona</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> <span class="at">--version</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> <span class="at">--version</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Por ejemplo, guardar FASTQs en el Escritorio de Windows:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR16885503 <span class="at">--outdir</span> /mnt/c/Users/<span class="va">$USER</span>/Desktop/fastq/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Ejercicio 1:</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>¿Cuál de estos comandos debes ejecutar en PowerShell (como Administrador) para habilitar WSL e instalar Ubuntu?</strong></p>
+<ol type="a">
+<li><code>wsl --enable ubuntu</code><br>
+</li>
+<li><code>Set-WSL -Install -Distribution Ubuntu</code><br>
+</li>
+<li><strong><code>wsl --install</code></strong><br>
+</li>
+<li><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code></li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>La respuesta correcta es <strong>c)</strong>. Desde Windows 10 (build 19041) y Windows 11, el comando <code>wsl --install</code> hace todo en un paso: activa el componente WSL, instala el kernel de Linux y descarga Ubuntu como distribución por defecto. Después hay que reiniciar el equipo. La opción <strong>d)</strong> era la forma antigua (manual) antes de esta actualización.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="prefetch-y-fasterq-dump" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="prefetch-y-fasterq-dump"><span class="header-section-number">7.2</span> <code>prefetch</code> y <code>fasterq-dump</code></h2>
+<p>Antes de utilizar estas herramientas, necesitamos distinguir entre el <strong>accession</strong>, el archivo SRA y el FASTQ.</p>
+<section id="qué-es-un-accession" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="qué-es-un-accession"><span class="header-section-number">7.2.1</span> ¿Qué es un accession?</h3>
+<p>Un <em>accession</em> es el identificador utilizado para localizar un recurso dentro de las bases de datos del NCBI. Los <em>runs</em> del SRA suelen identificarse con códigos que comienzan con <code>SRR</code>.</p>
+<p>Por ejemplo:</p>
+<pre class="text"><code>SRR12345678</code></pre>
+</section>
+<section id="por-qué-hay-dos-pasos" class="level3 idea" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="por-qué-hay-dos-pasos"><span class="header-section-number">7.2.2</span> ¿Por qué hay dos pasos?</h3>
+<p><code>prefetch</code> y <code>fasterq-dump</code> cumplen funciones diferentes.</p>
+<ul>
+<li><strong><code>prefetch</code></strong> descarga el objeto SRA y lo almacena localmente.</li>
+<li><strong><code>fasterq-dump</code></strong> convierte esos datos a FASTQ.</li>
+</ul>
+<p>Separar ambas operaciones permite validar y reutilizar la descarga antes de generar los FASTQ. También hace más fácil reiniciar un pipeline si la conversión falla sin tener que volver a descargar los datos.</p>
+<p>El patrón conceptual es:</p>
+<pre class="text"><code>accession → prefetch → archivo SRA local → fasterq-dump → FASTQ</code></pre>
+</section>
+<section id="descarga-con-prefetch" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="descarga-con-prefetch"><span class="header-section-number">7.2.3</span> Descarga con <code>prefetch</code></h3>
+<p>Una vez que tenemos el accession, podemos descargar el run correspondiente.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar un SRA run (formato .sra)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar múltiples accessions</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678 SRR12345679 SRR12345680</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar desde una lista de accessions (un ID por línea)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> <span class="at">--option-file</span> lista_sra.txt</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificar directorio de salida</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678 <span class="at">--output-directory</span> ./mis_datos/</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Limitar el tamaño máximo de descarga (en KB, aquí 20 GB)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678 <span class="at">--max-size</span> 20000000</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar integridad después de descargar</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> <span class="at">--verify</span> yes SRR12345678</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="convertir-a-fastq-con-fasterq-dump" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="convertir-a-fastq-con-fasterq-dump"><span class="header-section-number">7.2.4</span> Convertir a FASTQ con <code>fasterq-dump</code></h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir .sra a FASTQ (automáticamente detecta paired/single-end)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR12345678</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificar directorio de salida</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR12345678 <span class="at">--outdir</span> ./fastq_files/</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilizar varios hilos (por defecto: 6)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR12345678 <span class="at">--threads</span> 8</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir y después comprimir</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR12345678 <span class="at">--outdir</span> ./fastq_files/ <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gzip</span> ./fastq_files/SRR12345678<span class="pp">*</span>.fastq</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline: prefetch + fasterq-dump en un paso (descargar y comprimir)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678 <span class="kw">&amp;&amp;</span> <span class="ex">fasterq-dump</span> SRR12345678 <span class="at">--outdir</span> ./fastq/</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Para datos paired-end, genera automáticamente:</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># SRR12345678_1.fastq (R1)</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># SRR12345678_2.fastq (R2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En el primer bloque trabajamos con la descarga. En el segundo utilizamos el archivo descargado para generar los FASTQ que podremos utilizar posteriormente en nuestro pipeline de análisis.</p>
+<p>En datos <em>paired-end</em>, los reads de cada pareja se almacenan normalmente en archivos separados, como <code>R1</code> y <code>R2</code>.</p>
+</section>
+<section id="descarga-directa-en-la-nube-sin-prefetch" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="descarga-directa-en-la-nube-sin-prefetch"><span class="header-section-number">7.2.5</span> Descarga directa en la nube (sin prefetch)</h3>
+<p>En algunos entornos puede ser conveniente trabajar directamente con los datos disponibles en la nube, evitando almacenar previamente todo el objeto SRA de forma local. Esta opción depende del entorno y del tipo de datos con el que estemos trabajando.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descargar directamente sin usar caché local (útil en la nube)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> <span class="at">--ngc</span> prj_prot.ngc SRR12345678  <span class="co"># datos controlados de acceso</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando fasterq-dump directo desde cloud</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span> SRR12345678 <span class="at">--outdir</span> . <span class="at">--progress</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Ejercicio 2:</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p><strong>¿Cuál es la secuencia correcta para descargar y convertir datos del SRA?</strong></p>
+<ol type="a">
+<li><code>fasterq-dump SRR123 → prefetch SRR123</code><br>
+</li>
+<li><strong><code>prefetch SRR123 → fasterq-dump SRR123</code></strong><br>
+</li>
+<li><code>sra-download SRR123 → fastq-convert SRR123</code><br>
+</li>
+<li>Es indiferente el orden, ambas herramientas son independientes</li>
+</ol>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>La respuesta correcta es <strong>b)</strong>.</p>
+<p>El flujo correcto es: 1. <code>prefetch</code> descarga el archivo <code>.sra</code> comprimido y validado al caché local 2. <code>fasterq-dump</code> convierte el archivo <code>.sra</code> local a formato FASTQ</p>
+<p>Si se usa <code>fasterq-dump</code> directamente sin <code>prefetch</code>, se descargará de todas formas, pero es menos eficiente y propenso a errores de red. El workflow <code>prefetch → fasterq-dump</code> es más robusto.</p>
+</div>
+</div>
+</div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Ejercicio 3:</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>Completa el script para descargar y convertir <strong>una lista de 5 accessions</strong> desde <code>accessions.txt</code>, usando 8 hilos y guardando los FASTQ comprimidos en <code>./data/fastq/</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ./data/fastq</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">acc</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Procesando: </span><span class="va">$acc</span><span class="st">"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">prefetch</span> ___ <span class="at">--output-directory</span> ./data/</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">fasterq-dump</span> ./data/<span class="va">${acc}</span> <span class="dt">\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--outdir</span> ./data/fastq/ <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--threads</span> ___ <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--progress</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Comprimir los FASTQ generados</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">___</span> ./data/fastq/<span class="va">${acc}</span><span class="pp">*</span>.fastq</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> ___</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ./data/fastq</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="va">acc</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Procesando: </span><span class="va">$acc</span><span class="st">"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">prefetch</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="at">--output-directory</span> ./data/</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">fasterq-dump</span> <span class="st">"./data/</span><span class="va">${acc}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--outdir</span> ./data/fastq/ <span class="dt">\</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--threads</span> 8 <span class="dt">\</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--progress</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Comprimir los FASTQ generados</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gzip</span> ./data/fastq/<span class="va">${acc}</span><span class="pp">*</span>.fastq</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> accessions.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="vdb-validate-y-metadatos" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="vdb-validate-y-metadatos"><span class="header-section-number">7.3</span> <code>vdb-validate</code> y Metadatos</h2>
+<p>Descargar un archivo no significa automáticamente que podamos confiar en él. Una descarga interrumpida o dañada puede producir errores mucho después, durante una etapa de análisis que nada tiene que ver con la descarga. <code>vdb-validate</code> permite comprobar la integridad de los datos del SRA antes de continuar.</p>
+<p>Los metadatos también son importantes. El accession nos permite localizar un recurso, pero para diseñar un análisis necesitamos saber qué organismo corresponde a cada muestra, qué experimento representa y qué condiciones experimentales se describieron.</p>
+<p>En otras palabras, <strong>los datos de secuenciación y sus metadatos forman parte del mismo experimento</strong>.</p>
+<section id="validación-de-archivos" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="validación-de-archivos"><span class="header-section-number">7.3.1</span> Validación de archivos</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validar la integridad de un archivo .sra</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vdb-validate</span> SRR12345678.sra</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Validar todos los SRA en el caché</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vdb-validate</span> ~/ncbi/public/sra/</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener información detallada de un accession</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">sra-stat</span> <span class="at">--xml</span> <span class="at">--statistics</span> SRR12345678</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar un read de prueba</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fastq-dump</span> <span class="at">-X</span> 1 <span class="at">--stdout</span> SRR12345678  <span class="co"># imprime solo el primer read</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="información-y-metadatos-con-sam-dump" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="información-y-metadatos-con-sam-dump"><span class="header-section-number">7.3.2</span> Información y metadatos con <code>sam-dump</code></h3>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener metadatos del experimento</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span> SRR12345678</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sam-dump</span> <span class="at">--header</span> SRR12345678 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-50</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener solo el header SAM (metadatos de secuenciación)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">sam-dump</span> <span class="at">--header-only</span> SRR12345678</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver los primeros N reads como SAM</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="ex">sam-dump</span> SRR12345678 <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>vdb-validate</code> se utiliza para comprobar que los datos descargados pueden leerse correctamente. Las herramientas de estadísticas y <code>sam-dump</code> permiten consultar información adicional del run.</p>
+<p>No todas estas herramientas cumplen la misma función: algunas sirven para validar, otras para consultar información y otras para inspeccionar los datos.</p>
+<hr>
+</section>
+</section>
+<section id="descargas-en-lote-batch" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="descargas-en-lote-batch"><span class="header-section-number">7.4</span> Descargas en Lote (Batch)</h2>
+<section id="de-una-muestra-a-muchas-muestras" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="de-una-muestra-a-muchas-muestras"><span class="header-section-number">7.4.1</span> De una muestra a muchas muestras</h3>
+<p>Hasta ahora hemos trabajado con un solo accession. En un estudio real podemos tener decenas o incluso cientos de runs.</p>
+<p>Copiar y pegar los mismos comandos para cada muestra no es una buena estrategia: además de ser tedioso, hace más difícil repetir el análisis y detectar errores.</p>
+<p>Una alternativa es guardar los accessions en un archivo y utilizar Bash para procesarlos automáticamente.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧠 Una lista de accessions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un archivo como <code>accessions.txt</code> permite separar <strong>los datos que queremos procesar</strong> de <strong>la lógica que los procesa</strong>.</p>
+<p>Esto permite:</p>
+<ul>
+<li>volver a ejecutar el pipeline con otra lista;</li>
+<li>revisar qué muestras forman parte del análisis;</li>
+<li>registrar errores y éxitos;</li>
+<li>añadir paralelización sin reescribir todo el procedimiento.</li>
+</ul>
+</div>
+</div>
+<p>En un estudio real podemos trabajar con decenas o cientos de accessions. En lugar de repetir los mismos comandos para cada muestra, podemos utilizar loops, funciones Bash o <code>GNU parallel</code> para automatizar el proceso.</p>
+<p>Un buen script de <em>batch</em> también debería indicar qué muestra se está procesando, registrar los errores y permitir continuar el trabajo cuando sea posible.</p>
+</section>
+<section id="scripts-para-múltiples-accessions" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="scripts-para-múltiples-accessions"><span class="header-section-number">7.4.2</span> Scripts para múltiples accessions</h3>
+<section id="método-1-loop-con-una-lista-de-accessions" class="level4">
+<h4 class="anchored" data-anchor-id="método-1-loop-con-una-lista-de-accessions">Método 1: Loop con una lista de accessions</h4>
+<p>Un <code>while</code> permite recorrer el archivo una línea a la vez y ejecutar las mismas operaciones para cada accession.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> accessions.txt <span class="kw">|</span> <span class="cf">while</span> <span class="bu">read</span> <span class="va">acc</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"[</span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">] Descargando </span><span class="va">$acc</span><span class="st">..."</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">prefetch</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="dv">2</span><span class="op">&gt;&gt;</span> prefetch_errors.log <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">fasterq-dump</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="at">--outdir</span> ./fastq/ <span class="at">--threads</span> 4 <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gzip</span> ./fastq/<span class="va">${acc}</span><span class="pp">*</span>.fastq</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"[</span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">] Completado: </span><span class="va">$acc</span><span class="st">"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="método-2-con-gnu-parallel-más-eficiente" class="level4">
+<h4 class="anchored" data-anchor-id="método-2-con-gnu-parallel-más-eficiente">Método 2: Con GNU <code>parallel</code> (más eficiente)</h4>
+<p>Cuando tenemos muchas muestras, podemos ejecutar varios procesos al mismo tiempo utilizando GNU <code>parallel</code>.</p>
+<pre><code>cat accessions.txt | parallel -j3 \
+  "prefetch {} &amp;&amp; fasterq-dump {} --outdir ./fastq/ --threads 4 &amp;&amp; gzip ./fastq/{}*.fastq"</code></pre>
+<p>Aquí <code>-j3</code> indica que se pueden ejecutar hasta tres procesos simultáneamente.</p>
+</section>
+</section>
+</section>
+<section id="método-3-con-manejo-de-errores-y-reintentos" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Método 3: Con manejo de errores y reintentos</h1>
+<p>También podemos crear una función que intente nuevamente una descarga cuando ocurre un error.</p>
+<pre><code>download_sra() {
+  acc=$1
+  max_retries=3
+  attempt=1
+  while [ $attempt -le $max_retries ]; do
+    echo "Intento $attempt para $acc"
+    prefetch "$acc" --output-directory ./sra/ &amp;&amp; \
+    fasterq-dump "./sra/$acc" --outdir ./fastq/ --threads 6 &amp;&amp; \
+    gzip ./fastq/${acc}*.fastq &amp;&amp; \
+    echo "$acc" &gt;&gt; descargas_exitosas.txt &amp;&amp; return 0
+    ((attempt++))
+    sleep 10
+  done
+  echo "$acc" &gt;&gt; descargas_fallidas.txt
+  return 1
+}
+export -f download_sra
+cat accessions.txt | parallel -j2 download_sra {}</code></pre>
+<p>Aquí ya no estamos ejecutando simplemente un comando, sino construyendo un pequeño pipeline automatizado.</p>
+<p>Para cada accession:</p>
+<ol type="1">
+<li>se intenta descargar el SRA;</li>
+<li>se convierte a FASTQ;</li>
+<li>se comprimen los archivos;</li>
+<li>se registra si el proceso terminó correctamente;</li>
+<li>si ocurre un error, se vuelve a intentar hasta alcanzar el número máximo de intentos.</li>
+</ol>
+<p>Esta estructura permite trabajar con muchas muestras sin tener que escribir manualmente cada comando.</p>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Ejercicio 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>Tienes el archivo <code>SraRunTable.txt</code> descargado del NCBI SRA con metadatos de un estudio. Construye un pipeline que:</p>
+<ol type="1">
+<li>Extraiga los accession numbers (columna <code>Run</code>) de las muestras <em>Homo sapiens</em> en condición <strong>“treated”</strong></li>
+<li>Descargue los FASTQs correspondientes en paralelo (máx. 3 simultáneos)</li>
+<li>Verifique la integridad de cada descarga</li>
+<li>Genere un reporte con: accession, número de reads, tamaño del archivo</li>
+</ol>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Extraer accessions de muestras humanas en condición "treated"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (asumiendo columnas: Run, Organism, treatment)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F</span><span class="st">','</span> <span class="st">'NR&gt;1 &amp;&amp; $5=="Homo sapiens" &amp;&amp; $8=="treated" {print $1}'</span> <span class="dt">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  SraRunTable.txt <span class="op">&gt;</span> accessions_treated.txt</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Accessions a descargar: </span><span class="va">$(</span><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> accessions_treated.txt<span class="va">)</span><span class="st">"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Función de descarga con verificación</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">download_and_validate()</span> <span class="kw">{</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="va">acc</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"[</span><span class="va">$(</span><span class="fu">date</span> +%H:%M:%S<span class="va">)</span><span class="st">] Iniciando </span><span class="va">$acc</span><span class="st">"</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Descargar</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">prefetch</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="at">--output-directory</span> ./sra/ <span class="kw">||</span> <span class="kw">{</span> <span class="bu">echo</span> <span class="st">"ERROR prefetch </span><span class="va">$acc</span><span class="st">"</span><span class="kw">;</span> <span class="cf">return</span> <span class="dv">1</span><span class="kw">;</span> <span class="kw">}</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Validar</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="ex">vdb-validate</span> ./sra/<span class="va">$acc</span> <span class="kw">||</span> <span class="kw">{</span> <span class="bu">echo</span> <span class="st">"ERROR validación </span><span class="va">$acc</span><span class="st">"</span><span class="kw">;</span> <span class="cf">return</span> <span class="dv">1</span><span class="kw">;</span> <span class="kw">}</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convertir</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">fasterq-dump</span> ./sra/<span class="va">$acc</span> <span class="at">--outdir</span> ./fastq/ <span class="at">--threads</span> 4 <span class="kw">||</span> <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gzip</span> ./fastq/<span class="va">${acc}</span><span class="pp">*</span>.fastq</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"</span><span class="va">$acc</span><span class="st"> completado"</span> <span class="op">&gt;&gt;</span> progreso.log</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="at">-f</span> <span class="va">download_and_validate</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Ejecutar en paralelo (máx 3)</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> accessions_treated.txt <span class="kw">|</span> <span class="ex">parallel</span> <span class="at">-j3</span> download_and_validate {}</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Generar reporte</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"Accession\tReads\tTamaño_MB"</span> <span class="op">&gt;</span> reporte_descargas.tsv</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> ./fastq/<span class="pp">*</span>.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="va">acc</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'_'</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'.'</span> <span class="at">-f1</span><span class="va">)</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  <span class="va">reads</span><span class="op">=</span><span class="va">$(</span><span class="fu">zcat</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print $1/4}'</span><span class="va">)</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>  <span class="va">size</span><span class="op">=</span><span class="va">$(</span><span class="fu">du</span> <span class="at">-m</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1</span><span class="va">)</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"</span><span class="va">$acc</span><span class="st">\t</span><span class="va">$reads</span><span class="st">\t</span><span class="va">$size</span><span class="st">"</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&gt;&gt;</span> reporte_descargas.tsv</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> reporte_descargas.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./gff3.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./e_utilities.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">E-utilities (NCBI)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Roberto Álvarez Martínez y Mayela Fosado Mendoza">
 
-<title>Herramientas para Bioinformática</title>
+<title>Herramientas para Bioinformática - 5&nbsp; seqtk Procesamiento especializado de FASTA/FASTQ</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bash_one_liners.html" rel="next">
+<link href="./gff3.html" rel="next">
+<link href="./automatization.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./seqtk.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">`seqtk` Procesamiento especializado de FASTA/FASTQ</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
@@ -165,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./seqtk.html" class="sidebar-item-text sidebar-link">
+  <a href="./seqtk.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><code>seqtk</code> Procesamiento especializado de FASTA/FASTQ</span></span></a>
   </div>
 </li>
@@ -215,12 +215,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
-  <ul>
-  <li><a href="#qué-encontrarás-aquí" id="toc-qué-encontrarás-aquí" class="nav-link" data-scroll-target="#qué-encontrarás-aquí">¿Qué encontrarás aquí?</a></li>
-  <li><a href="#una-idea-importante" id="toc-una-idea-importante" class="nav-link" data-scroll-target="#una-idea-importante">Una idea importante</a></li>
-  <li><a href="#cómo-leer-los-ejemplos" id="toc-cómo-leer-los-ejemplos" class="nav-link" data-scroll-target="#cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</a></li>
-  </ul></li>
+  <li><a href="#conversiones-y-transformaciones" id="toc-conversiones-y-transformaciones" class="nav-link active" data-scroll-target="#conversiones-y-transformaciones"><span class="header-section-number">5.1</span> Conversiones y transformaciones</a></li>
+  <li><a href="#subconjuntos-y-extracción" id="toc-subconjuntos-y-extracción" class="nav-link" data-scroll-target="#subconjuntos-y-extracción"><span class="header-section-number">5.2</span> Subconjuntos y extracción</a></li>
+  <li><a href="#recorte-de-calidad" id="toc-recorte-de-calidad" class="nav-link" data-scroll-target="#recorte-de-calidad"><span class="header-section-number">5.3</span> Recorte de calidad</a></li>
+  <li><a href="#separación-de-fastq-interleaved" id="toc-separación-de-fastq-interleaved" class="nav-link" data-scroll-target="#separación-de-fastq-interleaved"><span class="header-section-number">5.4</span> Separación de FASTQ <em>interleaved</em></a></li>
   </ul>
 </nav>
     </div>
@@ -229,26 +227,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Herramientas para Bioinformática</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><code>seqtk</code> Procesamiento especializado de FASTA/FASTQ</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Roberto Álvarez Martínez y Mayela Fosado Mendoza </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Tuesday, August 11, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -256,137 +242,149 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="introducción" class="level1 unnumbered">
-<h1 class="unnumbered">Introducción</h1>
+<p><code>seqtk</code> es una herramienta especializada para trabajar con archivos FASTA y FASTQ. Con ella podemos extraer secuencias, convertir formatos, hacer muestreos aleatorios y recortar reads.</p>
+<p>Como <code>seqtk</code> ya conoce la estructura de estos formatos, muchas operaciones que requerirían varios comandos de Unix pueden hacerse de forma más sencilla.</p>
+<p>En esta sección veremos algunas de las operaciones más comunes de <code>seqtk</code> y cómo utilizarlas desde la terminal.</p>
+<div class="idea">
+<p><strong>Regla práctica:</strong> si una operación implica conocer la estructura interna de FASTQ, considera primero si una herramienta especializada como <code>seqtk</code> puede hacerla de forma más clara y segura.</p>
+</div>
+<p><a href="https://github.com/lh3/seqtk">seqtk</a> es una herramienta rápida para procesar archivos FASTA/FASTQ, con soporte nativo para archivos comprimidos con gzip.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figures/course_content.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Ilustración de Allison Horst.</figcaption>
+<p><img src="figures/seqtk.png" class="img-fluid figure-img" style="width:60.0%"></p>
 </figure>
 </div>
-<p>Muchas de las herramientas empleadas en bioinformática funcionan desde la línea de comandos. Aunque al principio puede parecer intimidante, la terminal es una herramienta poderosa que facilita el análisis de datos y la automatización de tareas.</p>
-<p>Este tutorial te guiará paso a paso por los comandos esenciales. Lo importante no es memorizarlos, sino entender qué hacen, cuándo utilizarlos y practicar con ejemplos hasta que formen parte de tu flujo de trabajo. Aquí el objetivo es dar el siguiente paso: <strong>usar la terminal para resolver problemas reales de bioinformática</strong>.</p>
-<section id="qué-encontrarás-aquí" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="qué-encontrarás-aquí">¿Qué encontrarás aquí?</h2>
-<p>El contenido está organizado en diferentes secciones que abarcan desde los fundamentos de Bash hasta herramientas ampliamente utilizadas en bioinformática.</p>
-<table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 45%">
-<col style="width: 34%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Sección</th>
-<th>Contenido principal</th>
-<th>Propósito</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Manipulación de texto</td>
-<td><code>awk</code>, <code>sed</code>, <code>grep</code>, <code>cut</code>, <code>sort</code>, <code>uniq</code>, <code>wc</code>, <code>tr</code>, <code>paste</code></td>
-<td>Aprender a transformar y resumir texto</td>
-</tr>
-<tr class="even">
-<td>Datos biológicos</td>
-<td>FASTA, FASTQ, VCF, BAM, BLAST, paired-end</td>
-<td>Aplicar las herramientas a formatos reales</td>
-</tr>
-<tr class="odd">
-<td>Automatización</td>
-<td><code>find</code>, <code>xargs</code>, loops, GNU <code>parallel</code></td>
-<td>Trabajar con muchos archivos y muestras</td>
-</tr>
-<tr class="even">
-<td><code>seqtk</code></td>
-<td>FASTA/FASTQ</td>
-<td>Usar herramientas especializadas para secuencias</td>
-</tr>
-<tr class="odd">
-<td>GFF3</td>
-<td>Anotaciones</td>
-<td>Explorar y analizar anotaciones genómicas</td>
-</tr>
-<tr class="even">
-<td>SRA Toolkit</td>
-<td><code>prefetch</code>, <code>fasterq-dump</code>, <code>vdb-validate</code></td>
-<td>Obtener datos públicos de secuenciación</td>
-</tr>
-<tr class="odd">
-<td>E-utilities</td>
-<td><code>einfo</code>, <code>esearch</code>, <code>efetch</code>, <code>elink</code>, <code>xtract</code></td>
-<td>Consultar y navegar por NCBI</td>
-</tr>
-<tr class="even">
-<td>NCBI Datasets</td>
-<td><code>datasets</code>, <code>dataformat</code></td>
-<td>Descargar recursos y metadatos organizados</td>
-</tr>
-<tr class="odd">
-<td><code>gget</code></td>
-<td>Python + CLI</td>
-<td>Consultar recursos genómicos y realizar análisis</td>
-</tr>
-<tr class="even">
-<td>Integración de herramientas</td>
-<td>Bash + NCBI + SRA + gget</td>
-<td>Integrar las herramientas en un flujo completo</td>
-</tr>
-<tr class="odd">
-<td>Resumen y recursos</td>
-<td>Referencia rápida y recursos</td>
-<td>Repasar y continuar aprendiendo</td>
-</tr>
-</tbody>
-</table>
+<section id="conversiones-y-transformaciones" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="conversiones-y-transformaciones"><span class="header-section-number">5.1</span> Conversiones y transformaciones</h2>
+<p><code>seqtk</code> permite convertir y modificar archivos FASTA y FASTQ de diferentes maneras. Por ejemplo, podemos convertir un FASTQ a FASTA, cambiar el formato de las líneas o generar el complemento reverso de una secuencia.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># FASTQ → FASTA</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-a</span> in.fq.gz <span class="op">&gt;</span> out.fa</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># FASTQ Illumina 1.3+ → FASTA, enmascarar bases con calidad &lt; 20</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-aQ64</span> <span class="at">-q20</span> in.fq <span class="op">&gt;</span> out.fa         <span class="co"># minúsculas</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-aQ64</span> <span class="at">-q20</span> <span class="at">-n</span> N in.fq <span class="op">&gt;</span> out.fa    <span class="co"># reemplazar con N</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Doblar líneas largas de FASTA a 60 caracteres</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-Cl60</span> in.fa <span class="op">&gt;</span> out.fa</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Complemento reverso</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-r</span> in.fq <span class="op">&gt;</span> out.fq</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># FASTQ multilínea → FASTQ de 4 líneas</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-l0</span> in.fq <span class="op">&gt;</span> out.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En estos ejemplos, la opción utilizada después de <code>seq</code> determina la transformación que se realizará. Por ejemplo, <code>-a</code> convierte la salida a FASTA, mientras que <code>-r</code> genera el complemento reverso.</p>
+</section>
+<section id="subconjuntos-y-extracción" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="subconjuntos-y-extracción"><span class="header-section-number">5.2</span> Subconjuntos y extracción</h2>
+<p>Una de las ventajas de <code>seqtk</code> es que permite trabajar solo con una parte de las secuencias de un archivo. Podemos extraer reads específicos utilizando una lista de nombres, seleccionar regiones mediante un archivo BED o generar una submuestra aleatoria.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer reads por nombre (uno por línea en name.lst)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> subseq in.fq name.lst <span class="op">&gt;</span> out.fq</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer secuencias por región (archivo BED)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> subseq in.fa regiones.bed <span class="op">&gt;</span> out.fa</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Submuestra 10,000 pares de reads (MISMA semilla para mantener el emparejamiento)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s100</span> read1.fq 10000 <span class="op">&gt;</span> sub1.fq</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s100</span> read2.fq 10000 <span class="op">&gt;</span> sub2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En el caso de datos paired-end, es importante utilizar la misma semilla (<code>-s100</code>) al submuestrear ambos archivos. De esta forma, se seleccionan los mismos registros en `<code>read1</code> y <code>read2</code>, manteniendo el emparejamiento entre los reads.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Requisitos
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Para aprovechar al máximo este tutorial necesitarás acceso a una terminal Bash (Linux, macOS o Ubuntu en Windows). Algunas herramientas se instalarán y explicarán en los capítulos correspondientes.</p>
+<p>💡 ¿Qué es la semilla?</p>
+<p>La semilla (seed) es un valor que se utiliza para controlar un proceso aleatorio. Usar la misma semilla permite repetir el mismo muestreo y obtener los mismos resultados.</p>
 </div>
 </div>
 </section>
-<section id="una-idea-importante" class="level2 unnumbered idea">
-<h2 class="unnumbered anchored" data-anchor-id="una-idea-importante">Una idea importante</h2>
-<p>No necesitas memorizar todos los comandos. Lo importante es reconocer <strong>qué problema quieres resolver</strong>, elegir una herramienta apropiada y saber combinarla con otras. A lo largo del tutorial se repite una misma lógica:</p>
-<p><strong>entrada → transformación → filtrado → salida</strong></p>
-<p>Por ejemplo:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> archivo.tsv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"gene"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1</span> <span class="op">&gt;</span> genes.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Cada comando realiza una tarea pequeña y la salida de uno puede convertirse en la entrada del siguiente.</p>
+<section id="recorte-de-calidad" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="recorte-de-calidad"><span class="header-section-number">5.3</span> Recorte de calidad</h2>
+<p>Los archivos FASTQ contienen información de calidad asociada a cada base. <code>seqtk</code> permite utilizar esta información para recortar bases de baja calidad de los extremos de los reads.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recortar bases de baja calidad en ambos extremos (algoritmo Phred)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> trimfq in.fq <span class="op">&gt;</span> out.fq</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Recortar 5bp al inicio y 10bp al final de cada read</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> trimfq <span class="at">-b</span> 5 <span class="at">-e</span> 10 in.fq <span class="op">&gt;</span> out.fq</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enmascarar regiones en reg.bed con minúsculas</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-M</span> reg.bed in.fa <span class="op">&gt;</span> out.fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los dos primeros comandos utilizan <code>trimfq</code> para recortar los reads. En el segundo caso, <code>-b 5</code> indica que se eliminarán 5 bases del inicio y <code>-e 10</code> que se eliminarán 10 bases del final.</p>
 </section>
-<section id="cómo-leer-los-ejemplos" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</h2>
-<p>Los bloques de código pueden contener tres tipos de elementos:</p>
-<ul>
-<li><strong>comandos:</strong> instrucciones que puedes ejecutar;</li>
-<li><strong>comentarios:</strong> comienzan con <code>#</code> y explican qué hace una línea;</li>
-<li><strong>variables:</strong> nombres como <code>$acc</code> o <code>$PROJECT</code> que permiten reutilizar valores.</li>
-</ul>
-<p>Cuando veas <code>archivo.txt</code>, <code>sample.fastq</code> o <code>GCF_...</code>, normalmente se trata de un <strong>marcador de posición</strong> que deberás sustituir por tu archivo o accesión.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="separación-de-fastq-interleaved" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="separación-de-fastq-interleaved"><span class="header-section-number">5.4</span> Separación de FASTQ <em>interleaved</em></h2>
+<p>En algunos flujos de trabajo, los reads <em>paired-end</em> se almacenan en un solo archivo FASTQ, alternando los reads de cada pareja. Este formato se conoce como interleaved FASTQ.</p>
+<p><code>seqtk</code> permite separar este archivo nuevamente en dos archivos, uno para cada miembro de la pareja:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar FASTQ interleaved en dos archivos</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-l0</span> <span class="at">-1</span> interleaved.fq <span class="op">&gt;</span> reads_1.fq</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> seq <span class="at">-l0</span> <span class="at">-2</span> interleaved.fq <span class="op">&gt;</span> reads_2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En este caso, <code>-1</code> selecciona los reads correspondientes al primer miembro de cada pareja y <code>-2</code> los del segundo.</p>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Ejercicio 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>Tienes dos archivos FASTQ paired-end y quieres submuestrear 50,000 pares de reads. ¿Cuál comando es correcto?</strong></p>
+<ol type="a">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample read1.fq 50000 <span class="op">&gt;</span> sub1.fq</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample read2.fq 50000 <span class="op">&gt;</span> sub2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s42</span> read1.fq 50000 <span class="op">&gt;</span> sub1.fq</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s99</span> read2.fq 50000 <span class="op">&gt;</span> sub2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="a">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s42</span> read1.fq 50000 <span class="op">&gt;</span> sub1.fq</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s42</span> read2.fq 50000 <span class="op">&gt;</span> sub2.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="a">
+<li>Ninguna de las anteriores</li>
+</ol>
 </div>
-<div class="callout-title-container flex-fill">
-🔁 Patrón que se repetirá en todo el tutorial
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>La respuesta correcta es <strong>c)</strong>.</p>
+<p>Es <strong>crítico</strong> usar la <strong>misma semilla aleatoria</strong> (<code>-s42</code>) en ambos archivos para garantizar que los pares de reads se mantengan juntos. Si se usan semillas diferentes (opción b) o ninguna semilla (opción a), los reads del archivo 1 y 2 no corresponderán entre sí.</p>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>En cada herramienta intenta responder cuatro preguntas: <strong>¿qué entra?, ¿qué transforma?, ¿qué sale?, ¿cómo compruebo que salió bien?</strong>. Esta pequeña rutina ayuda a evitar errores silenciosos y hace que los <em>pipelines</em> sean más reproducibles.</p>
+</div>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Ejercicio 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Completa el comando para <strong>subsampling reproducible</strong> de un FASTQ comprimido, extrayendo el <strong>10% de los reads</strong>, con semilla <code>123</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero contar total de reads</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">total</span><span class="op">=</span><span class="va">$(</span><span class="fu">zcat</span> sample.fq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print ___/___}'</span><span class="va">)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular 10%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">n_reads</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$total</span><span class="st"> * 0.1"</span> <span class="kw">|</span> <span class="ex">___</span><span class="va">)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Submuestrear</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s___</span> sample.fq.gz <span class="va">$___</span> <span class="op">&gt;</span> subsample.fq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar reads totales (4 líneas por read en FASTQ)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">total</span><span class="op">=</span><span class="va">$(</span><span class="fu">zcat</span> sample.fq.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print $1/4}'</span><span class="va">)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular 10% con bc</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">n_reads</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">"</span><span class="va">$total</span><span class="st"> * 0.1"</span> <span class="kw">|</span> <span class="fu">bc</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{printf "%d", $1}'</span><span class="va">)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Submuestrear con semilla 123</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">seqtk</span> sample <span class="at">-s123</span> sample.fq.gz <span class="va">$n_reads</span> <span class="op">&gt;</span> subsample.fq</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total reads: </span><span class="va">$total</span><span class="st"> → Subsample: </span><span class="va">$n_reads</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -754,10 +752,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./automatization.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatización y construcción de pipelines</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bash_one_liners.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./gff3.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Roberto Álvarez Martínez y Mayela Fosado Mendoza">
 
-<title>Herramientas para Bioinformática</title>
+<title>Herramientas para Bioinformática - 11&nbsp; Resumen y recursos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,7 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bash_one_liners.html" rel="next">
+<link href="./gget.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sources.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Resumen y recursos</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
@@ -201,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sources.html" class="sidebar-item-text sidebar-link">
+  <a href="./sources.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Resumen y recursos</span></span></a>
   </div>
 </li>
@@ -215,12 +180,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
-  <ul>
-  <li><a href="#qué-encontrarás-aquí" id="toc-qué-encontrarás-aquí" class="nav-link" data-scroll-target="#qué-encontrarás-aquí">¿Qué encontrarás aquí?</a></li>
-  <li><a href="#una-idea-importante" id="toc-una-idea-importante" class="nav-link" data-scroll-target="#una-idea-importante">Una idea importante</a></li>
-  <li><a href="#cómo-leer-los-ejemplos" id="toc-cómo-leer-los-ejemplos" class="nav-link" data-scroll-target="#cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</a></li>
-  </ul></li>
+  <li><a href="#checklist-de-salida" id="toc-checklist-de-salida" class="nav-link active" data-scroll-target="#checklist-de-salida"><span class="header-section-number">11.1</span> Checklist de salida</a></li>
+  <li><a href="#y-si-algo-sale-mal" id="toc-y-si-algo-sale-mal" class="nav-link" data-scroll-target="#y-si-algo-sale-mal"><span class="header-section-number">11.2</span> 🐛 ¿Y si algo sale mal?</a></li>
+  <li><a href="#tabla-de-referencia-rápida" id="toc-tabla-de-referencia-rápida" class="nav-link" data-scroll-target="#tabla-de-referencia-rápida"><span class="header-section-number">11.3</span> Tabla de referencia rápida</a></li>
+  <li><a href="#glosario-mínimo" id="toc-glosario-mínimo" class="nav-link" data-scroll-target="#glosario-mínimo"><span class="header-section-number">11.4</span> Glosario mínimo</a></li>
+  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales"><span class="header-section-number">11.5</span> Recursos adicionales</a></li>
   </ul>
 </nav>
     </div>
@@ -229,26 +193,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Herramientas para Bioinformática</h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Resumen y recursos</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Roberto Álvarez Martínez y Mayela Fosado Mendoza </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Tuesday, August 11, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -256,137 +208,266 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="introducción" class="level1 unnumbered">
-<h1 class="unnumbered">Introducción</h1>
+<p>Llegaste al final del recorrido. El objetivo de este tutorial no es que memorices una lista de comandos aislados, sino que puedas reconocer patrones de trabajo y construir soluciones a partir de ellos.</p>
+<p>En un proyecto real probablemente utilizarás solo una parte de estas herramientas, pero las mismas ideas se repiten constantemente: <strong>inspeccionar, seleccionar, transformar, validar, automatizar y documentar</strong>.</p>
+<p>Un ejemplo de cómo pueden integrarse varias de estas herramientas sería:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figures/course_content.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="figures/complete_workflow.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>Este recorrido reúne varias de las herramientas que vimos durante el tutorial:</p>
+<ul>
+<li><strong>E-utilities</strong> para consultar información del NCBI.</li>
+<li><strong>SRA Toolkit</strong> para obtener los datos de secuenciación.</li>
+<li><strong>Bash y sus herramientas</strong> para inspeccionar y procesar los archivos.</li>
+<li><strong><code>seqtk</code></strong> para trabajar con secuencias FASTA y FASTQ.</li>
+<li><strong><code>gget</code></strong> para consultar información, secuencias, expresión y enriquecimiento desde Python.</li>
+</ul>
+<p>No todos los análisis seguirán exactamente este camino. Dependiendo de la pregunta biológica y de los datos disponibles, algunas etapas pueden omitirse, cambiar de orden o requerir herramientas adicionales.</p>
+<section id="checklist-de-salida" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="checklist-de-salida"><span class="header-section-number">11.1</span> Checklist de salida</h2>
+<p>Antes de considerar terminado un análisis desde la línea de comandos, comprueba:</p>
+<ul class="task-list">
+<li><input type="checkbox">¿Sé cuál es el formato y la estructura de mi archivo de entrada?</li>
+<li><input type="checkbox">¿Probé cada comando con una muestra pequeña?</li>
+<li><input type="checkbox">¿La salida tiene el número y formato de registros esperado?</li>
+<li><input type="checkbox">¿Validé los archivos descargados?</li>
+<li><input type="checkbox">¿Los comandos pueden repetirse sin depender de pasos manuales ocultos?</li>
+<li><input type="checkbox">¿Guardé los comandos o el script utilizado?</li>
+<li><input type="checkbox">¿Registré errores, parámetros y versiones relevantes?</li>
+<li><input type="checkbox">Si trabajé con paired-end, ¿mantuve sincronizados R1 y R2?</li>
+</ul>
+<hr>
+<p>:: {.callout-note}</p>
+</section>
+<section id="y-si-algo-sale-mal" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="y-si-algo-sale-mal"><span class="header-section-number">11.2</span> 🐛 ¿Y si algo sale mal?</h2>
+<p>En bioinformática, los errores forman parte del proceso. Un comando puede fallar porque el archivo no tiene la estructura que esperábamos, porque una herramienta no está instalada o simplemente porque escribimos algo diferente a lo que queríamos.</p>
+<p>No pasa nada. Una parte importante de aprender a trabajar desde la terminal es aprender a leer los errores, revisar lo que hicimos y probar de nuevo.</p>
+<p>Cuando algo no funcione, vuelve a lo básico:</p>
+<ul>
+<li>¿El archivo de entrada es el correcto?</li>
+<li>¿La estructura del archivo es la que esperaba?</li>
+<li>¿El comando está haciendo lo que creo?</li>
+<li>¿Qué parte del pipeline produjo el error?</li>
+</ul>
+<p>A veces encontrar el error es también la forma de entender mejor lo que estamos haciendo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/debugging.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="figure-caption">Ilustración de Allison Horst.</figcaption>
 </figure>
 </div>
-<p>Muchas de las herramientas empleadas en bioinformática funcionan desde la línea de comandos. Aunque al principio puede parecer intimidante, la terminal es una herramienta poderosa que facilita el análisis de datos y la automatización de tareas.</p>
-<p>Este tutorial te guiará paso a paso por los comandos esenciales. Lo importante no es memorizarlos, sino entender qué hacen, cuándo utilizarlos y practicar con ejemplos hasta que formen parte de tu flujo de trabajo. Aquí el objetivo es dar el siguiente paso: <strong>usar la terminal para resolver problemas reales de bioinformática</strong>.</p>
-<section id="qué-encontrarás-aquí" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="qué-encontrarás-aquí">¿Qué encontrarás aquí?</h2>
-<p>El contenido está organizado en diferentes secciones que abarcan desde los fundamentos de Bash hasta herramientas ampliamente utilizadas en bioinformática.</p>
+<p>:::</p>
+</section>
+<section id="tabla-de-referencia-rápida" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="tabla-de-referencia-rápida"><span class="header-section-number">11.3</span> Tabla de referencia rápida</h2>
+<p>La siguiente tabla resume algunos de los comandos y herramientas que aparecen en el tutorial. Úsala como referencia rápida; para entender cómo funcionan, vuelve a la sección correspondiente</p>
 <table class="table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 45%">
-<col style="width: 34%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 55%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Sección</th>
-<th>Contenido principal</th>
-<th>Propósito</th>
+<th>Tarea</th>
+<th>Herramienta</th>
+<th>Comando ejemplo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Manipulación de texto</td>
-<td><code>awk</code>, <code>sed</code>, <code>grep</code>, <code>cut</code>, <code>sort</code>, <code>uniq</code>, <code>wc</code>, <code>tr</code>, <code>paste</code></td>
-<td>Aprender a transformar y resumir texto</td>
+<td>Extraer columnas</td>
+<td><code>awk</code></td>
+<td><code>awk '{print $2,$5}' file.txt</code></td>
 </tr>
 <tr class="even">
-<td>Datos biológicos</td>
-<td>FASTA, FASTQ, VCF, BAM, BLAST, paired-end</td>
-<td>Aplicar las herramientas a formatos reales</td>
+<td>Filtrar registros</td>
+<td><code>awk</code></td>
+<td><code>awk '$3 == "gene"' file.gff3</code></td>
 </tr>
 <tr class="odd">
-<td>Automatización</td>
-<td><code>find</code>, <code>xargs</code>, loops, GNU <code>parallel</code></td>
-<td>Trabajar con muchos archivos y muestras</td>
+<td>Reemplazar texto</td>
+<td><code>sed</code></td>
+<td><code>sed 's/foo/bar/g' file.txt</code></td>
 </tr>
 <tr class="even">
+<td>Buscar patrones</td>
+<td><code>grep</code></td>
+<td><code>grep '^&gt;' sequences.fa</code></td>
+</tr>
+<tr class="odd">
+<td>Ordenar datos</td>
+<td><code>sort</code></td>
+<td><code>sort -k2,2n file.txt</code></td>
+</tr>
+<tr class="even">
+<td>Submuestrear reads</td>
 <td><code>seqtk</code></td>
-<td>FASTA/FASTQ</td>
-<td>Usar herramientas especializadas para secuencias</td>
+<td><code>seqtk sample -s42 in.fq 10000</code></td>
 </tr>
 <tr class="odd">
-<td>GFF3</td>
-<td>Anotaciones</td>
-<td>Explorar y analizar anotaciones genómicas</td>
+<td>Descargar SRA</td>
+<td><code>prefetch</code></td>
+<td><code>prefetch SRR12345</code></td>
 </tr>
 <tr class="even">
-<td>SRA Toolkit</td>
-<td><code>prefetch</code>, <code>fasterq-dump</code>, <code>vdb-validate</code></td>
-<td>Obtener datos públicos de secuenciación</td>
+<td>Convertir SRA</td>
+<td><code>fasterq-dump</code></td>
+<td><code>fasterq-dump SRR12345 --threads 8</code></td>
 </tr>
 <tr class="odd">
-<td>E-utilities</td>
-<td><code>einfo</code>, <code>esearch</code>, <code>efetch</code>, <code>elink</code>, <code>xtract</code></td>
-<td>Consultar y navegar por NCBI</td>
+<td>Descargar genoma</td>
+<td><code>datasets</code></td>
+<td><code>datasets download genome accession GCF_...</code></td>
 </tr>
 <tr class="even">
-<td>NCBI Datasets</td>
-<td><code>datasets</code>, <code>dataformat</code></td>
-<td>Descargar recursos y metadatos organizados</td>
+<td>Descargar gen</td>
+<td><code>datasets</code></td>
+<td><code>datasets download gene symbol TP53 --taxon human</code></td>
 </tr>
 <tr class="odd">
-<td><code>gget</code></td>
-<td>Python + CLI</td>
-<td>Consultar recursos genómicos y realizar análisis</td>
+<td>Descargar batch</td>
+<td><code>datasets</code></td>
+<td><code>datasets download genome accession --inputfile acc.txt</code></td>
 </tr>
 <tr class="even">
-<td>Integración de herramientas</td>
-<td>Bash + NCBI + SRA + gget</td>
-<td>Integrar las herramientas en un flujo completo</td>
+<td>Metadatos a TSV</td>
+<td><code>dataformat</code></td>
+<td><code>... | dataformat tsv genome</code></td>
 </tr>
 <tr class="odd">
-<td>Resumen y recursos</td>
-<td>Referencia rápida y recursos</td>
-<td>Repasar y continuar aprendiendo</td>
+<td>Buscar en NCBI</td>
+<td><code>esearch</code></td>
+<td><code>esearch -db pubmed -query "BRCA1"</code></td>
+</tr>
+<tr class="even">
+<td>Recuperar registros</td>
+<td><code>efetch</code></td>
+<td><code>efetch -db nucleotide -id NM_007294</code></td>
+</tr>
+<tr class="odd">
+<td>Conectar bases</td>
+<td><code>elink</code></td>
+<td><code>elink -target protein</code></td>
+</tr>
+<tr class="even">
+<td>Extraer datos XML</td>
+<td><code>xtract</code></td>
+<td><code>xtract -pattern ... -element ...</code></td>
+</tr>
+<tr class="odd">
+<td>Buscar genes</td>
+<td><code>gget.search</code></td>
+<td><code>gget.search("TP53", "homo_sapiens")</code></td>
+</tr>
+<tr class="even">
+<td>Obtener información</td>
+<td><code>gget.info</code></td>
+<td><code>gget.info("ENSG...")</code></td>
+</tr>
+<tr class="odd">
+<td>Obtener secuencia</td>
+<td><code>gget.seq</code></td>
+<td><code>gget.seq("ENSG...")</code></td>
+</tr>
+<tr class="even">
+<td>Explorar expresión</td>
+<td><code>gget.archs4</code></td>
+<td><code>gget.archs4("TP53", which="tissue")</code></td>
+</tr>
+<tr class="odd">
+<td>Enriquecimiento</td>
+<td><code>gget.enrichr</code></td>
+<td><code>gget.enrichr(genes, database="ontology")</code></td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Requisitos
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Para aprovechar al máximo este tutorial necesitarás acceso a una terminal Bash (Linux, macOS o Ubuntu en Windows). Algunas herramientas se instalarán y explicarán en los capítulos correspondientes.</p>
-</div>
-</div>
 </section>
-<section id="una-idea-importante" class="level2 unnumbered idea">
-<h2 class="unnumbered anchored" data-anchor-id="una-idea-importante">Una idea importante</h2>
-<p>No necesitas memorizar todos los comandos. Lo importante es reconocer <strong>qué problema quieres resolver</strong>, elegir una herramienta apropiada y saber combinarla con otras. A lo largo del tutorial se repite una misma lógica:</p>
-<p><strong>entrada → transformación → filtrado → salida</strong></p>
-<p>Por ejemplo:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> archivo.tsv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"gene"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1</span> <span class="op">&gt;</span> genes.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Cada comando realiza una tarea pequeña y la salida de uno puede convertirse en la entrada del siguiente.</p>
+<section id="glosario-mínimo" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="glosario-mínimo"><span class="header-section-number">11.4</span> Glosario mínimo</h2>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Término</th>
+<th>Significado en este tutorial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>accession</strong></td>
+<td>Identificador único de un registro o conjunto de datos en una base de datos.</td>
+</tr>
+<tr class="even">
+<td><strong>read</strong></td>
+<td>Secuencia obtenida durante una corrida de secuenciación.</td>
+</tr>
+<tr class="odd">
+<td><strong>paired-end</strong></td>
+<td>Estrategia en la que cada fragmento se secuencia desde ambos extremos, generando R1 y R2.</td>
+</tr>
+<tr class="even">
+<td><strong>pipeline</strong></td>
+<td>Secuencia de comandos donde la salida de un paso alimenta al siguiente.</td>
+</tr>
+<tr class="odd">
+<td><strong>metadatos</strong></td>
+<td>Información que describe una muestra, experimento, genoma o registro.</td>
+</tr>
+<tr class="even">
+<td><strong>anotación</strong></td>
+<td>Información que identifica características biológicas sobre una secuencia.</td>
+</tr>
+<tr class="odd">
+<td><strong>reproducibilidad</strong></td>
+<td>Capacidad de repetir un análisis y obtener un resultado equivalente a partir de los mismos datos y parámetros.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="cómo-leer-los-ejemplos" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</h2>
-<p>Los bloques de código pueden contener tres tipos de elementos:</p>
+<section id="recursos-adicionales" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="recursos-adicionales"><span class="header-section-number">11.5</span> Recursos adicionales</h2>
 <ul>
-<li><strong>comandos:</strong> instrucciones que puedes ejecutar;</li>
-<li><strong>comentarios:</strong> comienzan con <code>#</code> y explican qué hace una línea;</li>
-<li><strong>variables:</strong> nombres como <code>$acc</code> o <code>$PROJECT</code> que permiten reutilizar valores.</li>
+<li>📚 <a href="https://github.com/stephenturner/oneliners">Bioinformatics one-liners (Stephen Turner)</a></li>
+<li>🧰 <a href="https://github.com/ncbi/sra-tools/wiki">SRA Toolkit Wiki</a></li>
+<li>🗂️ <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/download-and-install/">NCBI Datasets CLI — Documentación oficial</a></li>
+<li>🗂️ <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/datasets/">NCBI Datasets — Referencia de comandos</a></li>
+<li>🔬 <a href="https://www.ncbi.nlm.nih.gov/books/NBK25498/">NCBI E-utilities Documentation</a></li>
+<li>🐍 <a href="https://github.com/pachterlab/gget">gget Documentation</a></li>
+<li>📖 <a href="https://github.com/lh3/seqtk">seqtk GitHub</a></li>
+<li>🔧 <a href="https://www.gnu.org/software/parallel/parallel_tutorial.html">GNU parallel Tutorial</a></li>
 </ul>
-<p>Cuando veas <code>archivo.txt</code>, <code>sample.fastq</code> o <code>GCF_...</code>, normalmente se trata de un <strong>marcador de posición</strong> que deberás sustituir por tu archivo o accesión.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🔁 Patrón que se repetirá en todo el tutorial
+💡 Consejos finales
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En cada herramienta intenta responder cuatro preguntas: <strong>¿qué entra?, ¿qué transforma?, ¿qué sale?, ¿cómo compruebo que salió bien?</strong>. Esta pequeña rutina ayuda a evitar errores silenciosos y hace que los <em>pipelines</em> sean más reproducibles.</p>
+<ol type="1">
+<li><strong>Siempre valida</strong> los archivos descargados antes de procesarlos (<code>vdb-validate</code>, <code>md5sum</code>)</li>
+<li><strong>Usa semillas reproducibles</strong> (<code>-s42</code>) en cualquier operación de submuestreo</li>
+<li><strong>Agrega <code>--dry-run</code></strong> antes de ejecutar comandos destructivos en paralelo</li>
+<li><strong>Registra tu API key</strong> de NCBI para obtener mayor velocidad con E-utilities</li>
+<li><strong>Usa <code>--inputfile</code></strong> en NCBI Datasets para descargas batch reproducibles desde un archivo de texto</li>
+<li><strong>Prefiere WSL</strong> sobre PowerShell nativo en Windows para mayor compatibilidad con scripts bash</li>
+<li><strong>Documenta tus pipelines</strong> con comentarios y guarda los logs de cada paso</li>
+</ol>
 </div>
 </div>
+<hr>
+<p><em>Tutorial generado con <a href="https://quarto.org/">Quarto</a> · Bioinformática</em></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -754,11 +835,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./gget.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">gget: Acceso a bases de datos genómicas con Python</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bash_one_liners.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

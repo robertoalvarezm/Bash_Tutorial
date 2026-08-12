@@ -1,2 +1,41 @@
 project:
+  type: book
   output-dir: docs
+
+book:
+  title: "Herramientas para Bioinformática"
+  author: "Roberto Álvarez Martínez y Mayela Fosado Mendoza"
+  date: today
+  date-format: "dddd, MMMM D, YYYY"
+  page-navigation: true
+
+  chapters:
+    - index.qmd
+    - bash_one_liners.qmd
+    - one_liners_and_bioinformatics.qmd
+    - automatization.qmd
+    - seqtk.qmd
+    - gff3.qmd
+    - SRA_toolkit.qmd
+    - e_utilities.qmd
+    - NCBI_dataset.qmd
+    - gget.qmd
+    - sources.qmd
+
+favicon: favicon.png
+
+format:
+  html:
+    theme:
+      light: minty
+      dark: darkly
+    css: styles.css
+    toc: true
+    toc-depth: 4
+    number-depth: 3
+    code-fold: show
+    code-copy: true
+    smooth-scroll: true
+    link-external-newwindow: true
+
+editor: visual

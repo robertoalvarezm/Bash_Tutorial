@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Roberto Álvarez Martínez y Mayela Fosado Mendoza">
 
-<title>Herramientas para Bioinformática</title>
+<title>Herramientas para Bioinformática - 6&nbsp; Anotaciones GFF3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./bash_one_liners.html" rel="next">
+<link href="./SRA_toolkit.html" rel="next">
+<link href="./seqtk.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gff3.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gff3.html" class="sidebar-item-text sidebar-link">
+  <a href="./gff3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></span></a>
   </div>
 </li>
@@ -215,12 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a>
-  <ul>
-  <li><a href="#qué-encontrarás-aquí" id="toc-qué-encontrarás-aquí" class="nav-link" data-scroll-target="#qué-encontrarás-aquí">¿Qué encontrarás aquí?</a></li>
-  <li><a href="#una-idea-importante" id="toc-una-idea-importante" class="nav-link" data-scroll-target="#una-idea-importante">Una idea importante</a></li>
-  <li><a href="#cómo-leer-los-ejemplos" id="toc-cómo-leer-los-ejemplos" class="nav-link" data-scroll-target="#cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</a></li>
-  </ul></li>
+  <li><a href="#operaciones-sobre-archivos-gff3" id="toc-operaciones-sobre-archivos-gff3" class="nav-link active" data-scroll-target="#operaciones-sobre-archivos-gff3"><span class="header-section-number">6.1</span> Operaciones sobre archivos GFF3</a></li>
   </ul>
 </nav>
     </div>
@@ -229,26 +224,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Herramientas para Bioinformática</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Anotaciones GFF3</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Roberto Álvarez Martínez y Mayela Fosado Mendoza </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Tuesday, August 11, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -256,137 +239,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="introducción" class="level1 unnumbered">
-<h1 class="unnumbered">Introducción</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/course_content.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Ilustración de Allison Horst.</figcaption>
-</figure>
-</div>
-<p>Muchas de las herramientas empleadas en bioinformática funcionan desde la línea de comandos. Aunque al principio puede parecer intimidante, la terminal es una herramienta poderosa que facilita el análisis de datos y la automatización de tareas.</p>
-<p>Este tutorial te guiará paso a paso por los comandos esenciales. Lo importante no es memorizarlos, sino entender qué hacen, cuándo utilizarlos y practicar con ejemplos hasta que formen parte de tu flujo de trabajo. Aquí el objetivo es dar el siguiente paso: <strong>usar la terminal para resolver problemas reales de bioinformática</strong>.</p>
-<section id="qué-encontrarás-aquí" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="qué-encontrarás-aquí">¿Qué encontrarás aquí?</h2>
-<p>El contenido está organizado en diferentes secciones que abarcan desde los fundamentos de Bash hasta herramientas ampliamente utilizadas en bioinformática.</p>
-<table class="table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 45%">
-<col style="width: 34%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Sección</th>
-<th>Contenido principal</th>
-<th>Propósito</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Manipulación de texto</td>
-<td><code>awk</code>, <code>sed</code>, <code>grep</code>, <code>cut</code>, <code>sort</code>, <code>uniq</code>, <code>wc</code>, <code>tr</code>, <code>paste</code></td>
-<td>Aprender a transformar y resumir texto</td>
-</tr>
-<tr class="even">
-<td>Datos biológicos</td>
-<td>FASTA, FASTQ, VCF, BAM, BLAST, paired-end</td>
-<td>Aplicar las herramientas a formatos reales</td>
-</tr>
-<tr class="odd">
-<td>Automatización</td>
-<td><code>find</code>, <code>xargs</code>, loops, GNU <code>parallel</code></td>
-<td>Trabajar con muchos archivos y muestras</td>
-</tr>
-<tr class="even">
-<td><code>seqtk</code></td>
-<td>FASTA/FASTQ</td>
-<td>Usar herramientas especializadas para secuencias</td>
-</tr>
-<tr class="odd">
-<td>GFF3</td>
-<td>Anotaciones</td>
-<td>Explorar y analizar anotaciones genómicas</td>
-</tr>
-<tr class="even">
-<td>SRA Toolkit</td>
-<td><code>prefetch</code>, <code>fasterq-dump</code>, <code>vdb-validate</code></td>
-<td>Obtener datos públicos de secuenciación</td>
-</tr>
-<tr class="odd">
-<td>E-utilities</td>
-<td><code>einfo</code>, <code>esearch</code>, <code>efetch</code>, <code>elink</code>, <code>xtract</code></td>
-<td>Consultar y navegar por NCBI</td>
-</tr>
-<tr class="even">
-<td>NCBI Datasets</td>
-<td><code>datasets</code>, <code>dataformat</code></td>
-<td>Descargar recursos y metadatos organizados</td>
-</tr>
-<tr class="odd">
-<td><code>gget</code></td>
-<td>Python + CLI</td>
-<td>Consultar recursos genómicos y realizar análisis</td>
-</tr>
-<tr class="even">
-<td>Integración de herramientas</td>
-<td>Bash + NCBI + SRA + gget</td>
-<td>Integrar las herramientas en un flujo completo</td>
-</tr>
-<tr class="odd">
-<td>Resumen y recursos</td>
-<td>Referencia rápida y recursos</td>
-<td>Repasar y continuar aprendiendo</td>
-</tr>
-</tbody>
-</table>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Requisitos
+Antes de trabajar con un GFF3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Para aprovechar al máximo este tutorial necesitarás acceso a una terminal Bash (Linux, macOS o Ubuntu en Windows). Algunas herramientas se instalarán y explicarán en los capítulos correspondientes.</p>
+<p>Antes de escribir un filtro, primero identifica qué representa cada columna del archivo. En GFF3, cada línea describe una característica anotada sobre una secuencia, como un gen, transcrito, exón o CDS.</p>
 </div>
 </div>
-</section>
-<section id="una-idea-importante" class="level2 unnumbered idea">
-<h2 class="unnumbered anchored" data-anchor-id="una-idea-importante">Una idea importante</h2>
-<p>No necesitas memorizar todos los comandos. Lo importante es reconocer <strong>qué problema quieres resolver</strong>, elegir una herramienta apropiada y saber combinarla con otras. A lo largo del tutorial se repite una misma lógica:</p>
-<p><strong>entrada → transformación → filtrado → salida</strong></p>
+<p>Los archivos GFF3 describen características anotadas sobre secuencias genómicas. A diferencia de FASTA o FASTQ, aquí no estamos almacenando únicamente secuencias: estamos almacenando <strong>información estructurada sobre regiones</strong>, como genes, transcritos, exones, CDS y otras características.</p>
+<p>Un archivo GFF3 contiene <strong>nueve columnas separadas por tabuladores</strong>. Algunas indican dónde se encuentra una característica y qué tipo de característica es, mientras que la última columna contiene atributos adicionales, como identificadores y relaciones entre elementos.</p>
 <p>Por ejemplo:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> archivo.tsv <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"gene"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1</span> <span class="op">&gt;</span> genes.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Cada comando realiza una tarea pequeña y la salida de uno puede convertirse en la entrada del siguiente.</p>
-</section>
-<section id="cómo-leer-los-ejemplos" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="cómo-leer-los-ejemplos">¿Cómo leer los ejemplos?</h2>
-<p>Los bloques de código pueden contener tres tipos de elementos:</p>
+<pre class="text"><code>chr1    .    gene    1000    5000    .    +    .    ID=gene001
+
+En este registro:
+
+$1 → secuencia o cromosoma (chr1)
+$3 → tipo de característica (gene)
+$4 → posición inicial (1000)
+$5 → posición final (5000)
+$7 → hebra (+)
+$9 → atributos (ID=gene001)</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/format_gff3.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+<p>Este formato permite hacer preguntas como: ¿cuántos genes hay?, ¿qué genes están en un cromosoma?, ¿cuánto mide cada gen? o ¿qué identificadores tienen las características anotadas?</p>
+<section id="operaciones-sobre-archivos-gff3" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="operaciones-sobre-archivos-gff3"><span class="header-section-number">6.1</span> Operaciones sobre archivos GFF3</h2>
+<p>Una vez que conocemos la estructura del archivo, podemos utilizar herramientas como <code>grep</code>, <code>cut</code>, <code>sort</code>, <code>uniq</code>, <code>perl</code>, <code>awk</code> y <code>bioawk</code> para extraer y resumir información.</p>
+<p>Los siguientes ejemplos muestran algunas tareas comunes al trabajar con anotaciones.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar todas las secuencias anotadas</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-s</span> <span class="at">-f1,9</span> anotaciones.gff3 <span class="kw">|</span> <span class="fu">grep</span> <span class="st">$'</span><span class="dt">\t</span><span class="st">'</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tipos de features disponibles</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> anotaciones.gff3 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-s</span> <span class="at">-f3</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar genes totales</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">$'</span><span class="dt">\t</span><span class="st">gene</span><span class="dt">\t</span><span class="st">'</span> anotaciones.gff3</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer todos los IDs de genes</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">$'</span><span class="dt">\t</span><span class="st">gene</span><span class="dt">\t</span><span class="st">'</span> anotaciones.gff3 <span class="kw">|</span> <span class="fu">perl</span> <span class="at">-ne</span> <span class="st">'/ID=([^;]+)/ and printf("%s\n", $1)'</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Longitud de cada gen</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">$'</span><span class="dt">\t</span><span class="st">gene</span><span class="dt">\t</span><span class="st">'</span> anotaciones.gff3 <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-s</span> <span class="at">-f4,5</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">perl</span> <span class="at">-ne</span> <span class="st">'@v = split(/\t/); printf("%d\n", $v[1] - $v[0] + 1)'</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear tabla transcrito → gen desde GTF de GENCODE</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">bioawk</span> <span class="at">-c</span> gff <span class="st">'$feature=="transcript" {print $group}'</span> gencode.v28.annotation.gtf <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="at">-F</span> <span class="st">' '</span> <span class="st">'{print substr($4,2,length($4)-3) "\t" substr($2,2,length($2)-3)}'</span> <span class="op">&gt;</span> txp2gene.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Estos ejemplos muestran algunas formas de trabajar con la información contenida en un GFF3:</p>
 <ul>
-<li><strong>comandos:</strong> instrucciones que puedes ejecutar;</li>
-<li><strong>comentarios:</strong> comienzan con <code>#</code> y explican qué hace una línea;</li>
-<li><strong>variables:</strong> nombres como <code>$acc</code> o <code>$PROJECT</code> que permiten reutilizar valores.</li>
+<li><code>cut</code> permite seleccionar columnas.</li>
+<li><code>grep</code> permite buscar tipos de <em>features</em> o patrones específicos.</li>
+<li><code>sort</code> y <code>uniq</code> ayudan a obtener valores únicos.</li>
+<li><code>awk</code> y <code>perl</code> permiten realizar operaciones sobre los datos y extraer información de los atributos.</li>
+<li><code>bioawk</code> permite trabajar directamente con formatos de anotación.</li>
 </ul>
-<p>Cuando veas <code>archivo.txt</code>, <code>sample.fastq</code> o <code>GCF_...</code>, normalmente se trata de un <strong>marcador de posición</strong> que deberás sustituir por tu archivo o accesión.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<hr>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Ejercicio 1:</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">✅ Solución</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Dado un archivo <code>genome.gff3</code>, construye un pipeline que:</p>
+<ol type="1">
+<li>Extraiga todos los genes del cromosoma <code>chr1</code></li>
+<li>Calcule la longitud de cada gen (fin - inicio + 1)</li>
+<li>Filtre los genes con longitud &gt; 10,000 bp</li>
+<li>Reporte: ID del gen, inicio, fin, longitud, ordenados por longitud descendente</li>
+<li>Guarde en <code>chr1_genes_largos.tsv</code></li>
+</ol>
 </div>
-<div class="callout-title-container flex-fill">
-🔁 Patrón que se repetirá en todo el tutorial
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">$'</span><span class="dt">\t</span><span class="st">gene</span><span class="dt">\t</span><span class="st">'</span> genome.gff3 <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="st">'$1 == "chr1"'</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">awk</span> <span class="st">'BEGIN{OFS="\t"; print "gene_id\tinicio\tfin\tlongitud"}</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">    len = $5 - $4 + 1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">    if (len &gt; 10000) {</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">      # Extraer el gene_id del campo de atributos ($9)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">      match($9, /ID=([^;]+)/, arr)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">      print arr[1], $4, $5, len</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span> <span class="at">-k4nr</span> <span class="op">&gt;</span> chr1_genes_largos.tsv</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Genes con longitud &gt; 10kb en chr1:"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> chr1_genes_largos.tsv</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-5</span> chr1_genes_largos.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>En cada herramienta intenta responder cuatro preguntas: <strong>¿qué entra?, ¿qué transforma?, ¿qué sale?, ¿cómo compruebo que salió bien?</strong>. Esta pequeña rutina ayuda a evitar errores silenciosos y hace que los <em>pipelines</em> sean más reproducibles.</p>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -754,10 +705,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./seqtk.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title"><code>seqtk</code> Procesamiento especializado de FASTA/FASTQ</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./bash_one_liners.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bash One-liners para Bioinformática</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./SRA_toolkit.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SRA Toolkit</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
