@@ -127,7 +127,6 @@ Pero antes hay una pregunta importante: **¿qué secuencia necesitamos?**
 
 Un mismo gen puede estar asociado con diferentes transcriptos e isoformas, y podemos trabajar con ADN, ARN o proteína. Por eso es importante comprobar qué representa la secuencia antes de utilizarla en otro análisis.
 
-
 | Lo que buscamos            | Ejemplo             |
 |----------------------------|---------------------|
 | Secuencia de un gen        | ADN                 |
@@ -135,9 +134,7 @@ Un mismo gen puede estar asociado con diferentes transcriptos e isoformas, y pod
 | Secuencia traducida        | proteína            |
 | Diferentes isoformas       | varios transcriptos |
 
-
 ![](figures/gget_seq.png){fig-align="center" width="90%"}
-
 
 ``` python
 # Secuencia de DNA de un gen
@@ -163,34 +160,32 @@ gget seq ENSG00000139618 --save         # guarda .fa
 gget seq ENSG00000139618 --isoforms     # todas las isoformas
 ```
 
-::: {.callout-tip}
+::: callout-tip
 ### 💡 Antes de usar una secuencia
 
 Comprueba siempre:
 
-- qué molécula representa;
-- de qué organismo proviene;
-- qué identificador tiene;
-- si corresponde a una isoforma concreta.
+-   qué molécula representa;
+-   de qué organismo proviene;
+-   qué identificador tiene;
+-   si corresponde a una isoforma concreta.
 :::
 
-
-## `gget.blast` — Buscar secuencias similares
+## `gget.blast` --- Buscar secuencias similares
 
 BLAST permite comparar una secuencia con una base de datos y encontrar secuencias similares.
 
 Sin embargo, una similitud no significa automáticamente que dos secuencias tengan la misma función. Para interpretar los resultados debemos considerar diferentes métricas, como:
 
-- porcentaje de identidad;
-- cobertura;
-- **E-value**;
-- **bit score**;
-- longitud del alineamiento.
+-   porcentaje de identidad;
+-   cobertura;
+-   **E-value**;
+-   **bit score**;
+-   longitud del alineamiento.
 
 La elección del programa depende del tipo de consulta: `blastn` compara nucleótidos, `blastp` proteínas y otras variantes permiten comparar distintos tipos de secuencia.
 
 ![](figures/gget_blast.png){fig-align="center" width="90%"}
-
 
 ``` python
 # BLAST de una secuencia
@@ -209,7 +204,7 @@ gget.blast(seq,
 gget.blast("ATGCGTACGTAGCTAGCTAGC", program="blastn", database="nt")
 ```
 
-## `gget.enrichr` — Análisis de enriquecimiento
+## `gget.enrichr` --- Análisis de enriquecimiento
 
 Cuando tenemos una lista de genes, puede ser difícil interpretar cada gen individualmente. Un análisis de enriquecimiento pregunta si determinadas categorías funcionales aparecen con una frecuencia mayor de la esperada dentro de esa lista.
 
@@ -217,7 +212,7 @@ Cuando tenemos una lista de genes, puede ser difícil interpretar cada gen indiv
 
 La pregunta cambia respecto a las herramientas anteriores:
 
-```text
+``` bash
 search → ¿qué gen es?
 
 info → ¿qué información tiene?
@@ -227,14 +222,13 @@ seq → ¿cuál es su secuencia?
 enrichr → ¿qué tienen en común estos genes?
 ```
 
-::: {.callout-note}
+::: callout-note
 ### 🧠 Importante
 
 Un resultado enriquecido no significa que los genes "causen" esa función. Indica que una categoría funcional está representada de forma destacada en la lista analizada.
 
 La interpretación depende de cómo se obtuvo la lista de genes y de la base de datos utilizada.
 :::
-
 
 ``` python
 # Análisis de enriquecimiento de términos GO
@@ -260,22 +254,21 @@ gget enrichr BRCA1 BRCA2 TP53 ATM --database ontology
 gget enrichr BRCA1 BRCA2 TP53 --database pathway --json
 ```
 
-## `gget.archs4` — Explorar expresión génica
+## `gget.archs4` --- Explorar expresión génica
 
 `gget.archs4` permite explorar patrones de expresión utilizando datos públicos de RNA-seq.
 
 Podemos utilizarlo para preguntas como:
 
-- ¿En qué tejidos se expresa un gen?
-- ¿Cómo cambia su expresión entre tejidos?
-- ¿Qué genes presentan patrones de expresión similares?
+-   ¿En qué tejidos se expresa un gen?
+-   ¿Cómo cambia su expresión entre tejidos?
+-   ¿Qué genes presentan patrones de expresión similares?
 
-::: {.callout-note}
+::: callout-note
 ### ⚠️ Contexto, no sustituto de un análisis diferencial
 
-ARCHS4 puede ayudarnos a explorar patrones de expresión utilizando grandes colecciones públicas de datos de RNA-seq. Sin embargo,  ARCHS4 puede servir como contexto o exploración, pero no sustituye un análisis diferencial diseñado para un experimento específico.
+ARCHS4 puede ayudarnos a explorar patrones de expresión utilizando grandes colecciones públicas de datos de RNA-seq. Sin embargo, ARCHS4 puede servir como contexto o exploración, pero no sustituye un análisis diferencial diseñado para un experimento específico.
 :::
-
 
 ``` python
 # Expresión de un gen en diferentes tejidos (ARCHS4)
@@ -290,14 +283,15 @@ correlados = gget.archs4("MYC", which="correlation")
 print(correlados.head(20))
 ```
 
-## `gget.ref` — Genomas de referencia
+## `gget.ref` --- Genomas de referencia
 
 Cuando trabajamos con datos genómicos, necesitamos saber qué referencia estamos utilizando.
 
 `gget.ref` permite localizar recursos de referencia, como genomas y anotaciones, y obtener las URLs o archivos correspondientes. Esto resulta especialmente útil cuando queremos automatizar la obtención de archivos y evitar copiar manualmente URLs de servidores FTP.
 
-::: {.callout-note}
+::: callout-note
 ### ⚠️ Nota:
+
 La versión de la referencia también importa. Si un análisis depende de una versión concreta de Ensembl, debemos registrarla para que otra persona pueda reproducir exactamente la descarga.
 :::
 
@@ -321,12 +315,11 @@ gget ref homo_sapiens
 gget ref homo_sapiens --which genome gtf --release 109
 ```
 
-## `gget.cellxgene` — Buscar datasets de scRNA-seq
+## `gget.cellxgene` --- Buscar datasets de scRNA-seq
 
 Los datos de RNA-seq de célula única se encuentran en repositorios especializados. `gget.cellxgene` permite buscar datasets de CellxGene utilizando criterios como especie, tejido, tipo celular o enfermedad.
 
 En este tutorial lo utilizaremos para **localizar datasets**, no para realizar un análisis completo de scRNA-seq.
-
 
 ``` python
 # Buscar datasets de scRNA-seq en CellxGene

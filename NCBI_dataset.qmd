@@ -17,7 +17,7 @@ NCBI Datasets está compuesto por dos herramientas principales:
 | `dataformat` | Convertir metadatos de JSON Lines → TSV / Excel |
 
 ::: callout-tip
-##  Datasets vs. E-utilities
+## Datasets vs. E-utilities
 
 Una forma sencilla de decidir cuál utilizar es pensar en la tarea:
 
@@ -264,7 +264,7 @@ Un archivo como `accesiones.txt` permite separar **los datos que queremos proces
 
 Por ejemplo:
 
-``` text
+``` bash
 GCF_000001405.40
 GCF_000001635.27
 GCF_000002035.6
@@ -345,11 +345,9 @@ GCF_000001635.27
 GCF_000005845.2
 GCF_000009045.1
 ```
-::: {.callout-note} 
-GCF_000001405.40 → Homo sapiens
-GCF_000001635.27 → Mus musculus
-GCF_000005845.2  → E. coli K-12
-GCF_000009045.1  → B. subtilis 168
+
+::: callout-note
+GCF_000001405.40 → Homo sapiens GCF_000001635.27 → Mus musculus GCF_000005845.2 → E. coli K-12 GCF_000009045.1 → B. subtilis 168
 :::
 
 Escribe un pipeline que: 1. Descargue solo las anotaciones GFF3 (sin el genoma completo) de los 4 organismos 2. Descomprima cada `.zip` 3. Genere una tabla con el número de genes anotados en cada uno
@@ -395,7 +393,7 @@ Construye un pipeline completo que:
 2.  Extraiga los metadatos (nombre, tamaño del genoma, número de genes) en formato TSV
 3.  Descargue las proteínas de cada una en FASTA separado
 
-### ✅ Solución 
+### ✅ Solución
 
 ``` bash
 #!/bin/bash
@@ -441,21 +439,19 @@ echo "Total de proteínas: $(grep -c '^>' bacterias/proteinas/todas_proteinas.fa
 
 ## `dataformat` - Convertir metadatos a tabla
 
- 📊 De metadatos estructurados a una tabla que puedas analizar
+📊 De metadatos estructurados a una tabla que puedas analizar
 
 `datasets summary` puede producir información estructurada en JSON Lines. Ese formato es útil para programas, pero no siempre es el más cómodo para inspeccionar o analizar con herramientas tabulares.
 
 `dataformat` toma la salida JSON Lines de `datasets summary` y la convierte a formatos tabulares legibles. Después seleccionamos los campos que nos interesan y los convertimos a TSV o Excel. De esta forma, el flujo queda:
 
-``` text
+``` bash
 NCBI Datasets → JSON Lines → dataformat → tabla → análisis
 ```
 
 ![](figures/NCBI_datasets_workflow.png){fig-align="center" width="90%"}
 
-
 En resumen, esto crea un puente muy útil entre la consulta de NCBI y herramientas de análisis: podemos descargar o consultar datos con `datasets`, transformar los metadatos con `dataformat` y después continuar con Bash, R o Python, lo cual ayuda a producir reportes más claros y manejables.
-
 
 ``` bash
 # ── Conversión básica ─────────────────────────────────────────────────────────

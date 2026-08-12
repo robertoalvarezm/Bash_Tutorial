@@ -277,19 +277,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="unnumbered anchored" data-anchor-id="el-modelo-mental-del-sra-toolkit">El modelo mental del SRA Toolkit</h3>
 <p>Los datos públicos de secuenciación en formato <strong>Sequence Read Archive (SRA)</strong> que están en NCBI se organizan mediante <strong>accessions</strong> que permiten identificar estudios, experimentos y corridas de secuenciación.</p>
 <p>Una forma útil de visualizar el flujo es:</p>
-<pre class="text"><code>accession
-   ↓
-prefetch
-   ↓
-archivo SRA local
-   ↓
-vdb-validate
-   ↓
-fasterq-dump
-   ↓
-FASTQ
-   ↓
-análisis</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">accession</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">prefetch</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">archivo</span> SRA local</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">vdb-validate</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">fasterq-dump</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">FASTQ</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>   <span class="ex">↓</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">análisis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Cada paso tiene una función diferente: descargamos los datos, comprobamos que la descarga sea válida y finalmente los convertimos al formato que utilizaremos para el análisis.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -419,7 +419,7 @@ Descarga no significa análisis
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="qué-es-un-accession"><span class="header-section-number">7.2.1</span> ¿Qué es un accession?</h3>
 <p>Un <em>accession</em> es el identificador utilizado para localizar un recurso dentro de las bases de datos del NCBI. Los <em>runs</em> del SRA suelen identificarse con códigos que comienzan con <code>SRR</code>.</p>
 <p>Por ejemplo:</p>
-<pre class="text"><code>SRR12345678</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">SRR12345678</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="por-qué-hay-dos-pasos" class="level3 idea" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="por-qué-hay-dos-pasos"><span class="header-section-number">7.2.2</span> ¿Por qué hay dos pasos?</h3>
@@ -430,7 +430,7 @@ Descarga no significa análisis
 </ul>
 <p>Separar ambas operaciones permite validar y reutilizar la descarga antes de generar los FASTQ. También hace más fácil reiniciar un pipeline si la conversión falla sin tener que volver a descargar los datos.</p>
 <p>El patrón conceptual es:</p>
-<pre class="text"><code>accession → prefetch → archivo SRA local → fasterq-dump → FASTQ</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">accession</span> → prefetch → archivo SRA local → fasterq-dump → FASTQ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="descarga-con-prefetch" class="level3" data-number="7.2.3">
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="descarga-con-prefetch"><span class="header-section-number">7.2.3</span> Descarga con <code>prefetch</code></h3>
@@ -627,8 +627,8 @@ Descarga no significa análisis
 <section id="método-2-con-gnu-parallel-más-eficiente" class="level4">
 <h4 class="anchored" data-anchor-id="método-2-con-gnu-parallel-más-eficiente">Método 2: Con GNU <code>parallel</code> (más eficiente)</h4>
 <p>Cuando tenemos muchas muestras, podemos ejecutar varios procesos al mismo tiempo utilizando GNU <code>parallel</code>.</p>
-<pre><code>cat accessions.txt | parallel -j3 \
-  "prefetch {} &amp;&amp; fasterq-dump {} --outdir ./fastq/ --threads 4 &amp;&amp; gzip ./fastq/{}*.fastq"</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> accessions.txt <span class="kw">|</span> <span class="ex">parallel</span> <span class="at">-j3</span> <span class="dt">\</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"prefetch {} &amp;&amp; fasterq-dump {} --outdir ./fastq/ --threads 4 &amp;&amp; gzip ./fastq/{}*.fastq"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Aquí <code>-j3</code> indica que se pueden ejecutar hasta tres procesos simultáneamente.</p>
 </section>
 </section>
@@ -636,24 +636,24 @@ Descarga no significa análisis
 <section id="método-3-con-manejo-de-errores-y-reintentos" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Método 3: Con manejo de errores y reintentos</h1>
 <p>También podemos crear una función que intente nuevamente una descarga cuando ocurre un error.</p>
-<pre><code>download_sra() {
-  acc=$1
-  max_retries=3
-  attempt=1
-  while [ $attempt -le $max_retries ]; do
-    echo "Intento $attempt para $acc"
-    prefetch "$acc" --output-directory ./sra/ &amp;&amp; \
-    fasterq-dump "./sra/$acc" --outdir ./fastq/ --threads 6 &amp;&amp; \
-    gzip ./fastq/${acc}*.fastq &amp;&amp; \
-    echo "$acc" &gt;&gt; descargas_exitosas.txt &amp;&amp; return 0
-    ((attempt++))
-    sleep 10
-  done
-  echo "$acc" &gt;&gt; descargas_fallidas.txt
-  return 1
-}
-export -f download_sra
-cat accessions.txt | parallel -j2 download_sra {}</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download_sra()</span> <span class="kw">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">acc</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">max_retries</span><span class="op">=</span>3</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">attempt</span><span class="op">=</span>1</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="bu">[</span> <span class="va">$attempt</span> <span class="ot">-le</span> <span class="va">$max_retries</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Intento </span><span class="va">$attempt</span><span class="st"> para </span><span class="va">$acc</span><span class="st">"</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">prefetch</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="at">--output-directory</span> ./sra/ <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fasterq-dump</span> <span class="st">"./sra/</span><span class="va">$acc</span><span class="st">"</span> <span class="at">--outdir</span> ./fastq/ <span class="at">--threads</span> 6 <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gzip</span> ./fastq/<span class="va">${acc}</span><span class="pp">*</span>.fastq <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="op">&gt;&gt;</span> descargas_exitosas.txt <span class="kw">&amp;&amp;</span> <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">((</span><span class="va">attempt</span><span class="op">++</span><span class="kw">))</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sleep</span> 10</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"</span><span class="va">$acc</span><span class="st">"</span> <span class="op">&gt;&gt;</span> descargas_fallidas.txt</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="at">-f</span> <span class="va">download_sra</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> accessions.txt <span class="kw">|</span> <span class="ex">parallel</span> <span class="at">-j2</span> download_sra {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Aquí ya no estamos ejecutando simplemente un comando, sino construyendo un pequeño pipeline automatizado.</p>
 <p>Para cada accession:</p>
 <ol type="1">

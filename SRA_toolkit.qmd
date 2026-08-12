@@ -11,7 +11,7 @@ Los datos públicos de secuenciación en formato **Sequence Read Archive (SRA)**
 
 Una forma útil de visualizar el flujo es:
 
-``` text
+``` bash
 accession
    ↓
 prefetch
@@ -26,23 +26,19 @@ FASTQ
    ↓
 análisis
 ```
+
 Cada paso tiene una función diferente: descargamos los datos, comprobamos que la descarga sea válida y finalmente los convertimos al formato que utilizaremos para el análisis.
 
-![ ](figures/sra_workflow.png){fig-align="center" width="120%"}
+![](figures/sra_workflow.png){fig-align="center" width="120%"}
 
 ::: callout-warning
 ### Descarga no significa análisis
 
-Un archivo descargado correctamente no garantiza que esté listo para
-procesarse. La validación, la comprobación del espacio disponible y la
-organización de los archivos forman parte del pipeline.
+Un archivo descargado correctamente no garantiza que esté listo para procesarse. La validación, la comprobación del espacio disponible y la organización de los archivos forman parte del pipeline.
 :::
 :::
 
-El **SRA Toolkit** (Sequence Read Archive Toolkit) del NCBI permite
-descargar datos de secuenciación directamente desde el archivo SRA. Es
-la herramienta estándar para acceder a datos públicos de NGS, proporciona las herramientas necesarias para realizar este proceso desde la línea de comandos.
-
+El **SRA Toolkit** (Sequence Read Archive Toolkit) del NCBI permite descargar datos de secuenciación directamente desde el archivo SRA. Es la herramienta estándar para acceder a datos públicos de NGS, proporciona las herramientas necesarias para realizar este proceso desde la línea de comandos.
 
 ## Instalación y configuración
 
@@ -75,7 +71,7 @@ prefetch --version
 
 Si utilizas Windows y el tutorial está basado principalmente en comandos Bash, **WSL (Windows Subsystem for Linux)** proporciona un entorno Ubuntu dentro de Windows y permite trabajar con el SRA Toolkit utilizando comandos similares a los de Linux.
 
-::: {.callout-note}
+::: callout-note
 ## ¿Por qué utilizar WSL?
 
 WSL permite trabajar con Bash y herramientas como Conda dentro de un entorno Linux, lo que resulta especialmente útil cuando posteriormente trabajes con servidores o clústeres bioinformáticos.
@@ -138,8 +134,7 @@ fasterq-dump SRR16885503 --outdir /mnt/c/Users/$USER/Desktop/fastq/
 ::: panel-tabset
 ### Ejercicio 1:
 
-**¿Cuál de estos comandos debes ejecutar en PowerShell (como
-Administrador) para habilitar WSL e instalar Ubuntu?**
+**¿Cuál de estos comandos debes ejecutar en PowerShell (como Administrador) para habilitar WSL e instalar Ubuntu?**
 
 a)  `wsl --enable ubuntu`\
 b)  `Set-WSL -Install -Distribution Ubuntu`\
@@ -148,13 +143,8 @@ d)  `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsys
 
 ### ✅ Solución
 
-La respuesta correcta es **c)**. Desde Windows 10 (build 19041) y
-Windows 11, el comando `wsl --install` hace todo en un paso: activa el
-componente WSL, instala el kernel de Linux y descarga Ubuntu como
-distribución por defecto. Después hay que reiniciar el equipo. La opción
-**d)** era la forma antigua (manual) antes de esta actualización.
+La respuesta correcta es **c)**. Desde Windows 10 (build 19041) y Windows 11, el comando `wsl --install` hace todo en un paso: activa el componente WSL, instala el kernel de Linux y descarga Ubuntu como distribución por defecto. Después hay que reiniciar el equipo. La opción **d)** era la forma antigua (manual) antes de esta actualización.
 :::
-
 
 ## `prefetch` y `fasterq-dump`
 
@@ -166,7 +156,7 @@ Un *accession* es el identificador utilizado para localizar un recurso dentro de
 
 Por ejemplo:
 
-```text
+``` bash
 SRR12345678
 ```
 
@@ -178,13 +168,11 @@ SRR12345678
 -   **`prefetch`** descarga el objeto SRA y lo almacena localmente.
 -   **`fasterq-dump`** convierte esos datos a FASTQ.
 
-Separar ambas operaciones permite validar y reutilizar la descarga antes
-de generar los FASTQ. También hace más fácil reiniciar un pipeline si la
-conversión falla sin tener que volver a descargar los datos.
+Separar ambas operaciones permite validar y reutilizar la descarga antes de generar los FASTQ. También hace más fácil reiniciar un pipeline si la conversión falla sin tener que volver a descargar los datos.
 
 El patrón conceptual es:
 
-``` text
+``` bash
 accession → prefetch → archivo SRA local → fasterq-dump → FASTQ
 ```
 :::
@@ -237,11 +225,9 @@ prefetch SRR12345678 && fasterq-dump SRR12345678 --outdir ./fastq/
 # SRR12345678_2.fastq (R2)
 ```
 
-
 En el primer bloque trabajamos con la descarga. En el segundo utilizamos el archivo descargado para generar los FASTQ que podremos utilizar posteriormente en nuestro pipeline de análisis.
 
 En datos *paired-end*, los reads de cada pareja se almacenan normalmente en archivos separados, como `R1` y `R2`.
-
 
 ### Descarga directa en la nube (sin prefetch)
 
@@ -260,8 +246,7 @@ fasterq-dump SRR12345678 --outdir . --progress
 ::: panel-tabset
 ### Ejercicio 2:
 
-**¿Cuál es la secuencia correcta para descargar y convertir datos del
-SRA?**
+**¿Cuál es la secuencia correcta para descargar y convertir datos del SRA?**
 
 a)  `fasterq-dump SRR123 → prefetch SRR123`\
 b)  **`prefetch SRR123 → fasterq-dump SRR123`**\
@@ -321,11 +306,7 @@ done < accessions.txt
 
 ## `vdb-validate` y Metadatos
 
-Descargar un archivo no significa automáticamente que podamos confiar en
-él. Una descarga interrumpida o dañada puede producir errores mucho
-después, durante una etapa de análisis que nada tiene que ver con la
-descarga. `vdb-validate` permite comprobar la integridad de los datos
-del SRA antes de continuar.
+Descargar un archivo no significa automáticamente que podamos confiar en él. Una descarga interrumpida o dañada puede producir errores mucho después, durante una etapa de análisis que nada tiene que ver con la descarga. `vdb-validate` permite comprobar la integridad de los datos del SRA antes de continuar.
 
 Los metadatos también son importantes. El accession nos permite localizar un recurso, pero para diseñar un análisis necesitamos saber qué organismo corresponde a cada muestra, qué experimento representa y qué condiciones experimentales se describieron.
 
@@ -369,7 +350,7 @@ No todas estas herramientas cumplen la misma función: algunas sirven para valid
 
 ## Descargas en Lote (Batch)
 
-###  De una muestra a muchas muestras
+### De una muestra a muchas muestras
 
 Hasta ahora hemos trabajado con un solo accession. En un estudio real podemos tener decenas o incluso cientos de runs.
 
@@ -377,18 +358,17 @@ Copiar y pegar los mismos comandos para cada muestra no es una buena estrategia:
 
 Una alternativa es guardar los accessions en un archivo y utilizar Bash para procesarlos automáticamente.
 
-
-::: {.callout-note}
+::: callout-note
 ## 🧠 Una lista de accessions
 
 Un archivo como `accessions.txt` permite separar **los datos que queremos procesar** de **la lógica que los procesa**.
 
 Esto permite:
 
-- volver a ejecutar el pipeline con otra lista;
-- revisar qué muestras forman parte del análisis;
-- registrar errores y éxitos;
-- añadir paralelización sin reescribir todo el procedimiento.
+-   volver a ejecutar el pipeline con otra lista;
+-   revisar qué muestras forman parte del análisis;
+-   registrar errores y éxitos;
+-   añadir paralelización sin reescribir todo el procedimiento.
 :::
 
 En un estudio real podemos trabajar con decenas o cientos de accessions. En lugar de repetir los mismos comandos para cada muestra, podemos utilizar loops, funciones Bash o `GNU parallel` para automatizar el proceso.
@@ -415,7 +395,7 @@ done
 
 Cuando tenemos muchas muestras, podemos ejecutar varios procesos al mismo tiempo utilizando GNU `parallel`.
 
-```
+``` bash
 cat accessions.txt | parallel -j3 \
   "prefetch {} && fasterq-dump {} --outdir ./fastq/ --threads 4 && gzip ./fastq/{}*.fastq"
 ```
@@ -426,7 +406,7 @@ Aquí `-j3` indica que se pueden ejecutar hasta tres procesos simultáneamente.
 
 También podemos crear una función que intente nuevamente una descarga cuando ocurre un error.
 
-```
+``` bash
 download_sra() {
   acc=$1
   max_retries=3
@@ -451,11 +431,11 @@ Aquí ya no estamos ejecutando simplemente un comando, sino construyendo un pequ
 
 Para cada accession:
 
-1. se intenta descargar el SRA;
-2. se convierte a FASTQ;
-3. se comprimen los archivos;
-4. se registra si el proceso terminó correctamente;
-5. si ocurre un error, se vuelve a intentar hasta alcanzar el número máximo de intentos.
+1.  se intenta descargar el SRA;
+2.  se convierte a FASTQ;
+3.  se comprimen los archivos;
+4.  se registra si el proceso terminó correctamente;
+5.  si ocurre un error, se vuelve a intentar hasta alcanzar el número máximo de intentos.
 
 Esta estructura permite trabajar con muchas muestras sin tener que escribir manualmente cada comando.
 
@@ -464,18 +444,14 @@ Esta estructura permite trabajar con muchas muestras sin tener que escribir manu
 ::: panel-tabset
 ### Ejercicio 4
 
-Tienes el archivo `SraRunTable.txt` descargado del NCBI SRA con
-metadatos de un estudio. Construye un pipeline que:
+Tienes el archivo `SraRunTable.txt` descargado del NCBI SRA con metadatos de un estudio. Construye un pipeline que:
 
-1.  Extraiga los accession numbers (columna `Run`) de las muestras
-    *Homo sapiens* en condición **"treated"**
-2.  Descargue los FASTQs correspondientes en paralelo (máx. 3
-    simultáneos)
+1.  Extraiga los accession numbers (columna `Run`) de las muestras *Homo sapiens* en condición **"treated"**
+2.  Descargue los FASTQs correspondientes en paralelo (máx. 3 simultáneos)
 3.  Verifique la integridad de cada descarga
-4.  Genere un reporte con: accession, número de reads, tamaño del
-    archivo
+4.  Genere un reporte con: accession, número de reads, tamaño del archivo
 
-### ✅ Solución 
+### ✅ Solución
 
 ``` bash
 # 1. Extraer accessions de muestras humanas en condición "treated"

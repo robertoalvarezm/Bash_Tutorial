@@ -270,15 +270,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Las E-utilities son un conjunto de herramientas que permiten <strong>buscar, recuperar y conectar información entre diferentes bases de datos del NCBI</strong> (PubMed, GenBank, SRA, Protein, etc.) directamente desde la línea de comandos o scripts.</p>
 <p>En lugar de abrir una página web y copiar resultados manualmente, podemos realizar consultas desde la terminal y utilizar su salida directamente en otros comandos.</p>
 <p>La lógica que seguiremos en esta sección es:</p>
-<pre class="text"><code>explorar → buscar → recuperar → conectar → extraer
-  einfo     esearch   efetch     elink      xtract</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">explorar</span> → buscar → recuperar → conectar → extraer</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">einfo</span>     esearch   efetch     elink      xtract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Cada herramienta cumple una función diferente, pero podemos combinarlas para construir pipelines reproducibles.</p>
 <p>La idea fundamental es pensar en las E-utilities como piezas de un sistema de consulta:</p>
-<pre class="text"><code>einfo   → ¿qué bases y campos existen?
-esearch → ¿qué registros cumplen mi búsqueda?
-efetch  → ¿qué información quiero recuperar?
-elink   → ¿qué registros relacionados existen?
-xtract  → ¿qué campos quiero extraer de XML?</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">einfo</span>   → ¿qué bases y campos existen<span class="pp">?</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">esearch</span> → ¿qué registros cumplen mi búsqueda<span class="pp">?</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">efetch</span>  → ¿qué información quiero recuperar<span class="pp">?</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">elink</span>   → ¿qué registros relacionados existen<span class="pp">?</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">xtract</span>  → ¿qué campos quiero extraer de XML<span class="pp">?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -338,13 +338,13 @@ Registro recomendado
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">esearch</span> ... <span class="kw">|</span> <span class="ex">efetch</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <p>Podemos pensarlo así:</p>
-<pre class="text"><code>esearch
-  ↓
-IDs
-  ↓
-efetch
-  ↓
-datos</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">esearch</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">↓</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">IDs</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">↓</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">efetch</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">↓</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">datos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Esta separación permite, por ejemplo, buscar todos los transcritos que cumplen una condición y después decidir si queremos sus secuencias FASTA, registros GenBank o metadatos.</p>
 <section id="búsquedas-básicas" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="búsquedas-básicas"><span class="header-section-number">8.2.2</span> Búsquedas básicas</h3>
@@ -430,7 +430,7 @@ datos</code></pre>
 <div class="callout-body-container callout-body">
 <p>Una de las fortalezas de NCBI es que sus bases están relacionadas. Un artículo puede estar asociado con genes, secuencias o proyectos; un registro de SRA puede estar relacionado con un BioSample; un gen puede tener proteínas y secuencias asociadas. <code>elink</code> permite seguir esas relaciones de forma programática.</p>
 <p>Podemos pensar en el proceso como:</p>
-<pre class="text"><code>registro A → elink → registro relacionado B → efetch</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">registro</span> A → elink → registro relacionado B → efetch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Por ejemplo, podemos partir de una publicación, un gen o un registro de SRA y utilizar sus relaciones para encontrar información adicional. Esto evita tener que buscar manualmente cada identificador.</p>
 </div>
 </div>
@@ -467,7 +467,7 @@ datos</code></pre>
 <p>Muchas respuestas detalladas del NCBI se entregan en formato XML. XML permite representar información organizada en estructuras jerárquicas, pero no resulta especialmente cómodo para leer o analizar directamente desde la terminal.</p>
 <p><code>xtract</code> permite seleccionar patrones y elementos específicos dentro de ese XML y convertirlos en una salida tabular. Es especialmente útil cuando queremos pasar de una respuesta de NCBI a un archivo TSV que posteriormente pueda analizarse con <code>awk</code>, <code>cut</code>, R o Python.</p>
 <p>La idea general es:</p>
-<pre class="text"><code>NCBI → XML → xtract → TSV/CSV → awk/cut/sort/...</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NCBI</span> → XML → xtract → TSV/CSV → awk/cut/sort/...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <section id="ejemplos-2" class="level4">

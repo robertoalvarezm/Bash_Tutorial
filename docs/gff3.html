@@ -255,16 +255,16 @@ Antes de trabajar con un GFF3
 <p>Los archivos GFF3 describen características anotadas sobre secuencias genómicas. A diferencia de FASTA o FASTQ, aquí no estamos almacenando únicamente secuencias: estamos almacenando <strong>información estructurada sobre regiones</strong>, como genes, transcritos, exones, CDS y otras características.</p>
 <p>Un archivo GFF3 contiene <strong>nueve columnas separadas por tabuladores</strong>. Algunas indican dónde se encuentra una característica y qué tipo de característica es, mientras que la última columna contiene atributos adicionales, como identificadores y relaciones entre elementos.</p>
 <p>Por ejemplo:</p>
-<pre class="text"><code>chr1    .    gene    1000    5000    .    +    .    ID=gene001
-
-En este registro:
-
-$1 → secuencia o cromosoma (chr1)
-$3 → tipo de característica (gene)
-$4 → posición inicial (1000)
-$5 → posición final (5000)
-$7 → hebra (+)
-$9 → atributos (ID=gene001)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">chr1</span>    .    gene    1000    5000    .    +    .    ID=gene001</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">En</span> este registro:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">$1</span> → secuencia o cromosoma <span class="er">(</span><span class="ex">chr1</span><span class="kw">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">$3</span> → tipo de característica <span class="er">(</span><span class="ex">gene</span><span class="kw">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">$4</span> → posición inicial <span class="er">(</span><span class="ex">1000</span><span class="kw">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">$5</span> → posición final <span class="er">(</span><span class="ex">5000</span><span class="kw">)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">$7</span> → hebra <span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">$9</span> → atributos <span class="er">(</span><span class="va">ID</span><span class="op">=</span>gene001<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/format_gff3.png" class="img-fluid figure-img" style="width:90.0%"></p>

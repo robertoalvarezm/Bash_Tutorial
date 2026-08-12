@@ -35,10 +35,7 @@ Antes de considerar terminado un análisis desde la línea de comandos, comprueb
 -   [ ] ¿Registré errores, parámetros y versiones relevantes?
 -   [ ] Si trabajé con paired-end, ¿mantuve sincronizados R1 y R2?
 
-------------------------------------------------------------------------
-
-:: {.callout-note}
-
+::: callout-note
 ## 🐛 ¿Y si algo sale mal?
 
 En bioinformática, los errores forman parte del proceso. Un comando puede fallar porque el archivo no tiene la estructura que esperábamos, porque una herramienta no está instalada o simplemente porque escribimos algo diferente a lo que queríamos.
@@ -55,7 +52,6 @@ Cuando algo no funcione, vuelve a lo básico:
 A veces encontrar el error es también la forma de entender mejor lo que estamos haciendo.
 
 ![Ilustración de Allison Horst.](figures/debugging.png){fig-align="center" width="70%"}
-
 :::
 
 ## Tabla de referencia rápida
@@ -63,7 +59,7 @@ A veces encontrar el error es también la forma de entender mejor lo que estamos
 La siguiente tabla resume algunos de los comandos y herramientas que aparecen en el tutorial. Úsala como referencia rápida; para entender cómo funcionan, vuelve a la sección correspondiente
 
 | Tarea               | Herramienta    | Comando ejemplo                                          |
-|----------------|----------------|----------------------------------------|
+|---------------------|----------------|----------------------------------------------------------|
 | Extraer columnas    | `awk`          | `awk '{print $2,$5}' file.txt`                           |
 | Filtrar registros   | `awk`          | `awk '$3 == "gene"' file.gff3`                           |
 | Reemplazar texto    | `sed`          | `sed 's/foo/bar/g' file.txt`                             |
@@ -89,7 +85,7 @@ La siguiente tabla resume algunos de los comandos y herramientas que aparecen en
 ## Glosario mínimo
 
 | Término              | Significado en este tutorial                                                                                   |
-|------------------------------------|------------------------------------|
+|----------------------|----------------------------------------------------------------------------------------------------------------|
 | **accession**        | Identificador único de un registro o conjunto de datos en una base de datos.                                   |
 | **read**             | Secuencia obtenida durante una corrida de secuenciación.                                                       |
 | **paired-end**       | Estrategia en la que cada fragmento se secuencia desde ambos extremos, generando R1 y R2.                      |

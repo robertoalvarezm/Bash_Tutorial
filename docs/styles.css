@@ -1,0 +1,1066 @@
+
+
+/* PALETA DE COLORES */
+
+:root {
+  --bio-green: #91C788;
+  --bio-blue: #75C9D6;
+  --bio-yellow: #F6C85F;
+  --bio-pink: #F5A6C6;
+  --bio-purple: #A78BDA;
+
+  --bio-dark: #263238;
+  --bio-muted: #647278;
+
+  --bio-bg: #FFFFFF;
+  --bio-card: #FFFFFF;
+  --bio-border: #E4E8E9;
+}
+
+
+/*  TEXTO GENERAL */
+
+body {
+  color: var(--bio-dark);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+
+/* TÍTULOS */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  border: none;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  border: none;
+  padding: 0;
+  margin-top: 3rem;
+  margin-bottom: 1.2rem;
+}
+
+h2::after {
+  content: "";
+  display: block;
+
+  width: 55px;
+  height: 4px;
+
+  margin-top: 0.5rem;
+
+  border-radius: 10px;
+
+  background: var(--bio-purple);
+}
+
+h3 {
+  border: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+
+/* ENLACES */
+
+a {
+  color: #477F88;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--bio-purple);
+}
+
+
+/* CÓDIGO INLINE  */
+
+code:not(.sourceCode) {
+  background: #F2EEF9;
+  color: #694F91;
+
+  padding: 0.15rem 0.35rem;
+
+  border-radius: 5px;
+
+  font-size: 0.92em;
+}
+
+
+/* BLOQUES DE CÓDIGO — ESTILO TERMINAL */
+
+div.sourceCode {
+  border: none;
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  margin: 1.6rem 0;
+
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.10);
+}
+
+
+/* Barra superior de terminal */
+
+div.sourceCode::before {
+  content: "●  ●  ●";
+
+  display: block;
+
+  padding: 0.45rem 0.9rem;
+
+  background: #34313D;
+
+  color: #A78BDA;
+
+  font-size: 0.65rem;
+
+  letter-spacing: 0.22rem;
+}
+
+
+pre.sourceCode {
+  padding: 1rem 1.2rem;
+  margin: 0;
+}
+
+
+/* CALLOUTS DE QUARTO */
+
+.callout {
+  border: none !important;
+
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.05);
+
+  margin: 1.8rem 0;
+}
+
+
+/* TIP — verde */
+
+.callout-tip {
+  border-left: 5px solid var(--bio-green) !important;
+
+  background: #F1F9EE !important;
+}
+
+
+/* NOTE — morado */
+
+.callout-note {
+  border-left: 5px solid var(--bio-purple) !important;
+
+  background: #F5F0FC !important;
+}
+
+
+/* IMPORTANT — azul */
+
+.callout-important {
+  border-left: 5px solid var(--bio-blue) !important;
+
+  background: #EDF9FA !important;
+}
+
+
+/* WARNING — amarillo */
+
+.callout-warning {
+  border-left: 5px solid var(--bio-yellow) !important;
+
+  background: #FFF9E7 !important;
+}
+
+
+/* CAUTION — rosa */
+
+.callout-caution {
+  border-left: 5px solid var(--bio-pink) !important;
+
+  background: #FFF1F6 !important;
+}
+
+
+/* Títulos dentro de callouts */
+
+.callout-title {
+  font-weight: 700;
+}
+
+
+/* CAJAS PERSONALIZADAS */
+
+.idea,
+.exercise,
+.solution,
+.warning,
+.note {
+
+  border: none;
+
+  border-radius: 18px;
+
+  padding: 1.4rem 1.6rem;
+
+  margin: 2rem 0;
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Evitar bordes adicionales en títulos */
+
+.idea h3,
+.exercise h3,
+.solution h3,
+.warning h3,
+.note h3 {
+
+  border: none;
+
+  padding: 0;
+
+  margin-top: 0;
+}
+
+
+/* IDEA */
+
+.idea {
+
+  background:
+    linear-gradient(
+      135deg,
+      #FFF8DF,
+      #FFFDF5
+    );
+
+  border-top: 5px solid var(--bio-yellow);
+}
+
+
+/* EJERCICIO */
+
+.exercise {
+
+  background:
+    linear-gradient(
+      135deg,
+      #EAF8FA,
+      #F8FCFD
+    );
+
+  border-top: 5px solid var(--bio-blue);
+}
+
+
+/* SOLUCIÓN */
+
+.solution {
+
+  background:
+    linear-gradient(
+      135deg,
+      #EDF8E9,
+      #FAFDF9
+    );
+
+  border-top: 5px solid var(--bio-green);
+}
+
+
+/* ADVERTENCIA */
+
+.warning {
+
+  background:
+    linear-gradient(
+      135deg,
+      #FFF0F5,
+      #FFF9FB
+    );
+
+  border-top: 5px solid var(--bio-pink);
+}
+
+
+/* NOTA */
+
+.note {
+
+  background:
+    linear-gradient(
+      135deg,
+      #F3EEFC,
+      #FBF9FE
+    );
+
+  border-top: 5px solid var(--bio-purple);
+}
+
+
+/* =========================================================
+   IMÁGENES
+   ========================================================= */
+
+.quarto-figure {
+  margin: 2.5rem auto;
+  text-align: center;
+}
+
+.quarto-figure img {
+
+  max-width: 100%;
+
+  border-radius: 18px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.quarto-figure img:hover {
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+/* IMAGEN PRINCIPAL */
+
+.hero-image {
+
+  text-align: center;
+
+  margin: 2.5rem auto 3rem;
+}
+
+.hero-image img {
+
+  max-width: 850px;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* TARJETAS */
+
+.grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 1.2rem;
+
+  margin: 2rem 0;
+}
+
+
+.card {
+
+  padding: 1.5rem;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--bio-border);
+
+  background: var(--bio-card);
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+.card:nth-child(1) {
+  border-top: 6px solid var(--bio-green);
+}
+
+.card:nth-child(2) {
+  border-top: 6px solid var(--bio-yellow);
+}
+
+.card:nth-child(3) {
+  border-top: 6px solid var(--bio-purple);
+}
+
+
+/*  TARJETAS DE CAPÍTULOS  */
+
+.chapter-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 1.2rem;
+
+  margin: 2rem 0;
+}
+
+
+.chapter-card {
+
+  padding: 1.5rem;
+
+  border-radius: 20px;
+
+  background: var(--bio-card);
+
+  border: 1px solid var(--bio-border);
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.07);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.chapter-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+
+.chapter-card.green {
+  border-top: 6px solid var(--bio-green);
+}
+
+.chapter-card.yellow {
+  border-top: 6px solid var(--bio-yellow);
+}
+
+.chapter-card.pink {
+  border-top: 6px solid var(--bio-pink);
+}
+
+.chapter-card.blue {
+  border-top: 6px solid var(--bio-blue);
+}
+
+.chapter-card.purple {
+  border-top: 6px solid var(--bio-purple);
+}
+
+
+/*  TABLAS  */
+
+table {
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+
+  width: 100%;
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.06);
+
+  margin: 1.5rem 0;
+}
+
+
+thead {
+  background: #EAF5F2;
+}
+
+
+th {
+
+  font-weight: 700;
+
+  padding: 0.8rem;
+
+  border-bottom: 2px solid #DDE7E5;
+}
+
+
+td {
+
+  padding: 0.7rem 0.8rem;
+
+  border-bottom: 1px solid #ECEEEF;
+}
+
+
+tbody tr:nth-child(even) {
+  background: #FAFAFA;
+}
+
+
+tbody tr:hover {
+  background: #F3EEFC;
+}
+
+
+/* SIDEBAR  */
+
+.sidebar-title {
+  font-weight: 700;
+}
+
+
+.sidebar-item {
+
+  border-radius: 9px;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.sidebar-item:hover {
+  background: #F3EEFC;
+}
+
+
+.sidebar-item.active {
+
+  border-radius: 10px;
+
+  background: #EAF5F2;
+
+  color: #347A72;
+
+  font-weight: 600;
+
+  padding-left: 0.7rem;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn {
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   SELECCIÓN DE TEXTO
+   ========================================================= */
+
+::selection {
+
+  background: #E7DDF5;
+
+  color: #263238;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+.quarto-dark {
+
+  --bio-green: #9EDB9A;
+  --bio-blue: #82D6E3;
+  --bio-yellow: #F5D477;
+  --bio-pink: #F3A6C5;
+  --bio-purple: #B99BE8;
+
+  --bio-dark: #E9EDF0;
+
+  --bio-bg: #202327;
+  --bio-card: #292D31;
+  --bio-border: #41464B;
+}
+
+
+/* ---------------------------------------------------------
+   Texto
+   --------------------------------------------------------- */
+
+.quarto-dark body {
+  color: #DDE2E5;
+}
+
+
+.quarto-dark p,
+.quarto-dark li {
+  color: #D8DDE1;
+}
+
+
+/* ---------------------------------------------------------
+   Títulos
+   --------------------------------------------------------- */
+
+.quarto-dark h1,
+.quarto-dark h2,
+.quarto-dark h3,
+.quarto-dark h4 {
+  color: #F4F6F7;
+}
+
+
+.quarto-dark h2::after {
+  background: var(--bio-purple);
+}
+
+
+/* ---------------------------------------------------------
+   Enlaces
+   --------------------------------------------------------- */
+
+.quarto-dark a {
+  color: var(--bio-blue);
+}
+
+
+.quarto-dark a:hover {
+  color: var(--bio-pink);
+}
+
+
+/* ---------------------------------------------------------
+   Código inline
+   --------------------------------------------------------- */
+
+.quarto-dark code:not(.sourceCode) {
+
+  background: #342F40;
+
+  color: #DCCCF5;
+}
+
+
+/* ---------------------------------------------------------
+   Código
+   --------------------------------------------------------- */
+
+.quarto-dark div.sourceCode {
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+.quarto-dark div.sourceCode::before {
+
+  background: #1B1D20;
+
+  color: var(--bio-purple);
+}
+
+
+/* ---------------------------------------------------------
+   Callouts
+   --------------------------------------------------------- */
+
+.quarto-dark .callout-tip {
+  background: #29382D !important;
+}
+
+.quarto-dark .callout-note {
+  background: #342E40 !important;
+}
+
+.quarto-dark .callout-important {
+  background: #29383C !important;
+}
+
+.quarto-dark .callout-warning {
+  background: #393527 !important;
+}
+
+.quarto-dark .callout-caution {
+  background: #3A2D34 !important;
+}
+
+
+/* ---------------------------------------------------------
+   Cajas personalizadas
+   --------------------------------------------------------- */
+
+.quarto-dark .idea {
+
+  background: #393527;
+
+  border-top-color: var(--bio-yellow);
+}
+
+
+.quarto-dark .exercise {
+
+  background: #29383C;
+
+  border-top-color: var(--bio-blue);
+}
+
+
+.quarto-dark .solution {
+
+  background: #29382D;
+
+  border-top-color: var(--bio-green);
+}
+
+
+.quarto-dark .warning {
+
+  background: #3A2D34;
+
+  border-top-color: var(--bio-pink);
+}
+
+
+.quarto-dark .note {
+
+  background: #342E40;
+
+  border-top-color: var(--bio-purple);
+}
+
+
+/* ---------------------------------------------------------
+   Tarjetas
+   --------------------------------------------------------- */
+
+.quarto-dark .card,
+.quarto-dark .chapter-card {
+
+  background: var(--bio-card);
+
+  border-color: var(--bio-border);
+
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.22);
+}
+
+
+.quarto-dark .card:hover,
+.quarto-dark .chapter-card:hover {
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.30);
+}
+
+
+/* ---------------------------------------------------------
+   Tablas
+   --------------------------------------------------------- */
+
+.quarto-dark thead {
+  background: #30373C;
+}
+
+
+.quarto-dark th {
+
+  color: #FFFFFF;
+
+  border-bottom-color: #454B50;
+}
+
+
+.quarto-dark td {
+
+  color: #DDE2E5;
+
+  border-bottom-color: #41464B;
+}
+
+
+.quarto-dark tbody tr:nth-child(even) {
+  background: #272B2F;
+}
+
+
+.quarto-dark tbody tr:hover {
+  background: #342E40;
+}
+
+
+/* ---------------------------------------------------------
+   Sidebar
+   --------------------------------------------------------- */
+
+.quarto-dark .sidebar-item:hover {
+  background: #342E40;
+}
+
+
+.quarto-dark .sidebar-item.active {
+
+  background: #293C3D;
+
+  color: var(--bio-green);
+}
+
+
+/* ---------------------------------------------------------
+   Imágenes
+   --------------------------------------------------------- */
+
+.quarto-dark .quarto-figure img {
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ---------------------------------------------------------
+   Selección
+   --------------------------------------------------------- */
+
+.quarto-dark ::selection {
+
+  background: #51456A;
+
+  color: #FFFFFF;
+}
+
+
+/*  RESPONSIVE  */
+
+@media (max-width: 900px) {
+
+  .grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .chapter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 800px) {
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/*  EJERCICIOS — PANEL TABSET = */
+
+/* Contenedor completo del ejercicio */
+
+.panel-tabset {
+  margin: 2rem 0;
+}
+
+
+/* ---------------------------------------------------------
+   PESTAÑAS
+   --------------------------------------------------------- */
+
+.panel-tabset .nav-tabs {
+  border-bottom: none;
+  gap: 0.45rem;
+  margin-bottom: 0;
+}
+
+
+/* Cada pestaña */
+
+.panel-tabset .nav-tabs .nav-link {
+  border: 1px solid #DDE3E5;
+
+  border-bottom: none;
+
+  border-radius: 10px 10px 0 0;
+
+  background: #F7F8F8;
+
+  color: #5D686D;
+
+  padding: 0.65rem 1rem;
+
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Hover */
+
+.panel-tabset .nav-tabs .nav-link:hover {
+
+  background: #F3EEFC;
+
+  color: #694F91;
+
+  border-color: #D8CCE9;
+}
+
+
+/* Pestaña activa */
+
+.panel-tabset .nav-tabs .nav-link.active {
+
+  background: white;
+
+  color: #477F88;
+
+  font-weight: 700;
+
+  border-color: #DDE3E5;
+
+  border-bottom-color: white;
+}
+
+
+/* ---------------------------------------------------------
+   CONTENIDO DEL TAB
+   --------------------------------------------------------- */
+
+.panel-tabset .tab-content {
+
+  background: white;
+
+  border: 1px solid #DDE3E5;
+
+  border-radius: 0 14px 14px 14px;
+
+  padding: 1.5rem;
+
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Quitar márgenes exagerados dentro */
+
+.panel-tabset .tab-content > .tab-pane > :first-child {
+  margin-top: 0;
+}
+
+
+/* ---------------------------------------------------------
+   CÓDIGO DENTRO DE EJERCICIOS
+   --------------------------------------------------------- */
+
+.panel-tabset .tab-content div.sourceCode {
+
+  margin-top: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+
+/* ---------------------------------------------------------
+   SOLUCIÓN
+   --------------------------------------------------------- */
+
+/* Si la pestaña contiene "Solución", Quarto mantiene
+   la misma estructura; podemos hacer que el contenido
+   respire como una respuesta. */
+
+.panel-tabset .tab-content p strong:first-child {
+  color: #347A72;
+}
+
+
+/* DARK MODE — EJERCICIOS */
+
+.quarto-dark .panel-tabset .nav-tabs {
+  border-bottom: none;
+}
+
+
+.quarto-dark .panel-tabset .nav-tabs .nav-link {
+
+  background: #292D31;
+
+  color: #AEB6BA;
+
+  border-color: #41464B;
+}
+
+
+.quarto-dark .panel-tabset .nav-tabs .nav-link:hover {
+
+  background: #342E40;
+
+  color: var(--bio-purple);
+
+  border-color: #51456A;
+}
+
+
+.quarto-dark .panel-tabset .nav-tabs .nav-link.active {
+
+  background: #292D31;
+
+  color: var(--bio-green);
+
+  border-color: #41464B;
+
+  border-bottom-color: #292D31;
+}
+
+
+.quarto-dark .panel-tabset .tab-content {
+
+  background: #292D31;
+
+  border-color: #41464B;
+
+  box-shadow:
+    0 7px 20px rgba(0, 0, 0, 0.22);
+}

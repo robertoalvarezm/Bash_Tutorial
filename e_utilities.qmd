@@ -4,25 +4,25 @@ format: html
 editor: visual
 ---
 
-::: {.callout-note}
+::: callout-note
 ## 🧬 Pensar en NCBI como una colección de bases conectadas
 
-Las E-utilities son un conjunto de herramientas que permiten **buscar, recuperar y conectar información entre diferentes bases de datos del NCBI** (PubMed, GenBank, SRA, Protein, etc.) directamente desde la línea de comandos o scripts.  
+Las E-utilities son un conjunto de herramientas que permiten **buscar, recuperar y conectar información entre diferentes bases de datos del NCBI** (PubMed, GenBank, SRA, Protein, etc.) directamente desde la línea de comandos o scripts.
 
 En lugar de abrir una página web y copiar resultados manualmente, podemos realizar consultas desde la terminal y utilizar su salida directamente en otros comandos.
 
 La lógica que seguiremos en esta sección es:
 
-```text
+``` bash
 explorar → buscar → recuperar → conectar → extraer
   einfo     esearch   efetch     elink      xtract
 ```
+
 Cada herramienta cumple una función diferente, pero podemos combinarlas para construir pipelines reproducibles.
 
-La idea fundamental es pensar en las E-utilities como piezas de un
-sistema de consulta:
+La idea fundamental es pensar en las E-utilities como piezas de un sistema de consulta:
 
-``` text
+``` bash
 einfo   → ¿qué bases y campos existen?
 esearch → ¿qué registros cumplen mi búsqueda?
 efetch  → ¿qué información quiero recuperar?
@@ -31,11 +31,9 @@ xtract  → ¿qué campos quiero extraer de XML?
 ```
 :::
 
-![ ](figures/NCBI_toolkit.png){fig-align="center" width="120%"}
+![](figures/NCBI_toolkit.png){fig-align="center" width="120%"}
 
-Esta separación permite construir pipelines reproducibles y evita
-descargar información que no necesitamos.
-
+Esta separación permite construir pipelines reproducibles y evita descargar información que no necesitamos.
 
 ::: callout-note
 ## Registro recomendado
@@ -47,18 +45,11 @@ export NCBI_API_KEY="tu_api_key_aqui"
 ```
 :::
 
-
 ## `einfo` - Explorar bases de datos
 
-Antes de hacer una búsqueda compleja, es útil saber cómo está organizada
-la base de datos. `einfo` proporciona información sobre las bases
-disponibles, los campos que pueden utilizarse en las consultas y los
-enlaces entre bases.
+Antes de hacer una búsqueda compleja, es útil saber cómo está organizada la base de datos. `einfo` proporciona información sobre las bases disponibles, los campos que pueden utilizarse en las consultas y los enlaces entre bases.
 
-Esto es especialmente importante porque las búsquedas de NCBI no son
-simplemente búsquedas de texto libre. Los campos como `[Organism]`,
-`[Gene Name]`, `[PDAT]` o `[Title/Abstract]` permiten restringir la
-consulta y obtener resultados mucho más precisos.
+Esto es especialmente importante porque las búsquedas de NCBI no son simplemente búsquedas de texto libre. Los campos como `[Organism]`, `[Gene Name]`, `[PDAT]` o `[Title/Abstract]` permiten restringir la consulta y obtener resultados mucho más precisos.
 
 #### **Ejemplos:**
 
@@ -78,12 +69,11 @@ einfo -db sra -links
 
 Estos comandos responden preguntas diferentes sobre la base de datos:
 
-- ¿Qué bases existen?
-- ¿Qué campos puedo utilizar en una búsqueda?
-- ¿Qué información y relaciones ofrece una base concreta?
+-   ¿Qué bases existen?
+-   ¿Qué campos puedo utilizar en una búsqueda?
+-   ¿Qué información y relaciones ofrece una base concreta?
 
 Conocer esta estructura antes de construir una consulta ayuda a evitar búsquedas demasiado generales.
-
 
 ## `esearch` y `efetch` - Buscar y Descargar
 
@@ -103,10 +93,9 @@ esearch ... | efetch ...
 ```
 :::
 
-
 Podemos pensarlo así:
 
-``` text
+``` bash
 esearch
   ↓
 IDs
@@ -116,9 +105,7 @@ efetch
 datos
 ```
 
-Esta separación permite, por ejemplo, buscar todos los transcritos que
-cumplen una condición y después decidir si queremos sus secuencias
-FASTA, registros GenBank o metadatos.
+Esta separación permite, por ejemplo, buscar todos los transcritos que cumplen una condición y después decidir si queremos sus secuencias FASTA, registros GenBank o metadatos.
 
 ### Búsquedas básicas
 
@@ -143,10 +130,10 @@ Observa que la misma herramienta puede utilizarse con diferentes bases de datos.
 
 Los campos entre corchetes permiten hacer búsquedas más específicas. Por ejemplo:
 
-- `[Organism]` → organismo
-- `[Gene Name]` → nombre del gen
-- `[PDAT]` → fecha de publicación
-- `[Title/Abstract]` → título o resumen
+-   `[Organism]` → organismo
+-   `[Gene Name]` → nombre del gen
+-   `[PDAT]` → fecha de publicación
+-   `[Title/Abstract]` → título o resumen
 
 ### Descarga con `efetch`
 
@@ -205,24 +192,20 @@ En estos ejemplos utilizamos las E-utilities para obtener información que despu
 
 Por ejemplo, `runinfo` puede convertirse en una tabla de runs que posteriormente utilizaremos para descargar datos con SRA Toolkit.
 
-
 ## `elink` - Navegar entre bases de datos
 
-::: {.callout-note}
+::: callout-note
 ### 🔗 Las bases de NCBI están conectadas
-
 
 Una de las fortalezas de NCBI es que sus bases están relacionadas. Un artículo puede estar asociado con genes, secuencias o proyectos; un registro de SRA puede estar relacionado con un BioSample; un gen puede tener proteínas y secuencias asociadas. `elink` permite seguir esas relaciones de forma programática.
 
 Podemos pensar en el proceso como:
 
-``` text
+``` bash
 registro A → elink → registro relacionado B → efetch
 ```
 
-Por ejemplo, podemos partir de una publicación, un gen o un registro de
-SRA y utilizar sus relaciones para encontrar información adicional. Esto
-evita tener que buscar manualmente cada identificador.
+Por ejemplo, podemos partir de una publicación, un gen o un registro de SRA y utilizar sus relaciones para encontrar información adicional. Esto evita tener que buscar manualmente cada identificador.
 :::
 
 #### **Ejemplos:**
@@ -246,19 +229,16 @@ efetch -db nucleotide -id NM_007294 -format xml | \
 
 ## `xtract` - Parsear XML
 
-::: {.callout-note}
-###  ¿Por qué aparece XML?
+::: callout-note
+### ¿Por qué aparece XML?
 
 Muchas respuestas detalladas del NCBI se entregan en formato XML. XML permite representar información organizada en estructuras jerárquicas, pero no resulta especialmente cómodo para leer o analizar directamente desde la terminal.
 
-`xtract` permite seleccionar patrones y elementos específicos dentro de
-ese XML y convertirlos en una salida tabular. Es especialmente útil
-cuando queremos pasar de una respuesta de NCBI a un archivo TSV que
-posteriormente pueda analizarse con `awk`, `cut`, R o Python.
+`xtract` permite seleccionar patrones y elementos específicos dentro de ese XML y convertirlos en una salida tabular. Es especialmente útil cuando queremos pasar de una respuesta de NCBI a un archivo TSV que posteriormente pueda analizarse con `awk`, `cut`, R o Python.
 
 La idea general es:
 
-``` text
+``` bash
 NCBI → XML → xtract → TSV/CSV → awk/cut/sort/...
 ```
 :::
@@ -286,15 +266,14 @@ Aquí `xtract` actúa como un puente entre una respuesta XML y una tabla que pod
 
 No necesitamos aprender toda la estructura de XML para empezar. Lo importante es identificar el patrón que queremos (`-pattern`) y los elementos que queremos recuperar (`-element`).
 
-![ ](figures/NCBI_tools.png){fig-align="center" width="60%"}
+![](figures/NCBI_tools.png){fig-align="center" width="60%"}
 
 ------------------------------------------------------------------------
 
 ::: panel-tabset
 ### Ejercicio 1
 
-**¿Cuál pipeline descarga correctamente las secuencias de ARNm de BRCA2
-humano en formato FASTA?**
+**¿Cuál pipeline descarga correctamente las secuencias de ARNm de BRCA2 humano en formato FASTA?**
 
 a)  
 
@@ -325,14 +304,10 @@ einfo -db nucleotide -query "BRCA2" | efetch -format fasta
 
 La respuesta correcta es **c)**.
 
--   **a)** `efetch` no tiene flag `--query`; requiere IDs específicos o
-    input desde `esearch`
--   **b)** Busca en la base de datos `gene`, no en `nucleotide`, y sin
-    filtro de mRNA puede traer otros tipos de secuencias
--   **c)** ✅ Pipeline correcto: `esearch` busca con filtros apropiados
-    → `efetch` descarga en FASTA
--   **d)** `einfo` sirve para explorar la estructura de la base de
-    datos, no para buscar secuencias
+-   **a)** `efetch` no tiene flag `--query`; requiere IDs específicos o input desde `esearch`
+-   **b)** Busca en la base de datos `gene`, no en `nucleotide`, y sin filtro de mRNA puede traer otros tipos de secuencias
+-   **c)** ✅ Pipeline correcto: `esearch` busca con filtros apropiados → `efetch` descarga en FASTA
+-   **d)** `einfo` sirve para explorar la estructura de la base de datos, no para buscar secuencias
 :::
 
 ------------------------------------------------------------------------
@@ -340,9 +315,7 @@ La respuesta correcta es **c)**.
 ::: panel-tabset
 ### Ejercicio 2
 
-Completa el pipeline para **descargar los metadatos de runs del SRA**
-asociados al BioProject `PRJNA548382` y extraer: Run ID, número de
-bases, y nombre del organismo:
+Completa el pipeline para **descargar los metadatos de runs del SRA** asociados al BioProject `PRJNA548382` y extraer: Run ID, número de bases, y nombre del organismo:
 
 ``` bash
 esearch -db ___ -query "PRJNA548382[BioProject]" | \
@@ -377,8 +350,7 @@ Las posiciones de las columnas de `runinfo` pueden variar dependiendo de la info
 
 Construye un pipeline que:
 
-1.  Busque en PubMed artículos sobre "single-cell RNA-seq" publicados en
-    2022-2023
+1.  Busque en PubMed artículos sobre "single-cell RNA-seq" publicados en 2022-2023
 2.  Cuente el número de artículos encontrados\
 3.  Extraiga los PMIDs y los títulos
 4.  Guarde el resultado en `scRNAseq_papers.tsv`
@@ -418,9 +390,7 @@ head -6 scRNAseq_papers.tsv
 ::: panel-tabset
 ### Ejercicio 4:
 
-Usando E-utilities, realiza un análisis del número de publicaciones por
-año (2018-2023) sobre los términos **"metagenomics"**,
-**"transcriptomics"** y **"proteomics"** y genera una tabla comparativa:
+Usando E-utilities, realiza un análisis del número de publicaciones por año (2018-2023) sobre los términos **"metagenomics"**, **"transcriptomics"** y **"proteomics"** y genera una tabla comparativa:
 
 | Año  | Metagenomics | Transcriptomics | Proteomics |
 |------|--------------|-----------------|------------|
@@ -455,4 +425,3 @@ cat bibliometria.tsv | column -t -s $'\t'
 :::
 
 ------------------------------------------------------------------------
-

@@ -4,8 +4,8 @@ format: html
 editor: visual
 ---
 
-::: {.callout-note}
-##  Antes de trabajar con un GFF3
+::: callout-note
+## Antes de trabajar con un GFF3
 
 Antes de escribir un filtro, primero identifica qué representa cada columna del archivo. En GFF3, cada línea describe una característica anotada sobre una secuencia, como un gen, transcrito, exón o CDS.
 :::
@@ -16,7 +16,7 @@ Un archivo GFF3 contiene **nueve columnas separadas por tabuladores**. Algunas i
 
 Por ejemplo:
 
-```text
+``` bash
 chr1    .    gene    1000    5000    .    +    .    ID=gene001
 
 En este registro:
@@ -32,7 +32,6 @@ $9 → atributos (ID=gene001)
 ![](figures/format_gff3.png){fig-align="center" width="90%"}
 
 Este formato permite hacer preguntas como: ¿cuántos genes hay?, ¿qué genes están en un cromosoma?, ¿cuánto mide cada gen? o ¿qué identificadores tienen las características anotadas?
-
 
 ## Operaciones sobre archivos GFF3
 
@@ -64,11 +63,11 @@ bioawk -c gff '$feature=="transcript" {print $group}' gencode.v28.annotation.gtf
 
 Estos ejemplos muestran algunas formas de trabajar con la información contenida en un GFF3:
 
-- `cut` permite seleccionar columnas.
-- `grep` permite buscar tipos de *features* o patrones específicos.
-- `sort` y `uniq` ayudan a obtener valores únicos.
-- `awk` y `perl` permiten realizar operaciones sobre los datos y extraer información de los atributos.
-- `bioawk` permite trabajar directamente con formatos de anotación.
+-   `cut` permite seleccionar columnas.
+-   `grep` permite buscar tipos de *features* o patrones específicos.
+-   `sort` y `uniq` ayudan a obtener valores únicos.
+-   `awk` y `perl` permiten realizar operaciones sobre los datos y extraer información de los atributos.
+-   `bioawk` permite trabajar directamente con formatos de anotación.
 
 ------------------------------------------------------------------------
 
@@ -80,11 +79,10 @@ Dado un archivo `genome.gff3`, construye un pipeline que:
 1.  Extraiga todos los genes del cromosoma `chr1`
 2.  Calcule la longitud de cada gen (fin - inicio + 1)
 3.  Filtre los genes con longitud \> 10,000 bp
-4.  Reporte: ID del gen, inicio, fin, longitud, ordenados por longitud
-    descendente
+4.  Reporte: ID del gen, inicio, fin, longitud, ordenados por longitud descendente
 5.  Guarde en `chr1_genes_largos.tsv`
 
-### ✅ Solución 
+### ✅ Solución
 
 ``` bash
 grep $'\tgene\t' genome.gff3 | \
@@ -105,4 +103,3 @@ wc -l chr1_genes_largos.tsv
 head -5 chr1_genes_largos.tsv
 ```
 :::
-

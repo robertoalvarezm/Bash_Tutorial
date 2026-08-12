@@ -528,9 +528,9 @@ Documentación oficial
 <p>Hasta ahora hemos trabajado con una o varias accesiones directamente en el comando. Cuando tenemos muchas, es más práctico guardarlas en un archivo.</p>
 <p>Un archivo como <code>accesiones.txt</code> permite separar <strong>los datos que queremos procesar</strong> de <strong>la lógica del pipeline</strong>.</p>
 <p>Por ejemplo:</p>
-<pre class="text"><code>GCF_000001405.40
-GCF_000001635.27
-GCF_000002035.6</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">GCF_000001405.40</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">GCF_000001635.27</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">GCF_000002035.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="múltiples-accesiones-en-un-solo-comando" class="level3" data-number="9.5.1">
 <h3 data-number="9.5.1" class="anchored" data-anchor-id="múltiples-accesiones-en-un-solo-comando"><span class="header-section-number">9.5.1</span> Múltiples accesiones en un solo comando</h3>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pasar varias accesiones directamente</span></span>
@@ -700,7 +700,7 @@ Note
 <p>📊 De metadatos estructurados a una tabla que puedas analizar</p>
 <p><code>datasets summary</code> puede producir información estructurada en JSON Lines. Ese formato es útil para programas, pero no siempre es el más cómodo para inspeccionar o analizar con herramientas tabulares.</p>
 <p><code>dataformat</code> toma la salida JSON Lines de <code>datasets summary</code> y la convierte a formatos tabulares legibles. Después seleccionamos los campos que nos interesan y los convertimos a TSV o Excel. De esta forma, el flujo queda:</p>
-<pre class="text"><code>NCBI Datasets → JSON Lines → dataformat → tabla → análisis</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">NCBI</span> Datasets → JSON Lines → dataformat → tabla → análisis</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/NCBI_datasets_workflow.png" class="img-fluid figure-img" style="width:90.0%"></p>
