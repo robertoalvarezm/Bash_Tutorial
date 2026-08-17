@@ -7,7 +7,7 @@ editor: visual
 
 ## Introducción a Unix/Bash
 
-### Cómo usar este material {.callout-note}
+## Cómo usar este material {.callout-note}
 
 -   **Espacio de trabajo seguro**: Crea y trabaja siempre dentro de un
     directorio de práctica dedicado.
@@ -130,6 +130,42 @@ la raíz de tu usuario, y baja de nuevo hacia `practica_bash/sub1`.
 hace el comando `cd -`. Pruébalo alternando entre dos directorios y
 describe con tus palabras para qué sirve.
 
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `ls`, `mkdir`, `cd`, `pwd`
+
+**`ls`**
+
+1.  **Fácil**: Lista los archivos y directorios en tu directorio de
+    trabajo actual.
+2.  **Intermedio**: Lista los archivos en el directorio `/etc` y
+    muestra sus permisos.
+3.  **Avanzado**: Usa `ls` para mostrar los archivos ocultos y
+    ordénalos por tamaño.
+
+**`mkdir`**
+
+1.  **Fácil**: Crea un directorio llamado `proyecto`.
+2.  **Intermedio**: Crea un directorio `backup` dentro de `proyecto`.
+3.  **Avanzado**: Crea una estructura de directorios anidados:
+    `proyecto/{src,bin,docs}`.
+
+**`cd`**
+
+1.  **Fácil**: Cambia al directorio `proyecto`.
+2.  **Intermedio**: Navega al directorio padre de `proyecto`.
+3.  **Avanzado**: Navega al directorio `/usr/local/bin` usando una
+    ruta absoluta.
+
+**`pwd`**
+
+1.  **Fácil**: Imprime tu directorio de trabajo actual.
+2.  **Intermedio**: Usa `cd` para cambiar de directorio y luego usa
+    `pwd` para verificar tu ubicación.
+3.  **Avanzado**: Escribe un comando que combine `cd` y `pwd` para
+    cambiar a un directorio y mostrar su ruta completa inmediatamente
+    (pista: `cd directorio && pwd`).
+:::
+
 # Gestión de archivos y directorios
 
 ## Comandos de gestión
@@ -233,6 +269,37 @@ un directorio existente.
 `rm -r directorio/` y `rm -rf directorio/`? Investiga con `man rm` y
 explica en qué situación real usarías `-f` con precaución.
 
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `cp`, `mv`, `rm`
+
+**`cp`**
+
+1.  **Fácil**: Copia el archivo `documento.txt` a un nuevo archivo
+    llamado `copia.txt`.
+2.  **Intermedio**: Copia el archivo `copia.txt` al directorio
+    `backup`.
+3.  **Avanzado**: Copia todos los archivos `.txt` del directorio
+    actual al directorio `backup`, preservando sus atributos (pista:
+    `cp -p`).
+
+**`mv`**
+
+1.  **Fácil**: Renombra el archivo `copia.txt` a
+    `documento_copia.txt`.
+2.  **Intermedio**: Mueve el archivo `documento_copia.txt` al
+    directorio `backup`.
+3.  **Avanzado**: Mueve todos los archivos en el directorio `backup`
+    al directorio `proyecto/bin`.
+
+**`rm`**
+
+1.  **Fácil**: Elimina el archivo `copia.txt`.
+2.  **Intermedio**: Elimina todos los archivos `.tmp` en el
+    directorio `backup`.
+3.  **Avanzado**: Elimina de manera recursiva el directorio `backup`
+    y todos sus contenidos, confirmando cada eliminación con `-i`.
+:::
+
 ## Visualización y exploración de archivos
 
 ### Comandos de inspección
@@ -303,6 +370,51 @@ Ejercicio 5). Usa `cat -n` sobre las primeras 5 líneas (apóyate en
 `head`) y compáralo con el resultado de aplicar `-n` a `head`
 directamente sobre `numeros.txt`. ¿En qué se diferencia la numeración
 de `cat -n` de la que ya trae `numeros.txt` por construcción?
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `cat`, `head`, `tail`, `less`, `wc`
+
+**`cat`**
+
+1.  **Fácil**: Muestra el contenido del archivo `numeros.txt`.
+2.  **Intermedio**: Concatena y muestra el contenido de `sistemas.txt`
+    y `libro.txt` (los usarás en la siguiente sección).
+3.  **Avanzado**: Usa `cat` para crear un archivo `todo.txt` que
+    contenga los contenidos de dos archivos distintos, en un solo
+    comando.
+
+**`head`**
+
+1.  **Fácil**: Muestra las primeras 10 líneas de `numeros.txt`.
+2.  **Intermedio**: Muestra las primeras 5 líneas de `numeros.txt`.
+3.  **Avanzado**: Muestra las primeras 20 líneas de `numeros.txt` y
+    redirige la salida a un archivo `inicio.txt`.
+
+**`tail`**
+
+1.  **Fácil**: Muestra las últimas 10 líneas de `numeros.txt`.
+2.  **Intermedio**: Muestra las últimas 20 líneas (ajusta el archivo
+    para que tenga suficientes líneas, o usa `grande.txt` del
+    Ejercicio 5.3).
+3.  **Avanzado**: Usa `tail -f` para seguir en tiempo real un archivo
+    de log que otro proceso va escribiendo.
+
+**`less`**
+
+1.  **Fácil**: Abre `numeros.txt` con `less`.
+2.  **Intermedio**: Usa `less` para ver `numeros.txt` y busca la
+    palabra "10" con `/10` dentro del visor.
+3.  **Avanzado**: Abre un archivo grande (`grande.txt`) con `less` y
+    navega usando `g` (ir al inicio), `G` (ir al final) y `q` (salir).
+
+**`wc`**
+
+1.  **Fácil**: Cuenta el número de líneas en `numeros.txt`.
+2.  **Intermedio**: Cuenta el número de palabras en `numeros.txt`.
+3.  **Avanzado**: Usa `wc` para contar líneas, palabras y caracteres
+    de dos archivos distintos en un solo comando, y observa cómo `wc`
+    agrega automáticamente una fila de totales.
+:::
 
 ## Búsqueda de patrones con `grep`
 
@@ -700,6 +812,42 @@ número de secuencia (el dígito después de "seq"), usando `-o` para
 mostrar solo la parte que coincide. Compara tu resultado con el uso de
 `cut` o `sed` para lograr lo mismo.
 
+### Buscar en múltiples archivos a la vez
+
+`grep` también acepta varios archivos (o un patrón con comodín) como
+argumento, y en ese caso antepone el nombre del archivo a cada línea
+encontrada.
+
+``` bash
+grep "Unix" *.txt
+```
+
+Esto busca "Unix" en todos los archivos `.txt` del directorio actual y
+muestra, junto a cada coincidencia, de qué archivo proviene.
+
+**Ejercicio 6.18 (resuelto): Buscar en varios archivos**
+
+Busca la palabra "sistema" (sin importar mayúsculas) en `sistemas.txt`
+y `libro.txt` al mismo tiempo, mostrando de qué archivo viene cada
+coincidencia.
+
+``` bash
+grep -i "sistema" sistemas.txt libro.txt
+```
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `grep`
+
+1.  **Fácil**: Busca la palabra "error" en un archivo `log.txt` (créalo
+    tú mismo con un par de líneas de ejemplo, algunas con "error" y
+    otras sin él).
+2.  **Intermedio**: Busca todas las líneas que contienen la palabra
+    "importante" en `libro.txt`, ignorando mayúsculas/minúsculas.
+3.  **Avanzado**: Busca líneas que comiencen con "ERROR" en todos los
+    archivos `.log` del directorio actual (pista: combina `grep -r` o
+    un comodín `*.log` con el anclaje `^ERROR`).
+:::
+
 # Redirecciones y tuberías (Pipes)
 
 **Conceptos clave**
@@ -798,6 +946,45 @@ entre `comando > archivo 2>&1` y `comando 2>&1 > archivo`. Pruébalos
 ambos con un comando que genere tanto salida normal como un error, y
 explica por qué el orden de los operadores importa.
 
+### Más ejemplos de tuberías encadenadas
+
+Las tuberías se vuelven más potentes cuando se combinan varios
+comandos en cadena. Algunos ejemplos útiles:
+
+``` bash
+# Buscar un proceso en ejecución por nombre
+ps aux | grep "nombre_proceso"
+```
+
+``` bash
+# Ordenar el uso de disco de mayor a menor
+du -h | sort -h
+```
+
+``` bash
+# Pipeline avanzado: contar errores de un log por hora
+grep "ERROR" archivo.log | awk '{print $2}' | cut -d: -f1 | sort | uniq -c
+```
+
+Este último ejemplo encadena cinco comandos: `grep` filtra las líneas
+con "ERROR", `awk` extrae la columna de la hora, `cut` se queda solo
+con la hora (`HH`), `sort` la ordena, y `uniq -c` cuenta cuántas veces
+se repite cada hora, dando como resultado un conteo de errores por
+hora del día.
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: tuberías
+
+1.  **Fácil**: Usa `ls` y `wc` para contar el número de archivos en tu
+    directorio actual.
+2.  **Intermedio**: Usa `grep` y `wc` para contar cuántas líneas de
+    `libro.txt` contienen la palabra "tiempos".
+3.  **Avanzado**: Usa `cat`, `grep` y `wc` en una sola tubería para
+    contar cuántas veces aparece la palabra "sistema" en
+    `sistemas.txt` (aunque `grep -c` sea más directo, practica
+    encadenarlo con `cat` primero).
+:::
+
 ## Comodines (Wildcards)
 
 Los comodines permiten seleccionar múltiples archivos/directorios
@@ -866,6 +1053,17 @@ necesitas acotar el rango de años, no solo un dígito suelto.
 la expansión de comodines de Bash (`*.txt`) y una expresión regular de
 `grep` (`.*\.txt$`)? Da un ejemplo de un nombre de archivo donde ambas
 coincidirían igual, y otro donde el resultado sería distinto.
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: comodines
+
+1.  **Fácil**: Lista todos los archivos que terminan en `.txt` en el
+    directorio actual.
+2.  **Intermedio**: Lista todos los archivos que comienzan con "info"
+    y terminan en `.txt`.
+3.  **Avanzado**: Lista todos los archivos que tienen la letra "o" en
+    el segundo carácter de su nombre (pista: `?o*`).
+:::
 
 # Compresión y descompresión
 
@@ -942,6 +1140,30 @@ de `gzip` (bzip2) y `-J` de `tar` (xz). ¿En qué se diferencian del
 `gzip` estándar en términos de velocidad y tasa de compresión? No hace
 falta instalarlos si no los tienes disponibles: responde con base en la
 documentación (`man` o `--help`).
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `gzip`, `tar`
+
+**`gzip`**
+
+1.  **Fácil**: Comprime el archivo `numeros.txt` usando `gzip -k`
+    (para conservar el original).
+2.  **Intermedio**: Comprime todos los archivos `.txt` del directorio
+    actual (uno por uno, `gzip` no soporta múltiples archivos en un
+    solo `.gz` combinado).
+3.  **Avanzado**: Descomprime `numeros.txt.gz` y verifica que su
+    contenido sea idéntico al original con `diff`.
+
+**`tar`**
+
+1.  **Fácil**: Crea un archivo `backup.tar` (sin comprimir) que
+    incluya todos los archivos del directorio `proyecto`.
+2.  **Intermedio**: Extrae los contenidos de `backup.tar` en un nuevo
+    directorio llamado `restaurar`.
+3.  **Avanzado**: Crea un archivo comprimido `backup.tar.gz` que
+    incluya todos los archivos de `proyecto`, y verifica su contenido
+    con `tar -tzvf` antes de extraerlo.
+:::
 
 # Herramientas avanzadas de procesamiento de texto
 
@@ -1068,6 +1290,17 @@ promedio general (de las tres materias juntas) por estudiante en
 `notas.csv` y ordena la salida de mayor a menor promedio combinando
 `awk` con `sort`.
 
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `awk`
+
+1.  **Fácil**: Usa `awk` para imprimir la primera columna de
+    `notas.csv`.
+2.  **Intermedio**: Usa `awk` para sumar los valores de la columna de
+    Matemáticas en `notas.csv`.
+3.  **Avanzado**: Usa `awk` para imprimir solo las filas donde la nota
+    de Química sea mayor que 90 en `notas.csv`.
+:::
+
 # Automatización con alias y comandos combinados
 
 ## Crear alias para comandos frecuentes
@@ -1119,6 +1352,30 @@ el actual, ordenados por tamaño.
 ``` bash
 alias espacio="du -sh * | sort -hr"
 ```
+
+::: {.callout-tip collapse="true"}
+## Banco de ejercicios adicionales por nivel: `alias`
+
+1.  **Fácil**: Crea un alias llamado `ll` para listar archivos con
+    `ls -la`.
+2.  **Intermedio**: Crea un alias llamado `rmf` que ejecute `rm -rf`,
+    y reflexiona sobre el riesgo de tener un alias así siempre
+    disponible sin confirmación.
+3.  **Avanzado**: Crea un alias llamado `backup` que combine `tar` y
+    `gzip` para generar un `backup.tar.gz` de un directorio
+    específico.
+:::
+
+**Desafío final de alias:** Crea (o edita) un archivo `~/.bashrc` o
+`~/.bash_aliases` en tu directorio de inicio y define ahí varios de los
+alias que has creado en esta sección, para que estén disponibles cada
+vez que abras una terminal. Recarga la configuración sin cerrar sesión:
+
+``` bash
+source ~/.bashrc
+```
+
+Verifica que los alias funcionen ejecutando `alias` para listarlos.
 
 **Combinación de comandos: Ejercicios integradores**
 
@@ -1193,6 +1450,390 @@ cada minuto distinto.
 | top     | Muestra procesos en tiempo real.                      |
 | df      | Muestra el espacio libre en los sistemas de archivos. |
 | du      | Estima el uso de espacio de archivos/directorios.     |
+
+# Fundamentos de bash scripting
+
+Hasta ahora has usado comandos de forma individual o encadenada
+directamente en la terminal. Un **script** de bash es simplemente un
+archivo de texto con una secuencia de comandos que se ejecutan en
+orden, lo que te permite automatizar tareas, repetir procesos y
+construir programas sencillos de administración o análisis.
+
+## Tu primer script
+
+**Estructura básica**
+
+Un script de bash comienza con la línea `#!/bin/bash` (llamada
+***shebang***), que le indica al sistema qué intérprete debe usar para
+ejecutar el resto del archivo.
+
+``` bash
+#!/bin/bash
+
+echo "Hola, mundo!"
+```
+
+**Pasos para crear y ejecutar un script**
+
+1.  Escribe el contenido anterior en un archivo llamado
+    `mi_primer_script.sh` (puedes usar `nano`, `vim`, o el editor de
+    tu preferencia).
+2.  Dale permisos de ejecución:
+
+``` bash
+chmod +x mi_primer_script.sh
+```
+
+3.  Ejecútalo:
+
+``` bash
+./mi_primer_script.sh
+```
+
+Si todo está correcto, verás el mensaje "Hola, mundo!" en la terminal.
+
+**Ejercicio S1 (resuelto): Tu primer script**
+
+Crea un script `saludo.sh` que imprima tu nombre y la fecha actual.
+
+``` bash
+#!/bin/bash
+
+echo "Hola, soy $(whoami)"
+echo "Hoy es $(date '+%Y-%m-%d')"
+```
+
+**Ejercicio S2 (propuesto, sin solución):** ¿Qué ocurre si intentas
+ejecutar `./mi_primer_script.sh` sin haberle dado permisos de
+ejecución con `chmod +x`? Prueba también ejecutarlo con `bash
+mi_primer_script.sh` en lugar de `./mi_primer_script.sh`. ¿Por qué
+funciona esta segunda forma aunque el archivo no sea ejecutable?
+
+## Variables en bash
+
+Las variables te permiten almacenar y reutilizar valores dentro de un
+script. Se asignan **sin espacios** alrededor del `=`, y se leen
+anteponiendo `$` al nombre.
+
+``` bash
+#!/bin/bash
+
+nombre="Roberto"
+echo "Hola, $nombre!"
+```
+
+``` bash
+#!/bin/bash
+
+numero1=5
+numero2=10
+suma=$((numero1 + numero2))
+
+echo "La suma de $numero1 y $numero2 es $suma."
+```
+
+::: callout-tip
+## Variables de entorno vs. variables de script
+
+Las variables que defines dentro de un script son locales a esa
+sesión de shell a menos que las exportes con `export VARIABLE=valor`,
+lo que las hace visibles para procesos hijos (por ejemplo, otro script
+que llames desde el primero).
+:::
+
+**Ejercicio S3 (resuelto): Variables y aritmética**
+
+Escribe un script `rectangulo.sh` que calcule el área de un rectángulo
+a partir de dos variables `base` y `altura` definidas dentro del
+script.
+
+``` bash
+#!/bin/bash
+
+base=8
+altura=5
+area=$((base * altura))
+
+echo "El área del rectángulo es: $area"
+```
+
+**Ejercicio S4 (propuesto):** Modifica `rectangulo.sh` para que reciba
+`base` y `altura` como argumentos de línea de comandos (`$1` y `$2`)
+en lugar de tenerlos escritos dentro del script.
+
+::: {.callout-note collapse="true"}
+## Pista
+
+Dentro de un script, `$1` corresponde al primer argumento pasado al
+ejecutarlo (`./rectangulo.sh 8 5`), y `$2` al segundo.
+:::
+
+## Control de flujo
+
+bash soporta las estructuras de control habituales: condicionales
+`if`, ciclos `for` y `while`, y la sentencia `case` para múltiples
+alternativas.
+
+**Condicionales `if`**
+
+``` bash
+#!/bin/bash
+
+if [ $1 -gt 10 ]; then
+    echo "El número es mayor que 10."
+else
+    echo "El número es 10 o menor."
+fi
+```
+
+**Ciclos `for`**
+
+``` bash
+#!/bin/bash
+
+for i in {1..5}; do
+    echo "Iteración $i"
+done
+```
+
+**Ciclos `while`**
+
+``` bash
+#!/bin/bash
+
+contador=1
+while [ $contador -le 5 ]; do
+    echo "Contador: $contador"
+    contador=$((contador + 1))
+done
+```
+
+**Sentencia `case`**
+
+``` bash
+#!/bin/bash
+
+opcion=$1
+
+case $opcion in
+    "inicio")
+        echo "Iniciando el proceso..."
+        ;;
+    "detener")
+        echo "Deteniendo el proceso..."
+        ;;
+    *)
+        echo "Opción no reconocida."
+        ;;
+esac
+```
+
+**Ejercicio S5 (resuelto): Clasificar archivos con `for` e `if`**
+
+Escribe un script `clasificar.sh` que recorra todos los archivos del
+directorio actual y, para cada uno, indique si es un archivo `.txt`,
+un directorio, u "otro tipo".
+
+``` bash
+#!/bin/bash
+
+for elemento in *; do
+    if [ -d "$elemento" ]; then
+        echo "$elemento: directorio"
+    elif [[ "$elemento" == *.txt ]]; then
+        echo "$elemento: archivo de texto"
+    else
+        echo "$elemento: otro tipo"
+    fi
+done
+```
+
+**Ejercicio S6 (propuesto):** Escribe un script `contar_pares.sh` que
+use un ciclo `while` para imprimir únicamente los números pares entre
+1 y 20.
+
+::: {.callout-note collapse="true"}
+## Pista
+
+Puedes usar el operador `%` (módulo) dentro de una condición `[ $((n %
+2)) -eq 0 ]` para saber si un número es par.
+:::
+
+**Ejercicio S7 (propuesto, sin solución):** Adapta el ejemplo de
+`case` para que, en lugar de "inicio"/"detener", acepte las opciones
+"backup", "limpiar" y "estado", e imprima un mensaje distinto para
+cada una (sin necesidad de ejecutar acciones reales).
+
+## Funciones en bash
+
+Las funciones te permiten organizar tu código en bloques reutilizables
+en lugar de repetir la misma lógica varias veces.
+
+``` bash
+#!/bin/bash
+
+mi_funcion() {
+    echo "Esta es una función en bash."
+}
+
+mi_funcion
+```
+
+**Pasando argumentos a una función**
+
+``` bash
+#!/bin/bash
+
+suma() {
+    echo "La suma de $1 y $2 es $(( $1 + $2 ))."
+}
+
+suma 3 7
+```
+
+**Ejercicio S8 (resuelto): Función con validación**
+
+Escribe una función `es_par` que reciba un número y muestre si es par
+o impar.
+
+``` bash
+#!/bin/bash
+
+es_par() {
+    if [ $(( $1 % 2 )) -eq 0 ]; then
+        echo "$1 es par."
+    else
+        echo "$1 es impar."
+    fi
+}
+
+es_par 7
+es_par 12
+```
+
+**Ejercicio S9 (propuesto, sin solución):** Convierte el script
+`rectangulo.sh` del Ejercicio S4 en una función `area_rectangulo` que
+reciba `base` y `altura` como parámetros y devuelva (con `echo`) el
+área calculada. Luego llama a la función dos veces con valores
+distintos dentro del mismo script.
+
+## Debugging y manejo de errores
+
+**Modo de depuración**
+
+Puedes ejecutar un script mostrando cada comando y su resultado
+mientras se ejecuta, lo cual es muy útil para encontrar errores:
+
+``` bash
+bash -x mi_script.sh
+```
+
+**Detener el script ante el primer error**
+
+Por defecto, un script continúa ejecutándose aunque un comando falle.
+La opción `set -e` hace que el script se detenga inmediatamente si
+algún comando devuelve un error:
+
+``` bash
+#!/bin/bash
+set -e
+
+comando_que_puede_fallar
+echo "Este mensaje no se verá si el comando anterior falla."
+```
+
+::: callout-warning
+## Buen hábito para scripts de producción
+
+En scripts que vayan a ejecutarse de forma automática (por ejemplo,
+vía `cron`, como verás más abajo), es recomendable iniciar con `set
+-euo pipefail`: detiene el script ante errores (`-e`), variables no
+definidas (`-u`), y errores dentro de tuberías (`pipefail`), evitando
+que fallos silenciosos pasen desapercibidos.
+:::
+
+**Ejercicio S10 (propuesto):** Toma el script `backup_reciente.sh` de
+la sección del proyecto final (más adelante en esta guía) y ejecútalo
+con `bash -x` para observar el detalle de cada paso. Identifica en qué
+línea se generaría un error si le pasas un directorio que no existe.
+
+::: {.callout-note collapse="true"}
+## Pista
+
+`find` con un directorio inexistente no necesariamente hace que el
+script falle por sí solo; revisa qué pasa después con `tar` si no hay
+archivos que respaldar.
+:::
+
+## Buenas prácticas
+
+- **Comentarios**: añade comentarios (`#`) para explicar partes
+  complejas del código.
+- **Funciones**: divide el código en bloques reutilizables en lugar de
+  duplicar lógica.
+- **Validación de entradas**: verifica que los argumentos recibidos
+  sean correctos antes de usarlos.
+
+``` bash
+#!/bin/bash
+
+# Este es un comentario
+mi_funcion() {
+    if [ -z "$1" ]; then
+        echo "Error: falta un argumento."
+        exit 1
+    fi
+    echo "El argumento es $1."
+}
+
+mi_funcion "$1"
+```
+
+**Ejercicio S11 (propuesto, sin solución):** Revisa cualquiera de los
+scripts que has escrito hasta ahora en esta guía (por ejemplo,
+`saludo.sh` o `clasificar.sh`) y agrégale validación de entradas: si
+el script espera un argumento y no se proporciona, debe imprimir un
+mensaje de uso (`Uso: $0 <argumento>`) y salir con `exit 1`, siguiendo
+el mismo patrón usado en el script `backup_reciente.sh` del proyecto
+final.
+
+## Ejecución automática: crontab
+
+`cron` es el planificador de tareas de Unix/Linux que permite ejecutar
+scripts automáticamente en intervalos definidos (por ejemplo, todos
+los días a una hora fija), sin necesidad de que dejes una terminal
+abierta.
+
+**Editar tu crontab**
+
+``` bash
+crontab -e
+```
+
+**Ejemplo: ejecutar un script todos los días a las 5 AM**
+
+```         
+0 5 * * * /ruta/al/script.sh
+```
+
+Cada línea de un crontab sigue el formato `minuto hora día mes
+día_semana comando`, donde `*` significa "cualquier valor".
+
+::: callout-tip
+## Registrar la salida de tareas programadas
+
+Cuando `cron` ejecuta un script, no tienes una terminal visible para
+ver los mensajes. Es buena práctica redirigir la salida a un archivo
+de log, como en:
+`0 5 * * * /ruta/al/script.sh >> /ruta/al/log.txt 2>&1`, reutilizando
+lo aprendido en la sección de redirecciones.
+:::
+
+**Ejercicio S12 (propuesto, sin solución):** Escribe (sin necesidad de
+activarla realmente si no quieres modificar tu crontab personal) la
+línea de crontab que ejecutaría el script `backup_reciente.sh` del
+proyecto final todos los lunes a las 8:00 AM, redirigiendo tanto la
+salida estándar como los errores a `~/backups/cron.log`.
 
 # Descarga de archivos desde la terminal con `wget` y `curl`
 
@@ -1537,6 +2178,80 @@ archivos son iguales.
 la latitud y longitud como argumentos de línea de comandos (`$1` y
 `$2`), validando que ambos se hayan proporcionado antes de continuar.
 
+### Ejercicio 7: Descarga y procesamiento de un archivo de texto
+
+Este ejercicio combina lo aprendido sobre descargas con `wget`/`curl`
+y búsqueda de patrones con `grep`:
+
+1.  Usa `wget` o `curl` para descargar un archivo de texto desde una
+    URL específica.
+2.  Usa `grep` para encontrar todas las líneas que contienen una
+    palabra clave.
+3.  Usa `wc` para contar el número de líneas que contienen la palabra
+    clave.
+
+``` bash
+wget http://example.com/archivo.txt -O archivo.txt
+grep "palabra_clave" archivo.txt | wc -l
+```
+
+### Aplicación bioinformática: descargar un genoma desde NCBI
+
+Un caso de uso frecuente en microbiología computacional es descargar
+genomas de referencia directamente desde el FTP de NCBI. A
+continuación, el procedimiento para obtener el genoma de *Escherichia
+coli* K-12 (ensamble ASM584v2):
+
+**Con `wget`:**
+
+``` bash
+wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+```
+
+**Con `curl`:**
+
+``` bash
+curl -O ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz
+```
+
+**Descomprimir el archivo FASTA descargado:**
+
+``` bash
+gzip -d GCF_000005845.2_ASM584v2_genomic.fna.gz
+```
+
+Al descomprimirlo obtienes `GCF_000005845.2_ASM584v2_genomic.fna`, un
+archivo FASTA con la secuencia genómica completa, listo para análisis
+posteriores (alineamientos, anotación, extracción de regiones
+específicas, etc.).
+
+::: callout-tip
+## Nota
+
+Esta URL corresponde específicamente al ensamble ASM584v2 de *E. coli*
+K-12. Para otros organismos o ensambles, consulta el índice del FTP de
+NCBI Genomes (`ftp://ftp.ncbi.nlm.nih.gov/genomes/all/`) y navega por
+la jerarquía de carpetas según el número de acceso (*accession
+number*) del organismo de interés.
+:::
+
+**Ejercicio 8 (resuelto): Contar secuencias en un genoma descargado**
+
+Una vez descomprimido el archivo FASTA de *E. coli*, cuenta cuántas
+secuencias (contigs o cromosomas) contiene, reutilizando lo aprendido
+en la sección de `grep`.
+
+``` bash
+grep -c "^>" GCF_000005845.2_ASM584v2_genomic.fna
+```
+
+**Ejercicio 9 (propuesto, sin solución):** Descarga el genoma de otra
+bacteria de tu interés desde el FTP de NCBI (busca su *accession
+number* en <https://www.ncbi.nlm.nih.gov/genome/>), descomprímelo, y
+usa `grep`, `awk` y `wc` para reportar: número de secuencias, longitud
+total aproximada del genoma (en pares de bases, sumando los caracteres
+de las líneas que no son cabecera) y el contenido de GC aproximado.
+
 ## Consejos y mejores prácticas
 
 **Para `wget`:**
@@ -1730,4 +2445,3 @@ Esta guía cubre los fundamentos esenciales para trabajar eficientemente en un e
 
 La línea de comandos es una herramienta poderosa. Con gran poder viene una gran responsabilidad. ¡Feliz aprendizaje!
 :::
-
