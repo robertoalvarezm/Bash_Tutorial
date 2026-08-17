@@ -16,18 +16,18 @@ Este tutorial te guiará paso a paso por los comandos esenciales. Lo importante 
 
 El contenido está organizado en diferentes secciones que abarcan desde los fundamentos de Bash hasta herramientas ampliamente utilizadas en bioinformática.
 
-| Sección               | Contenido principal                                              | Propósito                                        |
-|-----------------|-------------------------------|------------------------|
-| Manipulación de texto | `awk`, `sed`, `grep`, `cut`, `sort`, `uniq`, `wc`, `tr`, `paste` | Aprender a transformar y resumir texto           |
-| Datos biológicos      | FASTA, FASTQ, VCF, BAM, BLAST, paired-end                        | Aplicar las herramientas a formatos reales       |
-| Automatización        | `find`, `xargs`, loops, GNU `parallel`                           | Trabajar con muchos archivos y muestras          |
-| `seqtk`               | FASTA/FASTQ                                                      | Usar herramientas especializadas para secuencias |
-| GFF3                  | Anotaciones                                                      | Explorar y analizar anotaciones genómicas        |
-| SRA Toolkit           | `prefetch`, `fasterq-dump`, `vdb-validate`                       | Obtener datos públicos de secuenciación          |
-| E-utilities           | `einfo`, `esearch`, `efetch`, `elink`, `xtract`                  | Consultar y navegar por NCBI                     |
-| NCBI Datasets         | `datasets`, `dataformat`                                         | Descargar recursos y metadatos organizados       |
-| `gget`                | Python + CLI                                                     | Consultar recursos genómicos y realizar análisis |
-| Resumen y recursos    | Referencia rápida y recursos                                     | Repasar y continuar aprendiendo                  |
+| Sección | Contenido principal | Propósito |
+|------------------|------------------------------|------------------------|
+| Manipulación de texto | `awk`, `sed`, `grep`, `cut`, `sort`, `uniq`, `wc`, `tr`, `paste` | Aprender a transformar y resumir texto |
+| Datos biológicos | FASTA, FASTQ, VCF, BAM, BLAST, paired-end | Aplicar las herramientas a formatos reales |
+| Automatización | `find`, `xargs`, loops, GNU `parallel` | Trabajar con muchos archivos y muestras |
+| `seqtk` | FASTA/FASTQ | Usar herramientas especializadas para secuencias |
+| GFF3 | Anotaciones | Explorar y analizar anotaciones genómicas |
+| SRA Toolkit | `prefetch`, `fasterq-dump`, `vdb-validate` | Obtener datos públicos de secuenciación |
+| E-utilities | `einfo`, `esearch`, `efetch`, `elink`, `xtract` | Consultar y navegar por NCBI |
+| NCBI Datasets | `datasets`, `dataformat` | Descargar recursos y metadatos organizados |
+| `gget` | Python + CLI | Consultar recursos genómicos y realizar análisis |
+| Resumen y recursos | Referencia rápida y recursos | Repasar y continuar aprendiendo |
 
 ::: callout-note
 ## Requisitos {.unnumbered}
@@ -55,9 +55,9 @@ Cada comando realiza una tarea pequeña y la salida de uno puede convertirse en 
 
 Los bloques de código pueden contener tres tipos de elementos:
 
--   **comandos:** instrucciones que puedes ejecutar;
--   **comentarios:** comienzan con `#` y explican qué hace una línea;
--   **variables:** nombres como `$acc` o `$PROJECT` que permiten reutilizar valores.
+- **comandos:** instrucciones que puedes ejecutar;
+- **comentarios:** comienzan con `#` y explican qué hace una línea;
+- **variables:** nombres como `$acc` o `$PROJECT` que permiten reutilizar valores.
 
 Cuando veas `archivo.txt`, `sample.fastq` o `GCF_...`, normalmente se trata de un **marcador de posición** que deberás sustituir por tu archivo o accesión.
 

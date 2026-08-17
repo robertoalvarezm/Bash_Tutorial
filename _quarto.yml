@@ -11,6 +11,7 @@ book:
 
   chapters:
     - index.qmd
+    - bash_basics.qmd
     - bash_one_liners.qmd
     - one_liners_and_bioinformatics.qmd
     - automatization.qmd
